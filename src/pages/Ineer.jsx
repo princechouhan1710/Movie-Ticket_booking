@@ -13,7 +13,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-
 // import required modules
 import { Navigation, Pagination } from 'swiper/modules';
 function Ineer() {
@@ -27,211 +26,245 @@ const now =new Date();
 
   return (
     <>
-    <div className='p-10 w-[70%] m-auto'>
-        <div className='flex gap-5 p-3 '>
-            <img src={movie.poster} alt="" height={"150px"} width={"100px"}  className='border'/>
-            <div className='flex flex-col gap-2'>
-                <p className='font-bold text-2xl'>{movie.name}</p>
-                <p className='text-gray-400'>{movie.genre} | {movie.langauage} | {movie.length}</p>
-                <button className='border px-3 rounded flex justify-center text-center py-1 w-[50%]' onClick={()=>setView(true)}>View details</button>
-            </div>
-        </div>
-        <hr className='text-gray-300 m-3'/>
-        <div className='flex gap-3 '>
-            <div className=' bg-gray-100 text-amber-400 rounded py-2 px-3 text-3xl '>A</div>
-            <div>
-            <p className='text-[14px]'>Movie  suitable  for  adults(18+ Years) only</p>
-            <p className='text-[14px]'>Please carry  your IDs with birth date for verification</p>
-            </div>
-        </div>
-        <div className='flex gap-3 '>
-            {/* {(now.getMonth()+1).toString()} */}
-                      <p className='border bg-gray-100 text-amber-400 rounded-2xl m-2 px-3 border-none text-center flex items-center'>
-dec</p> 
-          <div className='border bg-gray-100 rounded  px-3 border-none'><p className='text-2xl'>{now.getDate()}</p>  
-         {/* <p className=''>{now.getDay()}</p> */}
-           </div>        
-             <div className='border bg-gray-100 rounded  px-3 border-none'><p className='text-2xl'>{now.getDate()+1}</p>  
-         {/* <p className=''>{now.getDay()+1}</p> */}
-           </div>    
-             <div className='border bg-gray-100 rounded  px-3 border-none'><p className='text-2xl'>{now.getDate()+2}</p>  
-         {/* <p className=''>{now.getDay()+2}</p> */}
-           </div>    
-             <div className='border bg-gray-100 rounded  px-3 border-none'><p className='text-2xl'>{now.getDate()+3}</p>  
-         {/* <p className=''>{now.getDay()+3}</p> */}
-           </div>    
-        </div>
-         <div className='flex gap-3 p-5'>
-        <button className='border-1 px-3 rounded border-gray-300'>Filter </button>
-        <button className='border-1 px-3 rounded border-gray-300'>After 10 PM</button>
-        <button className='border-1 px-3 rounded border-gray-300'>Premium Seats</button>
-       
-      </div>
-      
-        <hr className='text-gray-300 m-3'/>
-        <div className='bg-gray-300 flex w-[98%] gap-5 m-auto'>
-            <p className='flex justify-center items-center gap-3 px-3 py-2'><p className='w-2 h-2 rounded-full bg-black' ></p> Available</p>
-            <p className='flex justify-center items-center gap-3 px-3'><p className='w-2 h-2 rounded-full bg-yellow-400' ></p> Filling fast</p>
-            <p className='flex justify-center items-center gap-3 px-3'><p className='w-2 h-2 rounded-full bg-orange-400' ></p>  Almost full</p>
-          
-           
-        </div>
-        <div>
-        {theatres.map((v,i)=>{
-            return(
-                <div>
-                   <div className='flex justify-between p-7'>
-                     <div className='flex gap-5'>
-                        <img src={v.image} alt=""  height={"50px"} width={"50px"} className='rounded-full border'/>
-                        <div>
-                        <p className='font-bold text-xl'>{v.name}</p>
-                        <p className='text-[12px] text-gray-500' >{v.location} </p>
-                        </div>
-                        </div>
-                        <p>🤍</p>
-                    </div>
-                    <div className='flex flex-wrap gap-5'>
-                            {v.movies.map((value,index)=>{
-                                return(
-                                 <div className='border px-7 rounded justify-center items-center w-[20%]'>
-                            <p className='text-center'>{value.time}</p>
-                            <p className='text-center text-gray-500'>RECLINERS</p>
-                        </div>
-         ) })}
-                           
-                      
-                            
-                    </div>
-                </div>
+   <div className="p-10 max-w-5xl mx-auto space-y-8">
 
-            )
-        })}
-        </div>
-           <ExLAng/>
-        <ExGenre/>
-     
+  <div className="flex gap-6 p-5 bg-white rounded-xl shadow">
+    <img
+      src={movie.poster}
+      alt=""
+      className="w-28 h-40 object-cover rounded-lg shadow"
+    />
+
+    <div className="flex flex-col justify-between">
+      <div>
+        <p className="text-3xl font-bold">{movie.name}</p>
+        <p className="text-gray-500 text-sm mt-1">
+          {movie.genre} | {movie.langauage} | {movie.length}
+        </p>
+      </div>
+
+      <button
+        className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition w-[50%]"
+        onClick={() => setView(true)}
+      >
+        View Details
+      </button>
     </div>
+  </div>
+
+  <div className="flex items-start gap-4 p-5 bg-gray-100 rounded-xl shadow-sm">
+    <div className="text-amber-500 font-bold text-3xl bg-white rounded-xl px-4 py-2 shadow">
+      A
+    </div>
+
+    <div>
+      <p className="text-[14px] font-semibold">
+        Movie suitable for adults (18+ Years) only
+      </p>
+      <p className="text-[14px] text-gray-600">
+        Please carry your ID with birth date for verification.
+      </p>
+    </div>
+  </div>
+
+  <div className="flex items-center gap-4 overflow-x-auto pb-2">
+    <p className="text-gray-500 font-semibold px-3 py-1 rounded-full bg-gray-200">
+      {now.toLocaleString("default", { month: "short" })}
+    </p>
+
+    {[0, 1, 2, 3].map((d) => (
+      <div
+        key={d}
+        className="px-4 py-2 bg-gray-100 rounded-xl shadow text-center hover:bg-blue-100 cursor-pointer"
+      >
+        <p className="text-xl font-bold">{now.getDate() + d}</p>
+      </div>
+    ))}
+  </div>
+
+  <div className="flex gap-4">
+    {["Filter", "After 10 PM", "Premium Seats"].map((b) => (
+      <button
+        key={b}
+        className="px-4 py-2 border border-gray-300 rounded-xl hover:bg-gray-200 transition"
+      >
+        {b}
+      </button>
+    ))}
+  </div>
+
+  <div className="bg-gray-100 flex justify-start gap-8 px-6 py-3 rounded-xl shadow">
+    <p className="flex items-center gap-2">
+      <span className="w-3 h-3 bg-black rounded-full"></span> Available
+    </p>
+    <p className="flex items-center gap-2">
+      <span className="w-3 h-3 bg-yellow-400 rounded-full"></span> Filling fast
+    </p>
+    <p className="flex items-center gap-2">
+      <span className="w-3 h-3 bg-orange-500 rounded-full"></span> Almost full
+    </p>
+  </div>
+
+  <div className="space-y-10">
+    {theatres.map((v, i) => (
+      <div
+        key={i}
+        className="p-6 bg-white rounded-xl shadow hover:shadow-lg transition"
+      >
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center gap-5">
+            <img
+              src={v.image}
+              alt=""
+              className="w-14 h-14 rounded-full border shadow"
+            />
+            <div>
+              <p className="text-xl font-bold">{v.name}</p>
+              <p className="text-sm text-gray-500">{v.location}</p>
+            </div>
+          </div>
+
+          <p className="text-2xl cursor-pointer">🤍</p>
+        </div>
+
+        <div className="flex flex-wrap gap-4 mt-4">
+          {v.movies.map((value, index) => (
+            <div
+              key={index}
+              className="px-6 py-3 bg-gray-100 rounded-xl shadow hover:bg-blue-100 cursor-pointer transition w-fit"
+            >
+              <p className="font-semibold">{value.time}</p>
+              <p className="text-sm text-gray-500 text-center">RECLINERS</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <ExLAng />
+  <ExGenre />
+</div>
+
     <Upmovie/>
 
 
     
-          <Dialog open={view} onClose={() => setView(false)} className="relative z-20">
-  <div className="fixed inset-0 flex justify-center items-start p-4 overflow-y-auto">
-    <div className="pointer-events-auto w-full">
-      <DialogPanel className="bg-white rounded-lg p-6 shadow-5xl w-[40%] max-w-3xl mx-auto">
+    <Dialog open={view} onClose={() => setView(false)} className="relative z-50">
 
-   
-                  <h2 className='font-bold text-xl '>Movie Details</h2>
-                  
-                  <h3 >{
-                    movie.name
-                  }</h3>
-                  <div className='flex justify-between py-3'> 
-                    <p className='font-bold text-14 hover:border-b-1 border-blue-500 ' >Reviews</p>
-                    <p className='font-bold text-14 hover:border-b-1 border-blue-500 '>Synopsis</p>
-                    <p className='font-bold text-14 hover:border-b-1 border-blue-500 '>Cast</p>
-                    <p className='font-bold text-14 hover:border-b-1 border-blue-500 '>Video</p>
-                    <p className='font-bold text-14 hover:border-b-1 border-blue-500 '>Posters</p>
-                  </div>
+  <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setView(false)} />
 
-                 <div>
-  <h3 className=' font-bold py-8'>Reviews</h3>
-<div className='flex justify-around gap-5 flex-wrap'>
-{movie.reviews.map((rev, index) => (
-  <div key={index} className=' p-3 w-[30%]'>
-    <p className="text-bold">{rev.rating}/5</p>
-    <p>{rev.platform}</p>
-  </div>
-  
-))}
-</div></div>
- <style>
-{`
-  .swiper-button-next,
-  .swiper-button-prev {
-    width: 15px !important;
-    height: 15px !important;
-    border-radius: 50%;
-  }
-
-  .swiper-button-next::after,
-  .swiper-button-prev::after {
-    font-size: 14px !important;
-    color: white;
-  }
-`}
-</style>
-
-<Swiper
-  slidesPerView={2}
-  spaceBetween={20}
-  pagination={{ clickable: true }}
-  navigation={true}
-  modules={[ Navigation]}
-  className="w-full mt-4"
->
-  {movie.reviews?.map((rev, index) => (
-    <SwiperSlide
-      key={index}
-      className="border p-4 rounded-lg bg-white text-black shadow-md"
+  <div className="fixed inset-0 flex justify-center items-start p-6 overflow-y-auto">
+    <DialogPanel
+      className="bg-white rounded-2xl p-8 shadow-2xl w-full max-w-3xl"
+      onClick={(e) => e.stopPropagation()}
     >
-      <div className="flex justify-between">
-        <p className="font-bold">{rev.platform}</p>
-        <p>⭐ {rev.rating}</p>
+
+      <h2 className="text-3xl font-bold mb-2 text-gray-900">🎬 Movie Details</h2>
+      <h3 className="text-xl font-semibold text-gray-700 mb-6">{movie.name}</h3>
+
+      <div className="flex justify-between bg-gray-100 rounded-xl p-3 mb-8">
+        {["Reviews", "Synopsis", "Cast", "Video", "Posters"].map((tab) => (
+          <p
+            key={tab}
+            className="text-sm font-semibold text-gray-600 cursor-pointer hover:text-blue-600 transition"
+          >
+            {tab}
+          </p>
+        ))}
       </div>
-      <p className="mt-2 text-gray-700">{rev.review}</p>
-    </SwiperSlide>
-  ))}
-</Swiper>
- 
-  <h3 className=' font-bold py-8'>Synopsis</h3>
-  <p className='text-gray-400'>{movie.description}</p>
 
-<div className='flex flex-col gap-5 py-2'>
-  <p> A</p>
-  <p>{movie.langauage}</p>
-  <p> {movie.category}</p>
-  </div>
+      <section className="mb-10">
+        <h3 className="text-xl font-bold mb-4">⭐ Reviews</h3>
 
-  <h3 className=' font-bold py-8'>Cast</h3>
-<div className='flex flex-wrap gap-4'>
-  {movie.cast.map((v,i)=>{
-return(
-  <div>
-                        <img src={v.image} alt=""   className='rounded-full border w-20 h-20 '/>
-    <p className='text-center font-bold'>{v.name}</p>
-  </div>
-)
-  })}
-  <div>
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={20}
+          pagination={{ clickable: true }}
+          modules={[Pagination]}
+          className="w-full"
+        >
+          {movie.reviews?.map((rev, index) => (
+            <SwiperSlide
+              key={index}
+              className="bg-white border rounded-xl p-5 shadow-sm hover:shadow-md transition"
+            >
+              <div className="flex justify-between items-center">
+                <p className="font-bold text-gray-700">{rev.platform}</p>
+                <p className="text-yellow-500 font-semibold">⭐ {rev.rating}</p>
+              </div>
+              <p className="mt-3 text-gray-600 text-sm">{rev.review}</p>
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-    
-  </div>
-</div>
+        <style>
+          {`
+            .swiper-pagination {
+              margin-top: 20px !important;
+            }
+          `}
+        </style>
+      </section>
 
-  
-  <h3 className=' font-bold py-8'>Video</h3>
+      <section className="mb-10">
+        <h3 className="text-xl font-bold mb-4">📌 Synopsis</h3>
+        <div className="bg-gray-50 p-5 rounded-xl shadow-inner">
+          <p className="text-gray-700 leading-relaxed">{movie.description}</p>
 
-            <iframe width="500" height="300" src={movie.video} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen className='m-auto'></iframe>
+          <div className="mt-5  grid-cols-3 gap-4 text-sm text-gray-700 flex flex-col" >
+            <p><span className="font-bold">🎬 Category:</span> {movie.category}</p>
+            <p><span className="font-bold">🌐 Language:</span> {movie.langauage}</p>
+            <p><span className="font-bold">⭐ Rating:</span> {movie.rating}</p>
+          </div>
+        </div>
+      </section>
 
-     
-  
+      <section className="mb-10">
+        <h3 className="text-xl font-bold mb-4">🎭 Cast</h3>
 
+        <div className="flex flex-wrap gap-6">
+          {movie.cast?.map((actor, i) => (
+            <div key={i} className="text-center w-[90px]">
+              <img
+                src={actor.image}
+                className="rounded-full w-20 h-20 object-cover shadow-md border"
+                alt=""
+              />
+              <p className="font-semibold mt-2 text-gray-700">{actor.name}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
+      <section className="mb-10">
+        <h3 className="text-xl font-bold mb-4">🎥 Trailer</h3>
 
+        <div className="flex justify-center">
+          <iframe
+            width="560"
+            height="315"
+            src={movie.video}
+            className="rounded-xl shadow-lg"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </section>
 
-  <h3 className=' font-bold py-8'>Posters And Wallpaper</h3>
-<img src={movie.poster} alt="" className='h-100 m-auto w-100'/>
+      <section className="mb-6">
+        <h3 className="text-xl font-bold mb-4">🖼 Posters & Wallpapers</h3>
 
+        <img
+          src={movie.poster}
+          className="rounded-xl shadow-lg w-full object-cover"
+          alt=""
+        />
+      </section>
 
-
-
- 
-        
-      </DialogPanel>
-    </div>
+    </DialogPanel>
   </div>
 </Dialog>
+
 
     </>
   );

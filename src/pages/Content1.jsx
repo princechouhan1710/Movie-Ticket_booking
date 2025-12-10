@@ -49,7 +49,7 @@ Book me
 </button>
                  </div>
                  <div className='w-[50%] text-center  p-1'>
-                           <img src={v.poster} class=" w-[50%] mx-39 h-[90%] p-2 flex justify-end rounded-2xl  " alt="..."/>
+                           <img src={v.poster} class=" w-[50%] mx-39 h-[90%] p-2 flex justify-end rounded-2xl object-cover " alt="..."/>
 
                  </div>
             </div>

@@ -66,7 +66,7 @@ onClick={() => setOrder(true)}>Orders</a>
         className="relative z-10"
       >
         <div
-          className="fixed inset-0 flex my-20 justify-center p-4 pointer-events-none"
+          className="fixed backdrop-blur-md inset-0 flex my-20 justify-center p-4 pointer-events-none h-screen"
         >
           <div
             className="pointer-events-auto"
@@ -108,7 +108,7 @@ onClick={() => setOrder(true)}>Orders</a>
         className="relative z-10"
       >
         <div
-          className="fixed inset-0 flex my-20 justify-center p-4 pointer-events-none"
+          className="fixed inset-0 flex my-20 justify-center p-4 pointer-events-none backdrop-blur-md h-full"
         >
           <div
             className="pointer-events-auto"
@@ -135,52 +135,87 @@ onClick={() => setOrder(true)}>Orders</a>
       </Dialog>
 
 
-      {/* Orders */}
-      
+      {/* Orders */}   
+<Dialog
+  open={order}
+  onClose={() => setOrder(false)}
+  className="relative z-50"
+>
+  <div
+    className="fixed inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-300"
+    onClick={() => setOrder(false)}
+  />
 
-      <Dialog
-        open={order}
-        onClose={() => setOpent(false)}
-        className="relative z-10"
+  <div className="fixed inset-0 flex items-center justify-center p-4">
+    <DialogPanel
+      className="bg-white rounded-2xl w-full max-w-lg p-8 shadow-2xl transform transition-all duration-300 scale-100 animate-fadeIn"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <h1
+        className="text-4xl text-amber-950 font-bold text-center mb-3"
+        style={{ fontFamily: "Pacifico" }}
       >
-        <div
-          className="fixed inset-0 flex text-center items-center justify-center p-4 pointer-events-none"
-        >
-          <div
-            className="pointer-events-auto"
-            onMouseEnter={() => setOrder(true)}
-            onMouseLeave={() => setOrder(false)}
-          >
-            <DialogPanel className="bg-white rounded-lg w-fit max-w-4xl p-6 shadow-5xl">
+        Ticket Wala
+      </h1>
 
-              <h1 className='text-4xl text-amber-950 p-10 font-bold' style={{ fontFamily: 'Pacifico' }}>Ticket Wala</h1>
-              <form action="#" class="pt-4 md:pt-6">
-                <p className='py-5 text-2xl'>Enter your E-mail </p>
-                <p className='text-[12px] text-gray-500 p-1'>If you don't have an account yet, we'll create one for you</p>
+      <p className="text-center text-gray-600 mb-6">
+        Enter your email to continue. If you don’t have an account, we'll create one!
+      </p>
 
-                <div class="mb-4">
-
-                  <input type="email" id="email" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="example@company.com" required />
-                </div>
-                <div>
-
-                  <input type="password" id="password" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="•••••••••" required />
-                </div>
-                <div class="flex items-start my-6">
-                  <div class="flex items-center">
-                    <input id="checkbox-remember" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft" />
-                    <label for="checkbox-remember" class="ms-2 text-sm font-medium text-heading">Remember me</label>
-                  </div>
-                  <a href="#" class="ms-auto text-sm font-medium text-fg-brand hover:underline">Lost Password?</a>
-                </div>
-                <button type="submit" class="text-white bg-amber-950 box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none w-full mb-3" onClick={() => { navigate('/history'); setOrder(false); }}>
-                  Continue</button>
-                <div class="text-sm font-medium text-body">Not registered? <a href="#" class="text-fg-brand hover:underline">Create account</a></div>
-              </form>
-            </DialogPanel>
-          </div>
+      <form className="space-y-4">
+        <div>
+          <label className="text-sm text-gray-700">Email Address</label>
+          <input
+            type="email"
+            className="mt-1 w-full px-3 py-2 bg-gray-100 border rounded-lg text-sm focus:ring-2 focus:ring-amber-800 outline-none"
+            placeholder="example@company.com"
+            required
+          />
         </div>
-      </Dialog>
+
+        <div>
+          <label className="text-sm text-gray-700">Password</label>
+          <input
+            type="password"
+            className="mt-1 w-full px-3 py-2 bg-gray-100 border rounded-lg text-sm focus:ring-2 focus:ring-amber-800 outline-none"
+            placeholder="•••••••••"
+            required
+          />
+        </div>
+
+        <div className="flex items-center justify-between text-sm">
+          <label className="flex items-center gap-2">
+            <input type="checkbox" className="w-4 h-4" />
+            Remember me
+          </label>
+
+          <a className="text-amber-800 hover:underline cursor-pointer">
+            Lost password?
+          </a>
+        </div>
+
+        <button
+          type="submit"
+          onClick={() => {
+            navigate("/history");
+            setOrder(false);
+          }}
+          className="w-full py-2.5 bg-amber-900 text-white rounded-lg hover:bg-amber-800 transition font-semibold"
+        >
+          Continue
+        </button>
+
+        <p className="text-sm text-center text-gray-600">
+          Not registered?
+          <a className="text-amber-900 font-semibold hover:underline ml-1 cursor-pointer">
+            Create account
+          </a>
+        </p>
+      </form>
+    </DialogPanel>
+  </div>
+</Dialog>
+
 
 {/* search */}
       <Dialog
@@ -189,7 +224,7 @@ onClick={() => setOrder(true)}>Orders</a>
         className="relative z-10"
       >
         <div
-          className="fixed inset-0 flex text-center items-center justify-center p-4 pointer-events-none"
+          className="fixed inset-0 flex text-center items-center justify-center p-4 pointer-events-none backdrop-blur-md"
         >
           <div
             className="pointer-events-auto"
@@ -231,48 +266,71 @@ onClick={() => setOrder(true)}>Orders</a>
       </Dialog>
 
       {/* profile */}
-      <Dialog
-        open={profile}
-        onClose={() => setProfile(false)}
-        className="relative z-10"
-      >
-        <div
-          className="fixed inset-0    p-4 pointer-events-none h-full bg-white w-[30%] mx-[70%]"
-        >
-          <div
-            className="pointer-events-auto"
-            onMouseEnter={() => setProfile(true)}
-          onMouseLeave={() => setOrder(false)}
-          >
-            <DialogPanel className=" rounded-lg  max-w-4xl shadow-5xl flex flex-col">
-              <div className='w-full flex flex-col gap-10'>
-                <h1 className='text-3xl bg-white w-full shadow-lg p-3 rounded-2xl'>Profile</h1>
-                <div className='flex gap-5'>
-                  <p className='w-15 h-15 rounded-full border flex justify-center items-center bg-indigo-500 text-white text-xl'>U</p>
-                  <div>
-                    <h2 className='font-bold text-xl'>User</h2>
-                    <h3>Email</h3>
-                  </div>
-                </div>
-                <div className='flex justify-between w-full   bg-white text-sm text-center items-center h-10 shadow-lg rounded-xl px-3'><h3 className=' bg-white '>View All Booking </h3> <h3>➪</h3></div>
-                <p className=' font-bold'>Support</p>
-                <div className='shadow-lg rounded-2xl p-3'>
-                  <div className='flex justify-between w-full   bg-white text-sm text-center items-center h-10 rounded-xl '><h3 className=' bg-white'>Frequently Asked Question</h3> <h3>➪</h3></div>
-                  <hr className='text-gray-400 '></hr>
-                  <div className='flex justify-between w-full   bg-white text-sm text-center items-center h-10 rounded-xl '><h3 className=' bg-white'>Contact Us</h3> <h3>➪</h3></div>
-                  </div>
-                  <p className=' font-bold'>More</p>
-                  <div className='flex justify-between w-full  ronded bg-white text-sm text-center items-center h-10 shadow-lg rounded-xl px-3'><h3 className=' bg-white '>Term and Conditions </h3> <h3>➪</h3></div>
-                  
-                  <div className='flex justify-between w-full  ronded bg-white text-sm text-center items-center h-10 shadow-lg rounded-xl px-3'><h3 className=' bg-white '>Logout </h3> </div>
+     <Dialog
+  open={profile}
+  onClose={() => setProfile(false)}
+  className="relative z-50"
+>
+  <div
+    className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity"
+    onClick={() => setProfile(false)}
+  />
 
-                
+  <div className="fixed inset-0 flex justify-end">
+    <DialogPanel
+      className="w-[340px] h-full bg-white shadow-2xl p-6 rounded-l-3xl 
+                 transform transition-all duration-300 animate-slideIn"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <h1 className="text-3xl font-semibold mb-6">Profile</h1>
 
-              </div>
-            </DialogPanel>
-          </div>
+      <div className="flex items-center gap-4 mb-8">
+        <p className="w-14 h-14 rounded-full bg-indigo-500 flex justify-center 
+                      items-center text-white text-2xl font-semibold">
+          U
+        </p>
+
+        <div>
+          <h2 className="text-lg font-bold">User</h2>
+          <h3 className="text-gray-600 text-sm">Email</h3>
         </div>
-      </Dialog>
+      </div>
+
+      <div className="shadow-md rounded-xl p-4 cursor-pointer hover:bg-gray-50 transition">
+        <div className="flex justify-between items-center text-sm">
+          <h3 className="font-medium">View All Booking</h3>
+          <span>➪</span>
+        </div>
+      </div>
+
+      <p className="mt-8 mb-2 text-sm font-bold text-gray-700">Support</p>
+
+      <div className="shadow-md rounded-xl">
+        <div className="flex justify-between items-center h-12 px-4 cursor-pointer hover:bg-gray-50">
+          <h3>Frequently Asked Questions</h3>
+          <span>➪</span>
+        </div>
+        <hr />
+        <div className="flex justify-between items-center h-12 px-4 cursor-pointer hover:bg-gray-50">
+          <h3>Contact Us</h3>
+          <span>➪</span>
+        </div>
+      </div>
+
+      <p className="mt-8 mb-2 text-sm font-bold text-gray-700">More</p>
+
+      <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+        <h3>Terms and Conditions</h3>
+        <span>➪</span>
+      </div>
+
+      <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 mt-3">
+        <h3 className="text-red-600 font-semibold">Logout</h3>
+      </div>
+    </DialogPanel>
+  </div>
+</Dialog>
+
     </div>
   )
 }

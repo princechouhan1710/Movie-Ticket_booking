@@ -60,7 +60,7 @@ function Movie() {
           releasedmovies.map((v,i)=>{return(
             
 <div  className='w-[22%] h-[450px] border-1   rounded-b-lg '  onClick={() => { navigate(`/movies/${i}`);}}>
-            <img src={v.poster} alt="" className='w-full h-[85%] ' />
+            <img src={v.poster} alt="" className='w-full h-[85%] object-cover' />
             <p className='px-5 font-bold'>{v.name}</p>
             <p className='px-5'>{v.genre},{v.langauage}</p>
         </div>
