@@ -1,64 +1,129 @@
-import React from 'react'
-import img from  '../assets/pngwing.com.png'
+import React from "react";
+
 function Footer() {
   return (
+    <footer className="bg-white mt-10 border-t border-gray-300 shadow-inner">
+      <div className="relative mx-auto max-w-7xl px-6 py-16">
 
-      <footer class="bg-gray-100 dark:bg-gray-900">
-  <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:pt-24">
-    <div class="absolute end-4 top-4 sm:end-6 sm:top-6 lg:end-8 lg:top-8">
-      <a class="inline-block rounded-full bg-teal-600 p-2 text-white shadow-sm transition hover:bg-teal-500 sm:p-3 lg:p-4 dark:bg-gray-700 dark:text-teal-300 dark:hover:bg-gray-600" href="#MainContent">
-        <span class="sr-only"></span>
+        {/* Back to Top Button */}
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="absolute end-4 top-4 bg-amber-700 text-white p-3 rounded-full shadow-lg 
+                     hover:bg-amber-800 transition"
+        >
+          {/* Arrow Icon (SVG) */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+          </svg>
+        </button>
 
-        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path>
-        </svg>
-      </a>
-    </div>
+        {/* FOOTER MAIN */}
+        <div className="lg:flex lg:items-start lg:justify-between gap-10">
 
-    <div class="lg:flex lg:items-end lg:justify-between">
-      <div>
-        <div class="flex justify-center text-teal-600 lg:justify-start dark:text-teal-300 text-3xl " style={{fontFamily: "Playwrite US Trad Guides"}}>
-       Ticket Wala
+          {/* Brand */}
+          <div>
+            <h2
+              className="text-3xl font-extrabold text-amber-800 tracking-wide"
+              style={{ fontFamily: "Pacifico" }}
+            >
+              Ticket Wala
+            </h2>
+
+            <p className="mt-4 max-w-md text-gray-600 leading-relaxed">
+              Book your favorite movies, shows & events quickly and easily with Ticket Wala.
+              Fast, simple & secure ticket booking.
+            </p>
+          </div>
+
+          {/* Links Section */}
+          <div className="mt-10 lg:mt-0">
+            <ul className="flex flex-wrap gap-10 text-gray-700">
+
+              {/* Home */}
+              <li className="flex items-center gap-2 cursor-pointer hover:text-amber-700 transition">
+                {/* Home Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-amber-700"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l9-7 9 7v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 21V9h6v12" />
+                </svg>
+                Home
+              </li>
+
+              {/* Movies */}
+              <li className="flex items-center gap-2 cursor-pointer hover:text-amber-700 transition">
+                {/* Movie Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-amber-700"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2"/>
+                  <path d="M7 5l2 3M17 5l-2 3M7 19l2-3M17 19l-2-3" />
+                </svg>
+                Movies
+              </li>
+
+              {/* Theatres */}
+              <li className="flex items-center gap-2 cursor-pointer hover:text-amber-700 transition">
+                {/* Building Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-amber-700"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M3 21V7l9-4 9 4v14H3z" />
+                  <path d="M9 21v-6h6v6" />
+                </svg>
+                Theatres
+              </li>
+
+              {/* Orders */}
+              <li className="flex items-center gap-2 cursor-pointer hover:text-amber-700 transition">
+                {/* Ticket Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-amber-700"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M3 8h3a3 3 0 0 0 6 0h3a3 3 0 0 0 6 0h3v8h-3a3 3 0 0 0-6 0h-3a3 3 0 0 0-6 0H3z" />
+                </svg>
+                Orders
+              </li>
+
+            </ul>
+          </div>
         </div>
 
-        <p class="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 lg:text-left dark:text-gray-400">
-          
+        {/* COPYRIGHT */}
+        <p className="mt-12 text-center text-sm text-gray-600">
+          © {new Date().getFullYear()} Ticket Wala — All rights reserved.
         </p>
       </div>
-
-      <ul class="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:mt-0 lg:justify-end lg:gap-12">
-        <li>
-          <a class="text-gray-700 transition hover:text-gray-700/75 dark:text-white dark:hover:text-white/75" href="#">
-            Home
-          </a>
-        </li>
-
-        <li>
-          <a class="text-gray-700 transition hover:text-gray-700/75 dark:text-white dark:hover:text-white/75" href="#">
-            Movies
-          </a>
-        </li>
-
-        <li>
-          <a class="text-gray-700 transition hover:text-gray-700/75 dark:text-white dark:hover:text-white/75" href="#">
-            Theatres
-          </a>
-        </li>
-
-        <li>
-          <a class="text-gray-700 transition hover:text-gray-700/75 dark:text-white dark:hover:text-white/75" href="#">
-            orders
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <p class="mt-12 text-center text-sm text-gray-500 lg:text-right dark:text-gray-400">
-      Copyright © 2022. All rights reserved.
-    </p>
-  </div>
-</footer>
-  )
+    </footer>
+  );
 }
 
-export default Footer
+export default Footer;

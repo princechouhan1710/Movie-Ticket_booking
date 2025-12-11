@@ -15,7 +15,7 @@ function Navbar() {
   const navigate = useNavigate();
   const releasedmov = Mov.filter(movie => movie.released === true)
   return (
-    <div className=''>
+    <div className='sticky top-[0px] z-40 bg-white' >
 
       <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
   <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">

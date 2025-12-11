@@ -37,9 +37,10 @@ function ExLAng() {
       >
         {lang.map((v, i) => (
           <SwiperSlide key={i} className="!w-auto ">   
-            <button className='border px-3 py-1 rounded-2xl bg-white'>
-              {v.lan} Movies
-            </button>
+               <button className="flex items-center gap-2 border bg-gray-100 px-4 py-2 rounded-2xl 
+hover:bg-gray-200 hover:shadow transition font-medium">
+  🎧 {v.lan} Movies
+</button>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -44,7 +44,7 @@ export default function Content1() {
                   
                     <h1 className='text-5xl'>{v.name}</h1> 
                 <h2 className='text-2xl'>{v.genre}|{v.category}</h2>
-               <button class="bg-black hover:bg-black text-white font-bold py-2 px-4 rounded">
+               <button class="bg-gray-800  shadow-2xl text-white font-bold py-2 px-4 rounded  hover:bg-gray-950 transition cursor-pointer">
 Book me
 </button>
                  </div>
