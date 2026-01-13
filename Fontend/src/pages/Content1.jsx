@@ -33,7 +33,7 @@ export default function Content1() {
           clickable: true,
         }}
         navigation={true}
-        modules={[Autoplay, Pagination]}
+        modules={[Autoplay, Pagination,Navigation]}
         className="mySwiper h-100 "
       >
         {Mov.map((v, i) => {
