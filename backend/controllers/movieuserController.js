@@ -53,19 +53,7 @@ let register = async (req, res) => {
         //     createdAt: Date.now()
         // });
         // await newuser.save()
-        // let newuser = await MovieUser.create({
-        //     name,
-        //     email,
-        //     password: hashed,
-        //     mobileNumber,
-        //     address,
-        //     interest,
-        //     otp: newotp,
-        //     otpExpiry: expiretime,
-        //     isVerified: false,
-        //     createdAt: Date.now()
-        // });
-        let newuser = await MovieUser.insertOne({
+        let newuser = await MovieUser.create({
             name,
             email,
             password: hashed,
@@ -77,6 +65,18 @@ let register = async (req, res) => {
             isVerified: false,
             createdAt: Date.now()
         });
+        // let newuser = await MovieUser.insertOne({
+        //     name,
+        //     email,
+        //     password: hashed,
+        //     mobileNumber,
+        //     address,
+        //     interest,
+        //     otp: newotp,
+        //     otpExpiry: expiretime,
+        //     isVerified: false,
+        //     createdAt: Date.now()
+        // });
 
 
         res.status(201).json({ success: true, message: "User Registered successfully", data: newuser })

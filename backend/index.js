@@ -17,8 +17,9 @@ app.use(bodyparser.json());
 // app.use(cors({
 //     "origin": ["http://127.0.0.1:5500/"]
 // }))
+
 app.use(cors({
-  origin: ["http://localhost:5173","http://localhost:5174","http://localhost:5175","http://localhost:5176"]
+  origin: ["http://127.0.0.1:5500/","http://localhost:5173","http://localhost:5174","http://localhost:5175","http://localhost:5176"]
 }));
 
 let path = require("path")
@@ -29,10 +30,12 @@ app.use(express.static(uploadpath))
 let UserRoute = require("./routes/userRoutes.js");
 let movieRoute = require("./routes/movieRoute.js");
 let theatresRoute = require("./routes/theatresRoute.js");
+let showRoute = require("./routes/showRoute.js");
 
 app.use("/api/user/", UserRoute)
 app.use("/api/movie", movieRoute)
 app.use("/api/theatres", theatresRoute)
+app.use("/api/show", showRoute)
 
 
 
