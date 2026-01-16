@@ -11,7 +11,9 @@ require("dotenv").config();
 ConnectDB()
 
 
-app.use(bodyparser.urlencoded());
+// app.use(bodyparser.urlencoded());
+// app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
 // app.use(cors({
@@ -22,11 +24,15 @@ app.use(cors({
   origin: ["http://127.0.0.1:5500/","http://localhost:5173","http://localhost:5174","http://localhost:5175","http://localhost:5176"]
 }));
 
-let path = require("path")
+// let path = require("path")
+// let uploadpath = path.join(__dirname, "/uploads");
+// app.use(express.static(uploadpath))
+const path = require("path");
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
-let uploadpath = path.join(__dirname, "/uploads");
-app.use(express.static(uploadpath))
+
 let UserRoute = require("./routes/userRoutes.js");
 let movieRoute = require("./routes/movieRoute.js");
 let theatresRoute = require("./routes/theatresRoute.js");

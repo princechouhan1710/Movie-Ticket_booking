@@ -19,7 +19,7 @@ function App() {
   //     released: true,
   //     poster: "https://image.tmdb.org/t/p/original/628Dep6AxEtDxjZoGP78TsOxYbK.jpg",
   //     video: "https://www.youtube.com/embed/5e2-BnQh4Gg?si=oZNL3kFV5_dNRZ3X" ,
-  //     category: ["Drama", "Thriller"],
+  //     category: ["Drama", ""],
   //     genre: "UA/16+ ",
   //     langauage: "Hindi ,English",
   //     length: "2 hour 10 minutes",

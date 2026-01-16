@@ -5,6 +5,8 @@ let createTheatre = async (req, res) => {
         let image = {
             filename: req.files["image"][0].filename,
             url: process.env.BASEURL + req.files["image"][0].filename
+            // url: `${process.env.BASEURL}/uploads/${req.files.image[0].filename}`
+
         }
         let newtheatre = await Theatre({ ...req.body, image });
         await newtheatre.save();

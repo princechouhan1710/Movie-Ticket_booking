@@ -32,7 +32,7 @@ function ExGenre() {
         spaceBetween={12}
         navigation={true}
         modules={[Navigation]}
-        className="mySwiper"
+        className="mySwiper genre-swiper                    "
       >
         {lang.map((v, i) => (
           <SwiperSlide key={i} className="!w-auto ">
