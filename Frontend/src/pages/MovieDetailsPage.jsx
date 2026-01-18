@@ -3,10 +3,10 @@ import { NavLink, useParams } from 'react-router-dom'
 import { moviecontext, theatrescontext } from '../App'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 
-import ExGenre from './Explore Genre ';
-import ExLAng from './Explore Language';
+import ExGenre from '../components/Explore Genre ';
+import ExLAng from '../components/Explore Language';
 import Upcoming from './Upcoming_movie_inner';
-import Upmovie from './Upcoming_movie_Home';
+import Upmovie from '../components/Upcoming_movie_Home';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -16,6 +16,15 @@ import 'swiper/css/pagination';
 // import required modules
 import { Navigation, Pagination } from 'swiper/modules';
 function Ineer() {
+  let [review,setReview]=useState( [
+        { platform: "Hungama News", review: "Amazing movie!", rating: 4.2 },
+        { platform: "Times of India", review: "Great direction.", rating: 4.0 },
+        { platform: "India Times", review: "Good storyline.", rating: 4.1 },
+        { platform: "News 18", review: "Worth watching.", rating: 4.3 },
+        { platform: "Filmfare", review: "Super acting!", rating: 4.0 },
+              { platform: "Times of India", review: "Great direction.", rating: 4.0 },
+
+      ])
   const { name } = useParams();
   const { Mov } = useContext(moviecontext);
   let { theatres } = useContext(theatrescontext);
@@ -26,6 +35,7 @@ function Ineer() {
   // let movie = Mov[id]
 
   let getMovie = async () => {
+    
 
     try {
       let data = await fetch(`http://localhost:4000/api/movie/getmovie/${name}`);
@@ -182,7 +192,7 @@ function Ineer() {
                         v.showTimings?.map((time,index)=>(
                            <div className='border border-gray-500  px-8 py-2 rounded ' >
                             {console.log(time)}
-                  <p className='font-semibold'> { new Date(time.time).getHours()}:{ new Date(time.time).getMinutes()} PM</p>
+                  <p className='font-semibold'> { new Date(time.time).getHours()}:{ new Date(time.time).getMinutes()}0</p>
                  
                   <p></p>
                 </div>
@@ -276,7 +286,7 @@ function Ineer() {
                   modules={[Pagination]}
                   className="w-full"
                 >
-                  {movie.reviews?.map((rev, index) => (
+                  {review?.map((rev, index) => (
                     <SwiperSlide
                       key={index}
                       className="bg-white border rounded-xl p-5 shadow-sm hover:shadow-md transition"
@@ -324,6 +334,7 @@ function Ineer() {
                 <h3 className="text-xs font-bold mb-4">🎥 Trailer</h3>
 
                 <div className="flex justify-center">
+                  <img src={movie?.video?.url}></img>
                   {/* <iframe
             width="560"
             height="315"
@@ -338,7 +349,7 @@ function Ineer() {
                 <h3 className="text-xl font-bold mb-4">🖼 Posters & Wallpapers</h3>
 
                 <img
-                  src={movie.poster.url}
+                  src={movie?.poster.url}
                   className="rounded-xl shadow-lg w-full object-cover"
                   alt=""
                 />

@@ -1,10 +1,10 @@
 import React from 'react'
-import Content1 from './Content1.jsx'
+import Content1 from '../components/HomeHeroSlider.jsx'
 
-import Movie from './Movie.jsx'
-import Upmovie from './Upcoming_movie_Home.jsx'
-import Lang from './Explore Language.jsx'
-import Genre from './Explore Genre .jsx'
+import Movie from '../components/Movie.jsx'
+import Upmovie from '../components/Upcoming_movie_Home.jsx'
+import Lang from '../components/Explore Language.jsx'
+import Genre from '../components/Explore Genre .jsx'
 
 function Home() {
   return (

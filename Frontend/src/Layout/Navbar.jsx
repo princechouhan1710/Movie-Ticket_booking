@@ -384,12 +384,13 @@ function Navbar() {
         className="relative z-50"
       >
         <div
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity"
+          className=" fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity"
           onClick={() => setProfile(false)}
         />
 
-        <div className="fixed inset-0 flex justify-end">
-          <DialogPanel
+
+  <div className="fixed inset-0 flex items-center justify-center p-4">
+          {/* <DialogPanel
             className="w-[340px] h-full bg-white shadow-2xl p-6 rounded-l-3xl 
                  transform transition-all duration-300 animate-slideIn"
             onClick={(e) => e.stopPropagation()}
@@ -439,7 +440,97 @@ function Navbar() {
             <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 mt-3">
               <h3 className="text-red-600 font-semibold">Logout</h3>
             </div>
-          </DialogPanel>
+          </DialogPanel> */}
+            <DialogPanel
+      onClick={(e) => e.stopPropagation()}
+      className="w-full max-w-md rounded-xl bg-white shadow-xl border border-gray-200"
+    >
+      <h1 className="text-center text-3xl font-extrabold text-amber-700 mt-6">
+        Ticket Wala
+      </h1>
+
+      <p className="text-center text-gray-500 text-sm mb-6">
+        Create your account
+      </p>
+
+      <form onSubmit={submitHandler} className="px-6 space-y-4">
+        <input
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
+          name="name"
+          value={formData.name}
+          onChange={inputhandler}
+          placeholder="Full Name"
+          required
+        />
+
+        <input
+          type="email"
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
+          name="email"
+          value={formData.email}
+          onChange={inputhandler}
+          placeholder="Email Address"
+          required
+        />
+
+        <input
+          type="password"
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
+          name="password"
+          value={formData.password}
+          onChange={inputhandler}
+          placeholder="Password"
+          required
+        />
+
+        <input
+          type="tel"
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
+          name="mobileNumber"
+          value={formData.mobileNumber}
+          onChange={inputhandler}
+          placeholder="Mobile Number"
+          required
+        />
+
+        <input
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
+          name="address"
+          value={formData.address}
+          onChange={inputhandler}
+          placeholder="Address"
+        />
+
+        <select
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
+          name="interest"
+          value={formData.interest}
+          onChange={inputhandler}
+          required
+        >
+          <option value="">Favourite Genre</option>
+          <option>Action</option>
+          <option>Comedy</option>
+          <option>Romance</option>
+          <option>Thriller</option>
+          <option>Horror</option>
+        </select>
+
+        <button
+          type="submit"
+          className="w-full py-3 rounded-lg bg-amber-500 hover:bg-amber-600 text-black font-semibold transition"
+        >
+          Register
+        </button>
+      </form>
+
+      <p className="text-center text-sm text-gray-500 mt-6 mb-6">
+        Already have an account?{" "}
+        <span className="text-amber-600 cursor-pointer font-semibold">
+          Login
+        </span>
+      </p>
+    </DialogPanel>
         </div>
       </Dialog>
 

@@ -1,9 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react'
-import Navbar from './components/Navbar.jsx'
-import Footer from './components/Footer.jsx'
+import Navbar from './Layout/Navbar.jsx'
+import Footer from './Layout/Footer.jsx'
 import Upcoming from './pages/Upcoming_movie_inner.jsx'
 import Home from './pages/Home.jsx'
-import Ineerpage from './pages/Ineer.jsx'
+import Ineerpage from './pages/MovieDetailsPage.jsx'
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
 import History from './pages/History.jsx'
 export const theatrescontext = createContext();

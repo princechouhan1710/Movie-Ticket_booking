@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { moviecontext } from '../App'
-import ExLAng from './Explore Language'
-import ExGenre from './Explore Genre '
+import ExLAng from '../components/Explore Language'
+import ExGenre from '../components/Explore Genre '
 import { Navigate, useNavigate } from 'react-router-dom'
 
 function Upcoming() {
