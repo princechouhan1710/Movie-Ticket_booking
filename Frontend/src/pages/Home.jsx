@@ -3,8 +3,8 @@ import Content1 from '../components/HomeHeroSlider.jsx'
 
 import Movie from '../components/Movie.jsx'
 import Upmovie from '../components/Upcoming_movie_Home.jsx'
-import Lang from '../components/Explore Language.jsx'
-import Genre from '../components/Explore Genre .jsx'
+import Lang from '../components/ExploreLanguage.jsx'
+import Genre from '../components/ExploreGenre .jsx'
 
 function Home() {
   return (

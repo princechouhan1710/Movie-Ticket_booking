@@ -1,5 +1,5 @@
 let Theatre = require("../models/theatreModel");
-
+let Show = require("../models/showModel");
 let createTheatre = async (req, res) => {
     try {
         let image = {
@@ -50,10 +50,19 @@ let deleteTheatre = async (req, res) => {
         res.status(404).json({ success: false, message: error.message })
     }
 }
+let filterTheatre = async (req, res) => {
+    try {
+        let { id } = req.params;
+        let theatres = await Show.find({ theatre: id }).populate("movie");
+        res.status(200).json({ success: true, data: theatres })
+    } catch (error) {
+        res.status(404).json({ success: false, message: error.message })
+    }
+}
 
 // let getTheatresByCity = async (req, res) => {
 //     const { city } = req.query;
 //     const theatres = await Theatre.find({ city });
 //     res.json(theatres);
 // };
-module.exports = { createTheatre, getTheatre,updateTheatre ,deleteTheatre}
+module.exports = { createTheatre, getTheatre,updateTheatre ,deleteTheatre,filterTheatre}

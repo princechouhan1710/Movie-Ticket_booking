@@ -57,4 +57,21 @@ let deleteMovies = async (req, res) => {
     }
 
 }
-module.exports = { createMovie, getMovies, getMovie,updateMovies,deleteMovies }
+let FilterMovie = async (req, res) => {
+    try {
+        let { key, value } = req.params;
+        let movie = await Movie.find({
+            [key]: {
+                "$in": value
+            }
+        });
+        if (!movie) {
+            return res.json({ success: false, message: "Movie not found" })
+        }
+        res.status(200).json({ success: true, message: "found", data: movie })
+    } catch (error) {
+        res.json({ success: false, message: error.message })
+    }
+}
+ 
+module.exports = { createMovie, getMovies, getMovie,updateMovies,deleteMovies ,FilterMovie}
