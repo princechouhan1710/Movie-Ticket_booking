@@ -47,7 +47,7 @@ function Upcoming() {
             upcomingmovies.map((v, i) => {
               return (
 
-                <div className='w-[22%] h-[450px] border-1   rounded-b-lg ' onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
+                <div className='w-[22%] h-[450px] border  rounded-b-lg ' onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
                   <img src={v.poster.url} alt="" className='w-full h-[85%] ' />
                   <p className='px-5 font-bold'>{v.name}</p>
                   <div className='flex items-center px-5 gap-2 text-gray-500 text-[14px] py-1 font-bold'>
