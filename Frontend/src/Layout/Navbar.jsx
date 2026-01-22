@@ -25,7 +25,9 @@ function Navbar() {
   );
   const location = useLocation();
   const isHistoryPage = location.pathname === "/history";
-  const [formData, setFormdata] = useState({
+ 
+  // Registration
+   const [formData, setFormdata] = useState({
     name: "",
     email: "",
     password: "",
@@ -33,18 +35,6 @@ function Navbar() {
     address: "",
     interest: ""
   });
-  const [otpform, setOtpForm] = useState({
-    email: "",
-    otp: ""
-  })
-  const [loginform, setLoginForm] = useState({
-    email: "",
-    password: ""
-  })
-  const [Resendotpform, setResendOtpForm] = useState({
-    email: "",
-  })
-
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -72,6 +62,15 @@ function Navbar() {
       alert("Registration failed ❌: " + (err.response?.data?.message || err.message));
     }
   };
+  const inputhandler = (e) => {
+    setFormdata({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  //Otp 
+   const [otpform, setOtpForm] = useState({
+    email: "",
+    otp: ""
+  })
   const otpsubmitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -88,6 +87,39 @@ function Navbar() {
       alert("OTP verification failed ❌");
     }
   };
+  const otpinputhandler = (e) => {
+    setOtpForm({ ...otpform, [e.target.name]: e.target.value });
+  };
+
+  //Otp Resend
+  const [Resendotpform, setResendOtpForm] = useState({
+    email: "",
+  })
+  const otpResendHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await axios.post("http://localhost:4000/api/user/resend-otp",
+        { ...Resendotpform }
+      )
+      setOtp(true)
+      setOtpResend(false)
+      setLoginForm({
+        email: "",
+      })
+      console.log(data.message)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const resendotpinputhandler = (e) => {
+    setResendOtpForm({ ...Resendotpform, [e.target.name]: e.target.value });
+  };
+
+  // Login 
+   const [loginform, setLoginForm] = useState({
+    email: "",
+    password: ""
+  })
   const loginHandler = async (e) => {
     e.preventDefault();
     try {
@@ -108,35 +140,10 @@ function Navbar() {
       alert("Login failed ❌");
     }
   };
-
-  const otpResendHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const data = await axios.post("http://localhost:4000/api/user/resend-otp",
-        { ...Resendotpform }
-      )
-      setOtp(true)
-      setOtpResend(false)
-      setLoginForm({
-        email: "",
-      })
-      console.log(data.message)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  const inputhandler = (e) => {
-    setFormdata({ ...formData, [e.target.name]: e.target.value });
-  };
-  const otpinputhandler = (e) => {
-    setOtpForm({ ...otpform, [e.target.name]: e.target.value });
-  };
-  const logininputhandler = (e) => {
+   const logininputhandler = (e) => {
     setLoginForm({ ...loginform, [e.target.name]: e.target.value });
   };
-  const resendotpinputhandler = (e) => {
-    setResendOtpForm({ ...Resendotpform, [e.target.name]: e.target.value });
-  };
+
   let ordercheck = async () => {
     try {
       let token = localStorage.getItem("token");
@@ -208,7 +215,6 @@ function Navbar() {
               <h2 className="text-2xl font-bold text-gray-700 tracking-wide">
                 Review Your Orders
               </h2>
-
               <div
                 className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center 
       text-3xl cursor-pointer hover:bg-gray-200 transition"
@@ -230,7 +236,6 @@ function Navbar() {
             className="pointer-events-auto"
             onMouseEnter={() => {
               setOpen(true)
-
             }}
             onMouseLeave={() => setOpen(false)}
           >
@@ -239,7 +244,7 @@ function Navbar() {
               <div className="flex flex-wrap gap-4 ">
                 {Mov.map((v, i) => {
                   return (
-                    <div className="flex w-[45%] gap-3 items-center" onClick={() => {
+                    <div className="flex w-[45%] gap-3 items-center" key={i} onClick={() => {
                       navigate(`/movies/${v.encodeName}`)
                       setOpen(false);
                     }}
@@ -251,7 +256,7 @@ function Navbar() {
                       />
                       <div>
                         <p className="font-bold">{v.name}</p>
-                        <p>{v.genre} {v.langauage}</p>
+                        <p>{v.genre} {v.langauage.join(",")}</p>
                       </div>
                     </div>
                   )
@@ -267,19 +272,19 @@ function Navbar() {
         open={opent}
         onClose={() => { setOpent(false); }}
         className="relative z-10" >
-        <div className="fixed inset-0 flex my-20 justify-center p-4 pointer-events-none backdrop-blur-md h-full"        >
+        <div className="fixed backdrop-blur-md inset-0 flex my-20 justify-center p-4 pointer-events-none "  >
           <div className="pointer-events-auto"
             onMouseEnter={() => {
               setOpent(true);
             }}
             onMouseLeave={() => setOpent(false)}
           >
-            <DialogPanel className="bg-white rounded-lg w-screen max-w-4xl p-6">
-              <DialogTitle className="text-xl font-bold mb-4">Theatres </DialogTitle>
-              <div className="flex flex-wrap gap-10 justify-center">
+            <DialogPanel className="bg-white rounded-lg w-screen max-w-4xl p-6 ">
+              <DialogTitle className="text-xl font-bold mb-4 ">Theatres </DialogTitle>
+              <div className="flex flex-wrap gap-10 justify-center ">
                 {theatres.map((v, i) => {
                   return (
-                    <NavLink to={"/theatre/list/" + v.name} className='w-[45%]'  >
+                    <NavLink to={"/theatre/list/" + v.name} onClick={() => { setOpent(false) }} className='w-[45%]'  >
                       {v.name},{v.location},{v.city}
                       <hr />
                     </NavLink>
@@ -663,8 +668,6 @@ function Navbar() {
         </div>
       </Dialog>
 
-
-
       {/* Login  */}
       <Dialog
         open={login}
@@ -730,7 +733,6 @@ function Navbar() {
           </DialogPanel>
         </div>
       </Dialog>
-
 
     </div>
   )

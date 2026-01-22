@@ -31,19 +31,14 @@ function Theater() {
             <p className='font-bold text-3xl '>{name},{theater[0]?.theatre?.location}  🤍 </p>
             <p className='text-gray-500 text-xl mt-1'>{theater[0]?.theatre?.screens}</p>
             <p className='text-2xl text-gray-300'>{theater[0]?.theatre?.city}</p>
-
           </div>
         </div>
-
-
       </div>
       <div className='flex flex-col gap-3'>
-
         <div className="flex items-center gap-4 overflow-x-auto pb-2">
           <p className="text-gray-500 font-semibold px-3 py-1 rounded-full bg-gray-200">
             {now.toLocaleString("default", { month: "short" })}
           </p>
-
           {[0, 1, 2, 3].map((d) => (
             <div
               key={d}
@@ -74,61 +69,42 @@ function Theater() {
             <span className="w-3 h-3 bg-orange-500 rounded-full"></span> Almost full
           </p>
         </div>
-
-
-
-
         {theater.map((v, i) => {
-          { console.log(theater) }
           return (
-            <div className='flex flex-col gap-5'> 
-               <div className="flex gap-6 p-5 bg-white rounded-xl shadow">
-              <img
-                src={v?.movie?.poster?.url}
-                alt=""
-                className="w-18 h-20 object-cover rounded-lg shadow"
-              />
+            <div className='flex flex-col gap-5' key={i}>
+              <div className="flex gap-6 p-5 bg-white rounded-xl shadow">
+                <img
+                  src={v?.movie?.poster?.url}
+                  alt=""
+                  className="w-18 h-20 object-cover rounded-lg shadow"
+                />
 
-              <div className="flex flex-col justify-between">
-                <div>
-                  <p className="text-2xl font-bold">{v?.movie?.name}</p>
-                  <p className="text-gray-500 text-sm mt-1">
-                    {v?.movie?.genre} | {v?.movie?.langauage.join(",")}
-                  </p>
-                  <p className="text-gray-500 text-sm mt-1">{v?.movie?.category.join(",")}</p>
+                <div className="flex flex-col justify-between">
+                  <div>
+                    <p className="text-2xl font-bold">{v?.movie?.name}</p>
+                    <p className="text-gray-500 text-sm mt-1">
+                      {v?.movie?.genre} | {v?.movie?.langauage.join(",")}
+                    </p>
+                    <p className="text-gray-500 text-sm mt-1">{v?.movie?.category.join(",")}</p>
+                  </div>
                 </div>
+
               </div>
-            
-            </div>
-
-            
               <div className='flex gap-5 '>
-                              {
-                                v.showTimings?.map((time, index) => (
-                                  <TimeCard key={index} time={time} />
-                                ))
-                              }
-                            </div>
-
-
-
+                {
+                  v.showTimings?.map((time, index) => (
+                    <TimeCard key={index} time={time} />
+                  ))
+                }
+              </div>
             </div>
           )
         })}
-         <ExLAng />
-         <ExGenre/>
-
-
-
-
-
-
+        <ExLAng />
+        <ExGenre />
       </div>
-
-
     </div>
   )
 }
 
 export default Theater
-

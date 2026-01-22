@@ -11,7 +11,6 @@ import MovieList from './pages/MovieList.jsx'
 export const theatrescontext = createContext();
 export const moviecontext = createContext();
 
-
 function App() {
   let [open, setOpen] = useState([])
   const [Mov, setMovie] = useState([]);

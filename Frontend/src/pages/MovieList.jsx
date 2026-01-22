@@ -18,37 +18,14 @@ export default function MovieList() {
         <div className='p-5 m-10 '>
             <div className='flex justify-between w-full'>
                 <h2 className='text-3xl font-bold'>All {value} Movies</h2>
-                
-            </div>
+                            </div>
             <div className="flex flex-wrap gap-3 p-5">
-                <button className="px-4 py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition">
-                    Filter
-                </button>
- 
-                <button className="px-4 py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition">
-                    Top Selling
-                </button>
- 
-                <button className="px-4 py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition">
-                    English
-                </button>
- 
-                <button className="px-4 py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition">
-                    Hindi
-                </button>
- 
-                <button className="px-4 py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition">
-                    Romance
-                </button>
- 
-                <button className="px-4 py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition">
-                    Drama
-                </button>
- 
-                <button className="px-4 py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition">
-                    3D
-                </button>
-            </div>
+        {["Filter", "Top Selling", "English", "Hindi", "Romance", "Drama", "3D"].map((value, i) => (
+          <button className="px-4 py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition" key={i}>
+            {value}
+          </button>
+        ))}
+      </div>
  
             <div className='flex gap-10 w-full flex-wrap p-3'>
                 {
@@ -66,11 +43,7 @@ export default function MovieList() {
                         )
                     })
                 }
-            </div>
- 
- 
+            </div> 
         </div>
     )
-}
- 
- 
+} 

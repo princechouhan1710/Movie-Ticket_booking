@@ -2,16 +2,12 @@ import { useContext, useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { moviecontext, theatrescontext } from '../App'
 import { Dialog, DialogPanel } from '@headlessui/react'
- 
 import ExGenre from '../components/ExploreGenre .jsx';
 import ExLAng from '../components/ExploreLanguage.jsx';
 import Upmovie from '../components/Upcoming_movie_Home';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
- 
-// import required modules
 import { Pagination } from 'swiper/modules';
 import TimeCard from './TimeCard.jsx';
 function Ineer() {
@@ -22,15 +18,14 @@ function Ineer() {
     { platform: "News 18", review: "Worth watching.", rating: 4.3 },
     { platform: "Filmfare", review: "Super acting!", rating: 4.0 },
     { platform: "Times of India", review: "Great direction.", rating: 4.0 },
- 
+
   ])
   const { name } = useParams();
- 
   let [view, setView] = useState(false)
   let [movie, setMovie] = useState(null)
   let [show, setShow] = useState([])
   let [loading, setLoading] = useState(true)
- 
+
   let getMovie = async () => {
     try {
       let data = await fetch(`http://localhost:4000/api/movie/getmovie/${name}`);
@@ -40,10 +35,10 @@ function Ineer() {
         getShow(res.data._id)
       }
     } catch (error) {
- 
+
     }
   }
- 
+
   useEffect(() => {
     getMovie();
   }, [name])
@@ -52,37 +47,32 @@ function Ineer() {
     let res = await data.json();
     if (res.success) {
       setShow([...res.data])
-      console.log("show", res.data)
     }
   }
- 
+
   useEffect(() => {
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
     }, 1200);
   }, [name])
- 
+
   if (!movie) return <h2 className='text-2xl text-center p-10 font-bold'>Movie Not Found</h2>;
   const now = new Date();
- 
- 
+
   return (
     <>
       {loading ? <div className='w-full h-screen flex items-center justify-center'>
         <div className="loader"></div>
       </div> :
         <>
- 
           <div className="p-10 max-w-5xl mx-auto space-y-8">
             <div className="flex gap-6 p-5 bg-white rounded-xl shadow">
- 
               <img
                 src={movie?.poster?.url}
                 alt=""
                 className="w-28 h-40 object-cover rounded-lg shadow"
               />
- 
               <div className="flex flex-col justify-between">
                 <div>
                   <p className="text-3xl font-bold">{movie.name}</p>
@@ -90,7 +80,7 @@ function Ineer() {
                     {movie.genre} | {movie?.langauage.join(",")} | {movie.length} hr
                   </p>
                 </div>
- 
+
                 <NavLink
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow text-center hover:bg-blue-700 transition "
                   onClick={() => setView(true)}
@@ -99,12 +89,10 @@ function Ineer() {
                 </NavLink>
               </div>
             </div>
- 
             <div className="flex items-start gap-4 p-5 bg-gray-100 rounded-xl shadow-sm">
               <div className="text-amber-500 font-bold text-3xl bg-white rounded-xl px-4 py-2 shadow">
                 A
               </div>
- 
               <div>
                 <p className="text-[14px] font-semibold">
                   Movie suitable for adults (18+ Years) only
@@ -114,12 +102,11 @@ function Ineer() {
                 </p>
               </div>
             </div>
- 
             <div className="flex items-center gap-4 overflow-x-auto pb-2">
               <p className=" text-gray-500 font-semibold px-3 py-1 rounded-full bg-gray-200">
                 {now.toLocaleString("default", { month: "short" })}
               </p>
- 
+
               {show[0]?.showDates.map((d, i) => (
                 <div
                   key={i}
@@ -129,7 +116,7 @@ function Ineer() {
                 </div>
               ))}
             </div>
- 
+
             <div className="flex gap-4">
               {["Filter", "After 10 PM", "Premium Seats"].map((b) => (
                 <button
@@ -140,7 +127,7 @@ function Ineer() {
                 </button>
               ))}
             </div>
- 
+
             <div className="bg-gray-100 flex justify-start gap-8 px-6 py-3 rounded-xl shadow">
               <p className="flex items-center gap-2">
                 <span className="w-3 h-3 bg-black rounded-full"></span> Available
@@ -169,10 +156,9 @@ function Ineer() {
                       <p className="text-sm text-gray-500">Non-cancellable</p>
                     </div>
                   </div>
- 
                   <p className="text-2xl cursor-pointer">🤍</p>
                 </div>
- 
+
                 <div className='flex gap-5 '>
                   {
                     v.showTimings?.map((time, index) => (
@@ -183,29 +169,23 @@ function Ineer() {
               </div>
             ))}
             <ExLAng />
- 
             <ExGenre />
           </div>
           <Upmovie />
           <Dialog open={view} onClose={() => setView(false)} className="relative z-50 ">
- 
             <div className="fixed inset-0 bg-black/40 backdrop-blur-sm " onClick={() => setView(false)} />
- 
             <div className="fixed inset-0 flex justify-center items-start p-6  ">
               <DialogPanel
                 className="bg-white rounded-2xl p-8 shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col"
                 onClick={(e) => e.stopPropagation()}
               >
- 
                 <div className="sticky top-0 bg-white z-10 pb-4">
                   <h2 className="text-3xl font-bold mb-2 text-gray-900">
                     🎬 Movie Details
                   </h2>
- 
                   <h3 className="text-xl font-semibold text-gray-700 mb-4">
                     {movie.name}
                   </h3>
- 
                   <div className="flex justify-between bg-gray-100 rounded-xl h-10 p-2 ">
                     {["Reviews", "Synopsis", "Cast", "Video", "Posters"].map((tab) => (
                       <p
@@ -217,14 +197,9 @@ function Ineer() {
                     ))}
                   </div>
                 </div>
- 
- 
                 <div className="overflow-y-auto mt-6 pr-2">
- 
- 
                   <section className="mb-10">
                     <h3 className="text-xl font-bold mb-4">⭐ Reviews</h3>
- 
                     <Swiper
                       slidesPerView={2}
                       spaceBetween={20}
@@ -245,7 +220,7 @@ function Ineer() {
                         </SwiperSlide>
                       ))}
                     </Swiper>
- 
+
                     <style>
                       {`
             .swiper-pagination {
@@ -254,12 +229,10 @@ function Ineer() {
           `}
                     </style>
                   </section>
- 
                   <section className="mb-10">
                     <h3 className="text-xl font-bold mb-4">📌 Synopsis</h3>
                     <div className="bg-gray-50 p-5 rounded-xl shadow-inner">
                       <p className="text-gray-700 leading-relaxed">{movie.description}</p>
- 
                       <div className="mt-5  grid-cols-3 gap-4 text-sm text-gray-700 flex flex-col" >
                         <p><span className="font-bold">🎬 Category:</span> {movie?.category.join(",")}</p>
                         <p><span className="font-bold">🌐 Language:</span> {movie?.langauage.join(",")}</p>
@@ -267,38 +240,27 @@ function Ineer() {
                       </div>
                     </div>
                   </section>
- 
                   <section className="mb-10">
                     <h3 className="text-xl font-bold mb-4">🎭 Cast</h3>
- 
                     <div className="flex flex-wrap gap-6">
                       <p className='font-bold text-xl'>{movie?.castNames.join(" ")}</p>
                     </div>
                   </section>
- 
                   <section className="mb-10">
                     <h3 className="text-xs font-bold mb-4">🎥 Trailer</h3>
- 
                     <div className="flex justify-center">
-                      <img src={movie?.video?.url}></img>
-                      {/* <iframe
-            width="560"
-            height="315"
-            src={movie.video}
-            className="rounded-xl shadow-lg"
-            allowFullScreen
-          ></iframe> */}
+                      {/* <img src={movie?.video?.url}></img> */}
                     </div>
                   </section>
- 
                   <section className="mb-6">
                     <h3 className="text-xl font-bold mb-4">🖼 Posters & Wallpapers</h3>
- 
-                    <img
-                      src={movie?.poster.url}
-                      className="rounded-xl shadow-lg w-full object-cover"
-                      alt=""
-                    />
+                    <div className="w-full p-3 h-80 aspect-video rounded-xl overflow-hidden shadow-lg">
+                      <img
+                        src={movie?.video?.url}
+                        alt="Trailer"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                   </section>
                 </div>
               </DialogPanel>
@@ -307,9 +269,5 @@ function Ineer() {
     </>
   );
 }
- 
+
 export default Ineer;
- 
- 
- 
- 

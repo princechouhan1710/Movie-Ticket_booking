@@ -1,58 +1,46 @@
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
- 
-import 'swiper/css';
-import 'swiper/css/navigation';
- 
-import {Autoplay } from 'swiper/modules';
-import { NavLink } from 'react-router-dom';
- 
-const lang = [
-  { lan: 'Hindi' },
-  { lan: 'English' },
-  { lan: 'Telugu' },
-  { lan: 'Tamil' },
-  { lan: 'Kannada' },
-  { lan: 'Bengali' },
-  { lan: 'Malayalam' },
-  { lan: 'Bhojpuri' },
-  { lan: 'Odia' },
-  { lan: 'Marathi' },
-  { lan: 'Punjabi' }
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { Autoplay } from "swiper/modules";
+import { NavLink } from "react-router-dom";
+
+const languages = [
+  "Hindi",
+  "English",
+  "Telugu",
+  "Tamil",
+  "Kannada",
+  "Bengali",
+  "Malayalam",
+  "Bhojpuri",
+  "Odia",
+  "Marathi",
+  "Punjabi",
 ];
- 
-function ExLAng() {
+
+function ExLang() {
   return (
-    <div className='m-10'>
- 
-      <h2 className='text-2xl font-bold p-3'>
+    <div className="m-10">
+      <h2 className="text-2xl font-bold p-3">
         Explore Latest Movies by Language
       </h2>
- 
       <Swiper
-        slidesPerView={'auto'}
+        slidesPerView="auto"
         spaceBetween={12}
-         autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-         modules={[Autoplay]}
-        className="mySwiper genre-swiper"
-      >
-        {lang.map((v, i) => (
-          <SwiperSlide key={i} className="w-auto! ">
-            <NavLink to={`/movies/list/${"langauage"}/${v.lan}`} className="flex items-center gap-2 border bg-gray-100 px-4 py-2 rounded-2xl
-hover:bg-gray-200 hover:shadow transition font-medium">
-              🎧 {v.lan} Movies
+        autoplay={{ delay: 2500, disableOnInteraction: false }}
+        modules={[Autoplay]}>
+        {languages.map((lang) => (
+          <SwiperSlide key={lang} className="w-auto!">
+            <NavLink
+              to={`/movies/list/langauage/${lang}`}
+              className="flex items-center gap-2 border bg-gray-100 px-4 py-2 rounded-2xl
+                         hover:bg-gray-200 hover:shadow transition font-medium whitespace-nowrap">
+              🎧 {lang} Movies
             </NavLink>
           </SwiperSlide>
         ))}
       </Swiper>
- 
     </div>
   );
 }
- 
-export default ExLAng;
- 
- 
+
+export default ExLang;
