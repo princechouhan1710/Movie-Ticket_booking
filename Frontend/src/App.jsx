@@ -39,7 +39,7 @@ fetchMovies();
               <Route path='/history' element={<History />}></Route>
               <Route path='/UpComing' element={<Upcoming />}></Route>
               <Route path='/movies/:name' element={<Ineerpage />}></Route>
-              <Route path='/theater/:id' element={<Theaters />}></Route>
+              <Route path='/theatre/list/:name' element={<Theaters />}></Route>
               <Route path='/movies/list/:key/:value' element={<MovieList />}></Route>
             </Routes>
       </BrowserRouter>

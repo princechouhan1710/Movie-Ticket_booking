@@ -52,17 +52,17 @@ let deleteTheatre = async (req, res) => {
 }
 let filterTheatre = async (req, res) => {
     try {
-        let { id } = req.params;
-        let theatres = await Show.find({ theatre: id }).populate("movie");
+        let { name } = req.params;
+        let theatre = await Theatre.findOne({ name })
+        if (!theatre) {
+            return res.status(400).json({ success: false, message: "Theatre not founnd" })
+        }
+        let theatres = await Show.find({ theatre: theatre._id  }).populate("movie").populate("theatre");
         res.status(200).json({ success: true, data: theatres })
     } catch (error) {
         res.status(404).json({ success: false, message: error.message })
     }
 }
+ 
 
-// let getTheatresByCity = async (req, res) => {
-//     const { city } = req.query;
-//     const theatres = await Theatre.find({ city });
-//     res.json(theatres);
-// };
 module.exports = { createTheatre, getTheatre,updateTheatre ,deleteTheatre,filterTheatre}

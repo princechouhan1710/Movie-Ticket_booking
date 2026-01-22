@@ -44,12 +44,12 @@ export default function Content1() {
 
                   <h1 className='text-5xl'>{v.name}</h1>
                   <h2 className='text-2xl'>{v.genre}|{v.category}</h2>
-                  <button class="bg-gray-800  shadow-2xl text-white font-bold py-2 px-4 rounded  hover:bg-gray-950 transition cursor-pointer">
+                  <button className="bg-gray-800  shadow-2xl text-white font-bold py-2 px-4 rounded  hover:bg-gray-950 transition cursor-pointer">
                     Book me
                   </button>
                 </div>
                 <div className='w-[50%] text-center  p-1'>
-                  <img src={v.poster.url} class=" w-[50%] mx-39 h-[90%] p-2 flex justify-end rounded-2xl object-cover " alt="..." />
+                  <img src={v.poster.url} className=" w-[50%] mx-39 h-[90%] p-2 flex justify-end rounded-2xl object-cover " alt="..." />
 
                 </div>
               </div>

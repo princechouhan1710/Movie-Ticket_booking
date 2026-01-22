@@ -4,9 +4,8 @@ import { useContext } from 'react'
 import { moviecontext, theatrescontext } from '../App';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import History from '../pages/History'
-function Navbar() {
 
+function Navbar() {
   const [open, setOpen] = useState(false)
   const [opent, setOpent] = useState(false)
   const [order, setOrder] = useState(false)
@@ -25,9 +24,7 @@ function Navbar() {
 
   );
   const location = useLocation();
-
   const isHistoryPage = location.pathname === "/history";
-
   const [formData, setFormdata] = useState({
     name: "",
     email: "",
@@ -94,18 +91,24 @@ function Navbar() {
   const loginHandler = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post(
+      const response = await axios.post(
         "http://localhost:4000/api/user/login",
         { ...loginform }
       );
-      setLogin(false);
-      alert("Login successfully ✅");
-      setLoginForm({ email: "", password: "" });
-    } catch (error) {
-      console.error(error);
+
+      if (response.data.success) {
+        localStorage.setItem("token", response.data.token);
+        setLogin(false);
+        navigate("/history");
+      } else {
+        alert(response.data.message);
+      }
+    } catch (err) {
+      console.error(err);
       alert("Login failed ❌");
     }
-  }
+  };
+
   const otpResendHandler = async (e) => {
     e.preventDefault();
     try {
@@ -132,8 +135,28 @@ function Navbar() {
     setLoginForm({ ...loginform, [e.target.name]: e.target.value });
   };
   const resendotpinputhandler = (e) => {
-    setResendOtpForm({ ...loginform, [e.target.name]: e.target.value });
+    setResendOtpForm({ ...Resendotpform, [e.target.name]: e.target.value });
   };
+  let ordercheck = async () => {
+    try {
+      let token = localStorage.getItem("token");
+      let { data } = await axios.get("http://localhost:4000/api/user/profile", {
+        headers: {
+          token: token
+        }
+      })
+      if (data.response.success) {
+        navigate("/history")
+      } else {
+        setLogin(true)
+      }
+    } catch (error) {
+      console.log(error?.response?.data)
+      setLogin(true)
+    }
+  }
+
+
   return (
     <div className='sticky top-0 z-40 bg-white' >
       <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
@@ -158,15 +181,15 @@ function Navbar() {
                 >
                   Movies
                 </NavLink>
-                <NavLink className="hover:text-amber-700 cursor-pointer transition"
+                <button className="hover:text-amber-700 cursor-pointer transition"
                   onMouseEnter={() => {
                     setOpen(false)
                     setOpent(true)
                   }}>Theatres
-                </NavLink>
-                <NavLink className="hover:text-amber-700 cursor-pointer transition"
-                  onClick={() => setProfile(true)}>Orders
-                </NavLink>
+                </button>
+                <button className="hover:text-amber-700 cursor-pointer transition"
+                  onClick={ordercheck}>Orders
+                </button>
               </div>
               <div className="flex items-center gap-5">
                 <input
@@ -256,14 +279,11 @@ function Navbar() {
               <div className="flex flex-wrap gap-10 justify-center">
                 {theatres.map((v, i) => {
                   return (
-                    <div className='w-[45%]' onClick={() => {
-                      navigate(`/theater/${v._id}`)
-                      setOpent(false);
-                    }}>
-
+                    <NavLink to={"/theatre/list/" + v.name} className='w-[45%]'  >
                       {v.name},{v.location},{v.city}
                       <hr />
-                    </div>
+                    </NavLink>
+
                   )
                 })}
 
@@ -275,7 +295,7 @@ function Navbar() {
 
 
       {/* Orders */}
-       <Dialog
+      <Dialog
         open={profile}
         onClose={() => setProfile(false)}
         className="relative z-50"
@@ -717,6 +737,3 @@ function Navbar() {
 }
 
 export default Navbar
-
-
-

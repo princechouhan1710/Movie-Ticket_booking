@@ -4,7 +4,8 @@ const theatreSchema = new mongoose.Schema({
     city: { type: String },
     location: String,
     screens: Number,
-    image: { filename: String, url: String, _id: false }
+    image: { filename: String, url: String, _id: false },
+    redirectUrl:String
 }, { timestamps: true });
 let theatreModel = mongoose.model("Theatre", theatreSchema);
 module.exports = theatreModel;

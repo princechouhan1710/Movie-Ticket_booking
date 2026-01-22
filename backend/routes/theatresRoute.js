@@ -6,5 +6,5 @@ router.post("/createtheatre", upload.fields([{ name: "image", maxCount: 1 }]), c
 router.get("/gettheatres", getTheatre);
 router.put("/updatetheatre/:id", updateTheatre);
 router.delete("/deletetheatre/:id", deleteTheatre);
-router.get("/filtertheatre/:id", filterTheatre);
+router.get("/filtertheatre/:name", filterTheatre);
 module.exports = router
