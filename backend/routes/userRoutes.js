@@ -7,7 +7,5 @@ router.post("/verify-otp", verifyOtp)
 router.post("/resend-otp", resendOtp)
 router.post("/login", login);
 router.get("/profile", auth, profile);
-
-
 module.exports = router
 
