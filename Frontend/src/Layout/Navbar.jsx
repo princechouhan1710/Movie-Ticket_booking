@@ -4,6 +4,10 @@ import { useContext } from 'react'
 import { moviecontext, theatrescontext } from '../App';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { IoMdMenu } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 
 function Navbar() {
   const [open, setOpen] = useState(false)
@@ -13,10 +17,12 @@ function Navbar() {
   const [profile, setProfile] = useState(false)
   const [otp, setOtp] = useState(false)
   const [login, setLogin] = useState(false)
+  let [showMenu,setshowMenu] =useState(false)
   const [resendOtp, setResendOtp] = useState(false)
   let { Mov, setMovie } = useContext(moviecontext)
   let [filter, setFilter] = useState("");
   let { theatres, setMovietheatres } = useContext(theatrescontext)
+
   const navigate = useNavigate();
   const releasedmov = Mov.filter(movie => movie.released === true)
   const filtermovie = Mov.filter((m) =>
@@ -25,7 +31,7 @@ function Navbar() {
   );
   const location = useLocation();
   const isHistoryPage = location.pathname === "/history";
- 
+
   // Registration
    const [formData, setFormdata] = useState({
     name: "",
@@ -166,16 +172,16 @@ function Navbar() {
 
   return (
     <div className='sticky top-0 z-40 bg-white' >
-      <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
-          <div className="text-amber-800 text-3xl font-extrabold cursor-pointer hover:scale-105 transition"
+      <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200 ">
+        <div className=" mx-auto flex items-center justify-between py-4 px-7">
+          <div className="text-amber-800 text-2xl font-extrabold cursor-pointer hover:scale-105 transition"
             onClick={() => navigate('/')}
           >
-            Ticket Wala
+            Ticket Wala <span className='text-gray-400 font-light hidden  lg:inline' >|</span> <span className='text-blue-500 hidden  lg:inline text-xl'> <FontAwesomeIcon icon={faLocationDot} />  Indore</span>
           </div>
           {!isHistoryPage ? (
             <>
-              <div className="hidden md:flex items-center gap-10 text-lg font-medium text-gray-700">
+              <div className="hidden md:flex items-center gap-10 text-lg font-medium bg-transparent text-zinc-600">
                 <NavLink className="hover:text-amber-700 cursor-pointer transition"
                   to={"/"}>
                   Home
@@ -198,17 +204,58 @@ function Navbar() {
                   onClick={ordercheck}>Orders
                 </button>
               </div>
-              <div className="flex items-center gap-5">
+              <div className="hidden md:flex items-center gap-5 ">
                 <input
                   type="search"
                   placeholder="🔍 Search movies or cinemas"
                   onClick={() => setSearch(true)}
-                  className="border border-gray-300 px-4 py-2 w-72 rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="border border-gray-300 px-4 py-2  rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none md:w-19 lg:w-45 xl:w-72  "
                 />
                 <div
                   className="w-11 h-11 rounded-full bg-gray-200 flex justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
                   onClick={() => setProfile(true)}>🧑🏻</div>
               </div>
+
+ <div className='sm:hidden' onClick={(e) => { e.stopPropagation() 
+     setshowMenu(!showMenu); }}> {!showMenu ? <h1><IoMdMenu /></h1> : <div><IoClose /></div>}
+      <div className={`menubox transition-all duration-500 absolute right-0 top-16 w-30 rounded-2xl bg-gray-400 text-white ${showMenu ? "h-fit" : "h-0 overflow-hidden"} sm:h-0 sm:overflow-hidden`}>
+         <div className='flex h-full flex-col justify-between p-2 gap-2 items-center'>
+           <p className='hover:bg-yellow-400 px-2 transition-all duration-400'><NavLink className="hover:text-amber-700 cursor-pointer transition"
+                  to={"/"}>
+                  Home
+                </NavLink></p> 
+            <p className='hover:bg-yellow-400 px-2 transition-all duration-400'><NavLink className="hover:text-amber-700 cursor-pointer transition"
+                  onMouseEnter={() => {
+                    setOpent(false)
+                    setOpen(true)
+                  }}
+                >
+                  Movies
+                </NavLink></p> 
+                <button className="hover:text-amber-700 cursor-pointer transition"
+                  onMouseEnter={() => {
+                    setOpen(false)
+                    setOpent(true)
+                  }}>Theatres
+                </button>
+                <button className="hover:text-amber-700 cursor-pointer transition"
+                  onClick={ordercheck}>Orders
+                </button>
+                <input
+                  type="search"
+                  placeholder="🔍 "
+                  onClick={() => setSearch(true)}
+                  className="border border-gray-300 py-1 rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none w-12 pl-2 "
+                />
+                <div
+                  className="w-11 h-11 rounded-full bg-gray-200 flex justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                  onClick={() => setProfile(true)}>🧑🏻</div>
+              
+
+                 
+                
+            </div> </div> </div>
+
             </>
           ) : (
             <>
@@ -739,3 +786,6 @@ function Navbar() {
 }
 
 export default Navbar
+
+
+
