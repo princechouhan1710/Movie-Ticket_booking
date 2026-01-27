@@ -37,11 +37,11 @@ app.use("/api/theatres", theatresRoute)
 app.use("/api/show", showRoute)
 
 //for serving the folder to the port
-app.use(express.static(path.join(__dirname,"../frontend/dist")))
+app.use(express.static(path.join(__dirname,"../Frontend/dist")))
 
 //for the main file
 app.get("*",(req,res)=>{
-  res.sendFile(path.resolve(__dirname,"../frontend/dist/index.html"))
+  res.sendFile(path.resolve(__dirname,"../Frontend/dist/index.html"))
 })
 
 
