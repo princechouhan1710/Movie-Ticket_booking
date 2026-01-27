@@ -1,4 +1,5 @@
-const router = require("express").Router();
+const express = require("express");
+const router = express.Router();
 const { register, verifyOtp, resendOtp, login, profile } = require("../controllers/movieuserController.js")
 let { auth } = require("../middlewares/auth.js")
 router.post("/register", register);
@@ -10,4 +11,3 @@ router.get("/profile", auth, profile);
 
 module.exports = router
 
-// otp , passhash ,passcompare
