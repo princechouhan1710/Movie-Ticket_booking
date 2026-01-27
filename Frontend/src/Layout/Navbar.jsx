@@ -39,7 +39,7 @@ function Navbar() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/user/register",
+        "/api/user/register",
         { ...formData }
       );
       if (response.data.success) {
@@ -75,7 +75,7 @@ function Navbar() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/user/verify-otp",
+        "/api/user/verify-otp",
         { ...otpform }
       );
       alert("OTP verified successfully ✅");
@@ -98,7 +98,7 @@ function Navbar() {
   const otpResendHandler = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post("http://localhost:4000/api/user/resend-otp",
+      const data = await axios.post("/api/user/resend-otp",
         { ...Resendotpform }
       )
       setOtp(true)
@@ -124,7 +124,7 @@ function Navbar() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/user/login",
+        "/api/user/login",
         { ...loginform }
       );
 
@@ -147,7 +147,7 @@ function Navbar() {
   let ordercheck = async () => {
     try {
       let token = localStorage.getItem("token");
-      let { data } = await axios.get("http://localhost:4000/api/user/profile", {
+      let { data } = await axios.get("/api/user/profile", {
         headers: {
           token: token
         }

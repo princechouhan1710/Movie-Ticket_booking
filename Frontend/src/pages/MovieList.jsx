@@ -7,7 +7,7 @@ export default function MovieList() {
     let [movies, setMovies] = useState([])
     let navigate = useNavigate()
     let getMovies = async () => {
-        let { data } = await axios(`http://localhost:4000/api/movie/filtermovie/${key}/${value}`)
+        let { data } = await axios(`/api/movie/filtermovie/${key}/${value}`)
         console.log(data)
         setMovies([...data.data])
     }

@@ -28,7 +28,7 @@ function Ineer() {
 
   let getMovie = async () => {
     try {
-      let data = await fetch(`http://localhost:4000/api/movie/getmovie/${name}`);
+      let data = await fetch(`/api/movie/getmovie/${name}`);
       let res = await data.json();
       if (res.success) {
         setMovie({ ...res.data })
@@ -43,7 +43,7 @@ function Ineer() {
     getMovie();
   }, [name])
   let getShow = async (movieId) => {
-    let data = await fetch("http://localhost:4000/api/show/getshow/" + movieId);
+    let data = await fetch("/api/show/getshow/" + movieId);
     let res = await data.json();
     if (res.success) {
       setShow([...res.data])

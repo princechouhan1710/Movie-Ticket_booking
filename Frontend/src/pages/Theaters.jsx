@@ -11,7 +11,7 @@ function Theater() {
   const gettheatres = async (name) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:4000/api/theatres/filterTheatre/${name}`
+        `/api/theatres/filterTheatre/${name}`
       );
       setTheater(data.data);
     } catch (err) {
