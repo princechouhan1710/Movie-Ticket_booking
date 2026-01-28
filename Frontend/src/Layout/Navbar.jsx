@@ -212,49 +212,50 @@ function Navbar() {
                   className="border border-gray-300 px-4 py-2  rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none md:w-19 lg:w-45 xl:w-72  "
                 />
                 <div
-                  className="w-11 h-11 rounded-full bg-gray-200 flex justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                  className="w-11 h-11 rounded-full bg-gray-200 md:flex justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
                   onClick={() => setProfile(true)}>🧑🏻</div>
               </div>
-
- <div className='sm:hidden' onClick={(e) => { e.stopPropagation() 
+              <div className='flex  items-center gap-4 '>
+<input
+                  type="search"
+                  placeholder="🔍 "
+                  onClick={() => setSearch(true)}
+                  className="border border-gray-300 py-1 text-[10px] rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none w-9 pl-2 md:hidden "
+                />
+ <div className='sm:hidden text-xl' onClick={(e) => { e.stopPropagation() 
      setshowMenu(!showMenu); }}> {!showMenu ? <h1><IoMdMenu /></h1> : <div><IoClose /></div>}
       <div className={`menubox transition-all duration-500 absolute right-0 top-16 w-30 rounded-2xl bg-gray-400 text-white ${showMenu ? "h-fit" : "h-0 overflow-hidden"} sm:h-0 sm:overflow-hidden`}>
          <div className='flex h-full flex-col justify-between p-2 gap-2 items-center'>
-           <p className='hover:bg-yellow-400 px-2 transition-all duration-400'><NavLink className="hover:text-amber-700 cursor-pointer transition"
+           <NavLink className="hover:text-amber-700 text-[13px] cursor-pointer transition"
                   to={"/"}>
                   Home
-                </NavLink></p> 
-            <p className='hover:bg-yellow-400 px-2 transition-all duration-400'><NavLink className="hover:text-amber-700 cursor-pointer transition"
+                </NavLink>
+            <NavLink className="hover:text-amber-700 text-[13px] cursor-pointer transition"
                   onMouseEnter={() => {
                     setOpent(false)
                     setOpen(true)
                   }}
                 >
                   Movies
-                </NavLink></p> 
-                <button className="hover:text-amber-700 cursor-pointer transition"
+                </NavLink>
+                <button className="hover:text-amber-700 text-[13px] cursor-pointer transition"
                   onMouseEnter={() => {
                     setOpen(false)
                     setOpent(true)
                   }}>Theatres
                 </button>
-                <button className="hover:text-amber-700 cursor-pointer transition"
+                <button className="hover:text-amber-700 text-[13px] cursor-pointer transition"
                   onClick={ordercheck}>Orders
                 </button>
-                <input
-                  type="search"
-                  placeholder="🔍 "
-                  onClick={() => setSearch(true)}
-                  className="border border-gray-300 py-1 rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none w-12 pl-2 "
-                />
+                
                 <div
-                  className="w-11 h-11 rounded-full bg-gray-200 flex justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
-                  onClick={() => setProfile(true)}>🧑🏻</div>
+                  className=" flex justify-center items-center text-[13px]  cursor-pointer hover:bg-gray-300 transition"
+                  onClick={() => setProfile(true)}>Profile</div>
               
 
                  
                 
-            </div> </div> </div>
+            </div> </div> </div></div>
 
             </>
           ) : (

@@ -17,15 +17,15 @@ function Content1() {
       autoplay={{ delay: 3000, disableOnInteraction: false }}
       pagination={{ clickable: true }}
       modules={[Autoplay, Pagination]}
-      className="w-full py-12"
+      className="w-full py-12 "
     >
       {Mov.map((movie) => (
         <SwiperSlide
           key={movie.encodeName}
           onClick={() => navigate(`/movies/${movie.encodeName}`)}
-          className="cursor-pointer"
+          className="cursor-pointer "
         >
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center m-10">
+          <div className=" max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center m-10">
             
             <div className="space-y-6 text-center md:text-left">
               <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900">

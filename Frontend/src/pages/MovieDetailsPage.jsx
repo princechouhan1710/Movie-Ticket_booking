@@ -28,7 +28,7 @@ function Ineer() {
 
   let getMovie = async () => {
     try {
-      let data = await fetch(`/api/movie/getmovie/${name}`);
+      let data = await fetch(`http://localhost:4000/api/movie/getmovie/${name}`);
       let res = await data.json();
       if (res.success) {
         setMovie({ ...res.data })
@@ -250,14 +250,16 @@ function Ineer() {
                     <h3 className="text-xs font-bold mb-4">🎥 Trailer</h3>
                     <div className="flex justify-center">
                       {/* <img src={movie?.video?.url}></img> */}
-                    </div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bK6ldnjE3Y0?si=fMj8UG_GnBRgDtaz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
                   </section>
                   <section className="mb-6">
                     <h3 className="text-xl font-bold mb-4">🖼 Posters & Wallpapers</h3>
                     <div className="w-full p-3 h-80 aspect-video rounded-xl overflow-hidden shadow-lg">
                       <img
-                        src={movie?.video?.url}
+                        src={movie?.poster?.url}
                         alt="Trailer"
+                        width="560" height="315" 
                         className="w-full h-full object-cover"
                       />
                     </div>

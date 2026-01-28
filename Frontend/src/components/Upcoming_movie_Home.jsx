@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation"; 
-import { Pagination, Navigation } from "swiper/modules";
+import { Pagination, Navigation ,Autoplay } from "swiper/modules";
 import { moviecontext } from "../App";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -15,12 +15,12 @@ function Upmovie() {
   const nextRef = useRef(null);
 
   return (
-    <div className="p-5 m-10">
+    <div className="md:p-5 md:m-10">
       <div className="flex justify-between w-full items-center mb-4">
         <h2 className="text-3xl font-bold">UpComing Movies</h2>
         <NavLink
           to={"/UpComing"}
-          className="px-3 py-1 rounded bg-amber-200 hover:bg-amber-300" >
+          className=" hidden px-3 py-1 rounded bg-amber-200 hover:bg-amber-300   sm:inline " >
           View all
         </NavLink>
       </div>
@@ -41,8 +41,8 @@ function Upmovie() {
         </button>
 
         <Swiper
-          slidesPerView={4}
-          spaceBetween={30}
+          slidesPerView="auto"
+          spaceBetween={12}
           pagination={{
             clickable: true,
           }}
@@ -54,12 +54,14 @@ function Upmovie() {
             swiper.params.navigation.prevEl = prevRef.current;
             swiper.params.navigation.nextEl = nextRef.current;
           }}
-          modules={[Navigation]}
+                  autoplay={{ delay: 2500, disableOnInteraction: false }}
+
+          modules={[Navigation,Autoplay]}
           className="mySwiper" >
           {upcomingmovies.map((v, i) => (
-            <SwiperSlide key={v.id ?? i}>
+            <SwiperSlide key={v.id ?? i} className="w-auto!">
               <div
-                className="w-full h-[450px] border rounded-b-lg cursor-pointer overflow-hidden"
+                className="w-75 h-[450px] border rounded-b-lg cursor-pointer overflow-hidden"
                 onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
                 <div className="w-full h-[85%] object-cover relative">
                   <img src={v.poster.url || "https://via.placeholder.com/300x400?text=No+Image"}

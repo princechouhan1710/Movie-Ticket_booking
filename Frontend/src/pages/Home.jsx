@@ -7,7 +7,7 @@ import Genre from '../components/ExploreGenre .jsx'
 
 function Home() {
   return (
-    <div className=''>
+    <div >
       <Content1 />
       <Movie />
       <Upmovie />
