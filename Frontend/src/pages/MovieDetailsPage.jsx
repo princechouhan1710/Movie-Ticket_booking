@@ -28,7 +28,7 @@ function Ineer() {
 
   let getMovie = async () => {
     try {
-      let data = await fetch(`/api/movie/getmovie/${name}`);
+      let data = await fetch(`http://localhost:4000/api/movie/getmovie/${name}`);
       let res = await data.json();
       if (res.success) {
         setMovie({ ...res.data })
@@ -173,7 +173,8 @@ function Ineer() {
             <ExGenre />
           </div>
           <Upmovie />
-          <Dialog open={view} onClose={() => setView(false)} className="relative z-50 ">
+
+<Dialog open={view} onClose={() => setView(false)} className="relative z-50 ">
             <div className="fixed inset-0 bg-black/40 backdrop-blur-sm " onClick={() => setView(false)} />
             <div className="fixed inset-0 flex justify-center items-start p-6  ">
               <DialogPanel
@@ -187,7 +188,7 @@ function Ineer() {
                   <h3 className="text-xl font-semibold text-gray-700 mb-4">
                     {movie.name}
                   </h3>
-                  <div className="flex justify-between bg-gray-100 rounded-xl h-10 p-2 ">
+                  <div className=" hidden md:flex justify-between bg-gray-100 rounded-xl h-10 p-2 ">
                     {["Reviews", "Synopsis", "Cast", "Video", "Posters"].map((tab) => (
                       <p
                         key={tab}
@@ -198,22 +199,23 @@ function Ineer() {
                     ))}
                   </div>
                 </div>
-                <div className="overflow-y-auto mt-6 pr-2">
+                <div className="overflow-y-auto md:mt-6 md:pr-2">
                   <section className="mb-10">
                     <h3 className="text-xl font-bold mb-4">⭐ Reviews</h3>
-                    <Swiper
+                    <div className='hidden md:inline'>
+                      <Swiper
                       slidesPerView={2}
                       spaceBetween={20}
                       autoplay={{ delay: 2500, disableOnInteraction: false }}
                       modules={[Autoplay]}
-                      className="w-full"
+                      className=" w-full"
                     >
                       {review?.map((rev, index) => (
                         <SwiperSlide
                           key={index}
-                          className="bg-white border rounded-xl p-5 shadow-sm hover:shadow-md transition"
+                          className="bg-white border rounded-xl  p-5 shadow-sm hover:shadow-md transition"
                         >
-                          <div className="flex justify-between items-center">
+                          <div className="flex justify-between items-center ">
                             <p className="font-bold text-gray-700">{rev.platform}</p>
                             <p className="text-yellow-500 font-semibold">⭐ {rev.rating}</p>
                           </div>
@@ -221,7 +223,21 @@ function Ineer() {
                         </SwiperSlide>
                       ))}
                     </Swiper>
-
+                    </div>
+                <div className='flex flex-col gap-5'>
+                      {review?.map((rev, index) => (
+                        <div
+                          key={index}
+                          className=" md:hidden bg-white border rounded-xl  p-5 shadow-sm hover:shadow-md transition"
+                        >
+                          <div className="flex justify-between items-center ">
+                            <p className="font-bold text-gray-700">{rev.platform}</p>
+                            <p className="text-yellow-500 font-semibold">⭐ {rev.rating}</p>
+                          </div>
+                          <p className="mt-3 text-gray-600 text-sm">{rev.review}</p>
+                        </div>
+                      ))}
+                </div>
                     <style>
                       {`
             .swiper-pagination {
@@ -251,7 +267,7 @@ function Ineer() {
                     <h3 className="text-xs font-bold mb-4">🎥 Trailer</h3>
                     <div className="flex justify-center">
                       {/* <img src={movie?.video?.url}></img> */}
-                      <iframe width="560" height="315" src="https://www.youtube.com/embed/bK6ldnjE3Y0?si=fMj8UG_GnBRgDtaz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                      <iframe  className='w-100 md:w-[560px] md:h-[315px]' src="https://www.youtube.com/embed/bK6ldnjE3Y0?si=fMj8UG_GnBRgDtaz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                   </section>
                   <section className="mb-6">
@@ -260,17 +276,21 @@ function Ineer() {
                       <img
                         src={movie?.poster?.url}
                         alt="Trailer"
-                        width="560" height="315"
-                        className="w-full h-full object-cover"
+                        className=" w-100 md:w-full md:h-full object-cover"
                       />
                     </div>
                   </section>
                 </div>
               </DialogPanel>
             </div>
-          </Dialog></>}
+          </Dialog>
+         </>}
     </>
   );
 }
 
 export default Ineer;
+
+
+
+ 
