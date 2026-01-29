@@ -151,14 +151,18 @@ function Navbar() {
   };
 
   let ordercheck = async () => {
+    console.log("order")
     try {
-      let token = localStorage.getItem("token");
+      let token =await localStorage.getItem("token");
+      console.log(token)
       let { data } = await axios.get("/api/user/profile", {
         headers: {
           token: token
         }
       })
+      console.log(data)
       if (data.response.success) {
+        console.log("Ddd")
         navigate("/history")
       } else {
         setLogin(true)
@@ -171,108 +175,141 @@ function Navbar() {
 
 
   return (
-    <div className='sticky top-0 z-40 bg-white' >
-      <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200 ">
-        <div className=" mx-auto flex items-center justify-between py-4 px-7">
-          <div className="text-amber-800 text-2xl font-extrabold cursor-pointer hover:scale-105 transition"
-            onClick={() => navigate('/')}
+    <div className='sticky top-0 z-40 bg-white mb-15' >
+      <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
+  <div className="mx-auto flex items-center justify-between py-4 px-7">
+    <div
+      className="text-amber-800 text-2xl font-extrabold cursor-pointer hover:scale-105 transition"
+      onClick={() => navigate("/")}
+    >
+      Ticket Wala{" "}
+      <span className="text-gray-400 font-light hidden lg:inline">|</span>{" "}
+      <span className="text-blue-500 hidden lg:inline text-xl">
+        <FontAwesomeIcon icon={faLocationDot} /> Indore
+      </span>
+    </div>
+
+    {!isHistoryPage ? (
+      <>
+        <div className="hidden md:flex items-center gap-10 text-lg font-medium text-zinc-600">
+          <NavLink to="/" className="hover:text-amber-700 transition">
+            Home
+          </NavLink>
+          <NavLink
+            className="hover:text-amber-700 transition"
+            onMouseEnter={() => {
+              setOpent(false);
+              setOpen(true);
+            }}
           >
-            Ticket Wala <span className='text-gray-400 font-light hidden  lg:inline' >|</span> <span className='text-blue-500 hidden  lg:inline text-xl'> <FontAwesomeIcon icon={faLocationDot} />  Indore</span>
-          </div>
-          {!isHistoryPage ? (
-            <>
-              <div className="hidden md:flex items-center gap-10 text-lg font-medium bg-transparent text-zinc-600">
-                <NavLink className="hover:text-amber-700 cursor-pointer transition"
-                  to={"/"}>
-                  Home
-                </NavLink>
-                <NavLink className="hover:text-amber-700 cursor-pointer transition"
-                  onMouseEnter={() => {
-                    setOpent(false)
-                    setOpen(true)
-                  }}
-                >
-                  Movies
-                </NavLink>
-                <button className="hover:text-amber-700 cursor-pointer transition"
-                  onMouseEnter={() => {
-                    setOpen(false)
-                    setOpent(true)
-                  }}>Theatres
-                </button>
-                <button className="hover:text-amber-700 cursor-pointer transition"
-                  onClick={ordercheck}>Orders
-                </button>
-              </div>
-              <div className="hidden md:flex items-center gap-5 ">
-                <input
-                  type="search"
-                  placeholder="🔍 Search movies or cinemas"
-                  onClick={() => setSearch(true)}
-                  className="border border-gray-300 px-4 py-2  rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none md:w-19 lg:w-45 xl:w-72  "
-                />
-                <div
-                  className="w-11 h-11 rounded-full bg-gray-200 md:flex justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
-                  onClick={() => setProfile(true)}>🧑🏻</div>
-              </div>
-              <div className='flex  items-center gap-4 '>
-<input
-                  type="search"
-                  placeholder="🔍 "
-                  onClick={() => setSearch(true)}
-                  className="border border-gray-300 py-1 text-[10px] rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none w-9 pl-2 md:hidden "
-                />
- <div className='sm:hidden text-xl' onClick={(e) => { e.stopPropagation() 
-     setshowMenu(!showMenu); }}> {!showMenu ? <h1><IoMdMenu /></h1> : <div><IoClose /></div>}
-      <div className={`menubox transition-all duration-500 absolute right-0 top-16 w-30 rounded-2xl bg-gray-400 text-white ${showMenu ? "h-fit" : "h-0 overflow-hidden"} sm:h-0 sm:overflow-hidden`}>
-         <div className='flex h-full flex-col justify-between p-2 gap-2 items-center'>
-           <NavLink className="hover:text-amber-700 text-[13px] cursor-pointer transition"
-                  to={"/"}>
-                  Home
-                </NavLink>
-            <NavLink className="hover:text-amber-700 text-[13px] cursor-pointer transition"
-                  onMouseEnter={() => {
-                    setOpent(false)
-                    setOpen(true)
-                  }}
-                >
-                  Movies
-                </NavLink>
-                <button className="hover:text-amber-700 text-[13px] cursor-pointer transition"
-                  onMouseEnter={() => {
-                    setOpen(false)
-                    setOpent(true)
-                  }}>Theatres
-                </button>
-                <button className="hover:text-amber-700 text-[13px] cursor-pointer transition"
-                  onClick={ordercheck}>Orders
-                </button>
-                
-                <div
-                  className=" flex justify-center items-center text-[13px]  cursor-pointer hover:bg-gray-300 transition"
-                  onClick={() => setProfile(true)}>Profile</div>
-              
-
-                 
-                
-            </div> </div> </div></div>
-
-            </>
-          ) : (
-            <>
-              <h2 className="text-2xl font-bold text-gray-700 tracking-wide">
-                Review Your Orders
-              </h2>
-              <div
-                className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center 
-      text-3xl cursor-pointer hover:bg-gray-200 transition"
-                onClick={() => setProfile(true)}
-              >🧑🏻
-              </div>
-            </>
-          )}
+            Movies
+          </NavLink>
+          <button
+            className="hover:text-amber-700 transition"
+            onMouseEnter={() => {
+              setOpen(false);
+              setOpent(true);
+            }}
+          >
+            Theatres
+          </button>
+          <button
+            className="hover:text-amber-700 transition"
+            onClick={ordercheck}
+          >
+            Orders
+          </button>
         </div>
-      </nav>
+
+        <div className="hidden md:flex items-center gap-5">
+          <input
+            type="search"
+            placeholder="🔍 Search movies or cinemas"
+            onClick={() => setSearch(true)}
+            className="border border-gray-300 pl-4 lg:px-4 py-2 rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none w-15 lg:w-65 xl:w-72 "
+          />
+          <div
+            className="w-11 h-11 rounded-full bg-gray-200 flex justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+            onClick={() => setProfile(true)}
+          >
+            🧑🏻
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4 md:hidden">
+          <input
+            type="search"
+            placeholder="🔍"
+            onClick={() => setSearch(true)}
+            className="border border-gray-300 py-1 text-xs rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none w-9 pl-2"
+          />
+
+          <div
+            className="text-2xl"
+            onClick={(e) => {
+              e.stopPropagation();
+              setshowMenu(!showMenu);
+            }}
+          >
+            {!showMenu ? <IoMdMenu /> : <IoClose />}
+          </div>
+
+          <div
+            className={`absolute right-3 top-16 w-32 rounded-xl bg-gray-500 text-white transition-all duration-300 ${
+              showMenu ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+            }`}
+          >
+            <div className="flex flex-col gap-2 p-3 items-center text-sm">
+              <NavLink to="/" className="hover:text-amber-300">
+                Home
+              </NavLink>
+              <NavLink
+                className="hover:text-amber-300"
+                onMouseEnter={() => {
+                  setOpent(false);
+                  setOpen(true);
+                }}
+              >
+                Movies
+              </NavLink>
+              <button
+                className="hover:text-amber-300"
+                onMouseEnter={() => {
+                  setOpen(false);
+                  setOpent(true);
+                }}
+              >
+                Theatres
+              </button>
+              <button className="hover:text-amber-300" onClick={ordercheck}>
+                Orders
+              </button>
+              <div
+                className="cursor-pointer hover:text-amber-300"
+                onClick={() => setProfile(true)}
+              >
+                Profile
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <h2 className="text-2xl font-bold text-gray-700 tracking-wide">
+          Review Your Orders
+        </h2>
+        <div
+          className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-3xl cursor-pointer hover:bg-gray-200 transition"
+          onClick={() => setProfile(true)}
+        >
+          🧑🏻
+        </div>
+      </>
+    )}
+  </div>
+</nav>
+
 
       {/* movies */}
       <Dialog
@@ -304,7 +341,7 @@ function Navbar() {
                       />
                       <div>
                         <p className="font-bold">{v.name}</p>
-                        <p>{v.genre} {v.langauage.join(",")}</p>
+                        <p>{v.genre} </p>
                       </div>
                     </div>
                   )

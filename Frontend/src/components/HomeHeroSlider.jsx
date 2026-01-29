@@ -17,7 +17,7 @@ function Content1() {
       autoplay={{ delay: 3000, disableOnInteraction: false }}
       pagination={{ clickable: true }}
       modules={[Autoplay, Pagination]}
-      className="w-full py-12 "
+      className="w-full py-12 mt-15 "
     >
       {Mov.map((movie) => (
         <SwiperSlide

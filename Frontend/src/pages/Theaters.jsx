@@ -22,15 +22,15 @@ function Theater() {
     gettheatres(name);
   }, [name]);
   return (
-    <div className="p-10 max-w-5xl mx-auto space-y-8">
+    <div className="py-5 md:p-10 max-w-5xl mx-auto space-y-8">
 
       <div className="flex gap-6 p-5 bg-white rounded-full ">
         <div className='flex gap-3  ' >
-          <img src={theater[0]?.theatre?.image?.url} alt="" height={"100px"} width={"100px"} className='w-28 h-30 object-cover rounded-full shadow' />
+          <img src={theater[0]?.theatre?.image?.url} alt="" height={"100px"} width={"100px"} className='w-25 h-25 md:w-28 md:h-30 object-cover rounded-full shadow' />
           <div >
-            <p className='font-bold text-3xl '>{name},{theater[0]?.theatre?.location}  🤍 </p>
+            <p className='font-bold text-xl md:text-3xl '>{name},{theater[0]?.theatre?.location}  🤍 </p>
             <p className='text-gray-500 text-xl mt-1'>{theater[0]?.theatre?.screens}</p>
-            <p className='text-2xl text-gray-300'>{theater[0]?.theatre?.city}</p>
+            <p className='  md:text-2xl text-gray-500'>{theater[0]?.theatre?.city}</p>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@ function Theater() {
             </div>
           ))}
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-4 overflow-scroll">
           {["Filter", "After 10 PM", "NewRelease"].map((b) => (
             <button
               key={b}

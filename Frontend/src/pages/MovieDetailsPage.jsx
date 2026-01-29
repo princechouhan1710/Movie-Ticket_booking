@@ -8,7 +8,7 @@ import Upmovie from '../components/Upcoming_movie_Home';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules';
 import TimeCard from './TimeCard.jsx';
 function Ineer() {
   let [review, setReview] = useState([
@@ -66,8 +66,8 @@ function Ineer() {
         <div className="loader"></div>
       </div> :
         <>
-          <div className="p-10 max-w-5xl mx-auto space-y-8">
-            <div className="flex gap-6 p-5 bg-white rounded-xl shadow">
+          <div className="py-10 md:p-10 max-w-5xl mx-auto space-y-8">
+            <div className="flex gap-6 py-5 md:p-5 bg-white rounded-xl shadow">
               <img
                 src={movie?.poster?.url}
                 alt=""
@@ -75,9 +75,10 @@ function Ineer() {
               />
               <div className="flex flex-col justify-between">
                 <div>
-                  <p className="text-3xl font-bold">{movie.name}</p>
-                  <p className="text-gray-500 text-sm mt-1">
-                    {movie.genre} | {movie?.langauage.join(",")} | {movie.length} hr
+                  <p className="text-2xl md:text-3xl font-bold">{movie.name}</p>
+                  <p className='text-gray-500 text-sm mt-1'> {movie?.langauage.join(",")} </p>
+                   <p className="text-gray-500 text-sm mt-1">
+                    {movie.genre} | {movie.length} hr
                   </p>
                 </div>
 
@@ -117,11 +118,11 @@ function Ineer() {
               ))}
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 overflow-scroll">
               {["Filter", "After 10 PM", "Premium Seats"].map((b) => (
                 <button
                   key={b}
-                  className="px-4 py-2 border border-gray-300 rounded-xl hover:bg-gray-200 transition"
+                  className="px-4 py-2 border  border-gray-300 rounded-xl hover:bg-gray-200 transition"
                 >
                   {b}
                 </button>
@@ -203,8 +204,8 @@ function Ineer() {
                     <Swiper
                       slidesPerView={2}
                       spaceBetween={20}
-                      pagination={{ clickable: true }}
-                      modules={[Pagination]}
+                      autoplay={{ delay: 2500, disableOnInteraction: false }}
+                      modules={[Autoplay]}
                       className="w-full"
                     >
                       {review?.map((rev, index) => (
@@ -250,8 +251,8 @@ function Ineer() {
                     <h3 className="text-xs font-bold mb-4">🎥 Trailer</h3>
                     <div className="flex justify-center">
                       {/* <img src={movie?.video?.url}></img> */}
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bK6ldnjE3Y0?si=fMj8UG_GnBRgDtaz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                  </div>
+                      <iframe width="560" height="315" src="https://www.youtube.com/embed/bK6ldnjE3Y0?si=fMj8UG_GnBRgDtaz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
                   </section>
                   <section className="mb-6">
                     <h3 className="text-xl font-bold mb-4">🖼 Posters & Wallpapers</h3>
@@ -259,7 +260,7 @@ function Ineer() {
                       <img
                         src={movie?.poster?.url}
                         alt="Trailer"
-                        width="560" height="315" 
+                        width="560" height="315"
                         className="w-full h-full object-cover"
                       />
                     </div>
