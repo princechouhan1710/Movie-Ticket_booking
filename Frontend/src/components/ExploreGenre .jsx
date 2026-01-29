@@ -21,7 +21,7 @@ const genres = [
 
 function ExGenre() {
   return (
-    <div className="m-10">
+    <div className="md:m-10">
       <h2 className="text-2xl font-bold p-3">
         Explore Latest Movies by Genre
       </h2>
