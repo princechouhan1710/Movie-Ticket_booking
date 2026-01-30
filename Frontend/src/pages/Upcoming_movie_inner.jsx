@@ -1,30 +1,81 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { moviecontext } from '../App'
 import ExLAng from '../components/ExploreLanguage'
 import ExGenre from '../components/ExploreGenre '
 import { Navigate, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function Upcoming() {
   let { Mov, setMovie } = useContext(moviecontext)
   const upcomingmovies = Mov.filter(movie => movie.released === false)
   const releasedmovies = Mov.filter(movie => movie.released !== false)
+  const [filter, setfilter] = useState({ langauage: null, category: null })
+    let FilterMovie = async () => {
+      try {
+        let { data } = await axios(`/api/movie/filtermovie-query/?langauage=${filter.langauage}&category=${filter.category}`)
+        console.log(data)
+        setMovie([...data.data])
+      } catch (error) {
+        console.log(error)
+   
+      }
+    }
+    console.log(filter)
+    useEffect(() => {
+      FilterMovie()
+    }, [filter])
   const navigate = useNavigate();
   return (
     <div>
       <div className='p-5 m-10 '>
         <h2 className='text-3xl font-bold'>Upcoming Movies</h2>
-        <div className="flex flex-wrap gap-3 p-5">
-        {["Filter", "Top Selling", "English", "Hindi", "Romance", "Drama", "3D"].map((value, i) => (
-          <button className="px-4 py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition" key={i}>
+        <div className=" flex overflow-x-scroll md:overflow-hidden gap-3 py-2 md:p-5 ">
+        {/* {["Filter", "English", "Hindi", "Romance", "Drama", "3D"].map((value, i) => (
+          <button className=" px-3 py-2 md:px-4 md:py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition" key={i}>
             {value}
           </button>
-        ))}
+        ))} */}
+        <button className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+          Filter
+        </button>
+ 
+        <button onClick={() => {
+          setfilter({ ...filter, langauage: "English" })
+ 
+        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+          English
+        </button>
+ 
+        <button onClick={() => {
+          setfilter({ ...filter, langauage: "Hindi" })
+ 
+        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+          Hindi
+        </button>
+ 
+        <button onClick={() => {
+          setfilter({ ...filter, category: "action" })
+ 
+        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+          Action
+        </button>
+ 
+        <button onClick={() => {
+          setfilter({ ...filter, category: "biography" })
+ 
+        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+          Biography
+        </button>
+ 
+        <button className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+          3D
+        </button>
       </div>
         <div className='flex gap-10 w-full flex-wrap p-3'>
           {
             upcomingmovies.map((v, i) => {
               return (
-                <div className='w-[22%] h-[450px] border  rounded-b-lg ' onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
+                <div className='w-[22%] h-[450px] border  rounded-b-lg ' key={i} onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
                   <img src={v.poster.url} alt="" className='w-full h-[85%] ' />
                   <p className='px-5 font-bold'>{v.name}</p>
                   <div className='flex items-center px-5 gap-2 text-gray-500 text-[14px] py-1 font-bold'>
@@ -44,7 +95,7 @@ function Upcoming() {
           {
             releasedmovies.map((v, i) => {
               return (
-                <div className='w-[22%] h-[450px] border   rounded-b-lg ' onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
+                <div className='w-[22%] h-[450px] border   rounded-b-lg ' key={i} onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
                   <img src={v.poster.url} alt="" className='w-full h-[85%] ' />
                   <p className='px-5 font-bold'>{v.name}</p>
                   <div className='flex items-center px-5 gap-2 text-gray-500 text-[14px] py-1 font-bold'>

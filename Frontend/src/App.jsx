@@ -8,6 +8,8 @@ import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
 import History from './pages/History.jsx'
 import Theaters from './pages/Theaters.jsx'
 import MovieList from './pages/MovieList.jsx'
+import AllTheaters from './pages/AllTheaters.jsx'
+import AllMovies from './pages/AllMovies.jsx'
 export const theatrescontext = createContext();
 export const moviecontext = createContext();
 
@@ -28,6 +30,11 @@ fetchMovies();
   };
   useEffect(() => {fetchTheatres();
   }, [])
+   let pathname = location.pathname
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+  
 
   return (<div>  <moviecontext.Provider value={{ Mov, setMovie }}>
         <theatrescontext.Provider value={{ theatres, setTheatres }}>
@@ -36,15 +43,18 @@ fetchMovies();
             <Routes>
               <Route path='/' element={<Home />}> </Route>
               <Route path='/history' element={<History />}></Route>
+              <Route path='/movies' element={<AllMovies />}></Route>
+              <Route path='/theatres' element={<AllTheaters />}></Route>
               <Route path='/UpComing' element={<Upcoming />}></Route>
               <Route path='/movies/:name' element={<Ineerpage />}></Route>
               <Route path='/theatre/list/:name' element={<Theaters />}></Route>
               <Route path='/movies/list/:key/:value' element={<MovieList />}></Route>
             </Routes>
+              {!location.pathname.includes("history") && <Footer />}
+
       </BrowserRouter>
         </theatrescontext.Provider>
       </moviecontext.Provider>
-  {!location.pathname.includes("history") && <Footer />}
     </div>
   )
 }

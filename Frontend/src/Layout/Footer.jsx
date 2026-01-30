@@ -1,6 +1,8 @@
 import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Footer() {
+   const navigate = useNavigate();
   return (
     <footer className="bg-white mt-10 border-t border-gray-300 shadow-inner">
       <div className="relative mx-auto max-w-7xl px-6 py-16">
@@ -22,7 +24,8 @@ function Footer() {
           <div>
             <h2
               className="text-3xl font-extrabold text-amber-800 tracking-wide"
-              style={{ fontFamily: "Pacifico" }}>
+              style={{ fontFamily: "Pacifico" }}
+              onClick={() => navigate("/")}>
               Ticket Wala
             </h2>
             <p className="mt-4 max-w-md text-gray-600 leading-relaxed">
@@ -30,66 +33,27 @@ function Footer() {
               Fast, simple & secure ticket booking.
             </p>
           </div>
-          <div className="mt-10 lg:mt-0">
-            <ul className="flex flex-wrap gap-10 text-gray-700">
-              <li className="flex items-center gap-2 cursor-pointer hover:text-amber-700 transition">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-amber-700"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l9-7 9 7v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 21V9h6v12" />
-                </svg>
-                Home
-              </li>
-              <li className="flex items-center gap-2 cursor-pointer hover:text-amber-700 transition">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-amber-700"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <rect x="3" y="5" width="18" height="14" rx="2" />
-                  <path d="M7 5l2 3M17 5l-2 3M7 19l2-3M17 19l-2-3" />
-                </svg>
-                Movies
-              </li>
+           <div className="mt-10 lg:mt-0">
+            <div className="flex flex-wrap gap-10 text-gray-700">
 
-              <li className="flex items-center gap-2 cursor-pointer hover:text-amber-700 transition">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-amber-700"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M3 21V7l9-4 9 4v14H3z" />
-                  <path d="M9 21v-6h6v6" />
-                </svg>
-                Theatres
-              </li>
-              <li className="flex items-center gap-2 cursor-pointer hover:text-amber-700 transition">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-amber-700"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M3 8h3a3 3 0 0 0 6 0h3a3 3 0 0 0 6 0h3v8h-3a3 3 0 0 0-6 0h-3a3 3 0 0 0-6 0H3z" />
-                </svg>
-                Orders
-              </li>
+              <p  onClick={() => navigate("/")} className="flex items-center gap-2 hover:text-amber-700 transition">
+  Home
+</p>
 
-            </ul>
+<p   onClick={() => navigate("/movies")} className="flex items-center gap-2 hover:text-amber-700 transition">
+  Movies
+</p>
+
+<p   onClick={() => navigate("/theatres")} className="flex items-center gap-2 hover:text-amber-700 transition">
+  Theatres
+</p>
+
+<p   onClick={() => navigate("/history")} className="flex items-center gap-2 hover:text-amber-700 transition">
+  Orders
+</p>
+
+
+            </div>
           </div>
         </div>
         <p className="mt-12 text-center text-sm text-gray-600">
