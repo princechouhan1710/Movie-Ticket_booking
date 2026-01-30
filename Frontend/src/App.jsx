@@ -4,7 +4,7 @@ import Footer from './Layout/Footer.jsx'
 import Upcoming from './pages/Upcoming_movie_inner.jsx'
 import Home from './pages/Home.jsx'
 import Ineerpage from './pages/MovieDetailsPage.jsx'
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Router, Routes, useLocation } from 'react-router-dom'
 import History from './pages/History.jsx'
 import Theaters from './pages/Theaters.jsx'
 import MovieList from './pages/MovieList.jsx'
@@ -14,6 +14,7 @@ export const theatrescontext = createContext();
 export const moviecontext = createContext();
 
 function App() {
+    let location = useLocation();
   let [open, setOpen] = useState([])
   const [Mov, setMovie] = useState([]);
   const fetchMovies = async () => {const res = await fetch("/api/movie/getmovies");
@@ -38,7 +39,7 @@ fetchMovies();
 
   return (<div>  <moviecontext.Provider value={{ Mov, setMovie }}>
         <theatrescontext.Provider value={{ theatres, setTheatres }}>
-          <BrowserRouter>
+          
             <Navbar />
             <Routes>
               <Route path='/' element={<Home />}> </Route>
@@ -52,7 +53,6 @@ fetchMovies();
             </Routes>
               {!location.pathname.includes("history") && <Footer />}
 
-      </BrowserRouter>
         </theatrescontext.Provider>
       </moviecontext.Provider>
     </div>
