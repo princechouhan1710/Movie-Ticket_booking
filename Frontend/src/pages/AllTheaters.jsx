@@ -1,8 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { theatrescontext } from '../App'
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function AllTheaters() {
   let { theatres } = useContext(theatrescontext);
+  
+    const navigate = useNavigate();
     return (
     <>
       <div className="p-10 max-w-5xl mx-auto space-y-8">
@@ -13,7 +16,7 @@ function AllTheaters() {
               className="p-6 bg-white rounded-xl shadow hover:shadow-lg transition"
             >
               <div className="flex justify-between items-center mb-4">
-                <div className="flex items-center gap-5">
+                <NavLink to={"/theatre/list/" + v.name} className="flex items-center gap-5">
                   <img
                     src={v.image.url}
                     alt=""
@@ -23,7 +26,7 @@ function AllTheaters() {
                     <p className="text-xl font-bold">{v.name} , {v.location} , {v.city}</p>
                     <p className="text-sm text-gray-500">Non-cancellable</p>
                   </div>
-                </div>
+                </NavLink>
 
                 <p className="text-2xl cursor-pointer">🤍</p>
               </div>

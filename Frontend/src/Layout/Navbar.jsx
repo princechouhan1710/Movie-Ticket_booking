@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import { FaArrowLeft } from "react-icons/fa";
 
 function Navbar() {
   const [open, setOpen] = useState(false)
@@ -178,16 +179,23 @@ function Navbar() {
     <div className='sticky top-0 z-40 bg-white mb-15' >
       <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
   <div className= " max-w-10xl mx-auto flex items-center justify-between py-2 px-3 sm:px-8">
-    <div
+    {/* <div
+      className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
+      onClick={() => navigate("/")}
+    >
+       <p>Ticket Wala | Indore</p>
+      
+    </div> */}
+
+    {!isHistoryPage ? (
+      <>
+      <div
       className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
       onClick={() => navigate("/")}
     >
        <p>Ticket Wala | Indore</p>
       
     </div>
-
-    {!isHistoryPage ? (
-      <>
         <div className="hidden md:flex items-center gap-10 text-lg font-medium text-gray-700">
           <NavLink to="/" className="hover:text-amber-700 transition text-xs">
             Home
@@ -293,15 +301,25 @@ function Navbar() {
       </>
     ) : (
       <>
-        <h2 className="text-2xl font-bold text-gray-700 tracking-wide">
-          Review Your Orders
+      <div
+      className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
+      onClick={() => navigate("/")}
+    >
+       <p>Ticket Wala | Indore</p>
+      
+    </div>
+    <div       className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
+     onClick={() => navigate("/")}
+><FaArrowLeft /></div>
+        <h2 className="text-lg font-bold flex text-amber-800 tracking-wide ">
+          Review  Your Orders
         </h2>
         <div
-          className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-3xl cursor-pointer hover:bg-gray-200 transition"
-          onClick={() => setProfile(true)}
-        >
-          🧑🏻
-        </div>
+            className="sm:w-11 sm:h-11 rounded-full flex bg-gray-200  justify-center items-center text-xl sm:text-2xl cursor-pointer hover:bg-gray-300 transition"
+            onClick={() => setProfile(true)}
+          >
+            🧑🏻
+          </div>
       </>
     )}
   </div>
