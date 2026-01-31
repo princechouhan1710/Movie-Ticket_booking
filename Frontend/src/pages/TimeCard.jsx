@@ -11,7 +11,7 @@ export default function TimeCard({ time }) {
                 hour: '2-digit',
                 minute: '2-digit'
             })}</p>
-            {timePop && <div className='absolute flex gap-2 bg-gray-200 z-10 top-11'>
+            {timePop && <div className='absolute flex gap-2 bg-gray-200 z-10 bottom-11 left-5 sm:-left-5 flex-col sm:flex-row '>
                 {time.seatCategories.map((v, i) => {
                     return <div className='top-11  px-3 py-2'>
                         <p className=' font-thin'>{v.categoryName}</p>

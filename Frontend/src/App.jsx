@@ -17,7 +17,7 @@ function App() {
     let location = useLocation();
   let [open, setOpen] = useState([])
   const [Mov, setMovie] = useState([]);
-  const fetchMovies = async () => {const res = await fetch("/api/movie/getmovies");
+  const fetchMovies = async () => {const res = await fetch(" /api/movie/getmovies");
     const data = await res.json();setMovie(data.data);
  };
   useEffect(() => {

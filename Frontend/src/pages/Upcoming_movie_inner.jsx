@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { moviecontext } from '../App'
-import ExLAng from '../components/ExploreLanguage'
-import ExGenre from '../components/ExploreGenre '
-import { Navigate, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import CategoryNavigator from '../components/CategoryNavigator'
+import { categories, langauages } from '../assets/data'
+import MovieCard from '../components/MovieCard'
 
 function Upcoming() {
   let { Mov, setMovie } = useContext(moviecontext)
@@ -24,17 +23,14 @@ function Upcoming() {
     useEffect(() => {
       FilterMovie()
     }, [filter])
-  const navigate = useNavigate();
   return (
-    <div>
-      <div className='p-5 m-10 '>
-        <h2 className='text-3xl font-bold'>Upcoming Movies</h2>
-        <div className=" flex overflow-x-scroll md:overflow-hidden gap-3 py-2 md:p-5 ">
-        {/* {["Filter", "English", "Hindi", "Romance", "Drama", "3D"].map((value, i) => (
-          <button className=" px-3 py-2 md:px-4 md:py-2 bg-gray-100 border rounded-xl hover:bg-gray-200 transition" key={i}>
-            {value}
-          </button>
-        ))} */}
+    <>
+       <div className='py-2 md:p-5 md:m-10 '>
+      <div className='flex  w-full'>
+        <h2 className='text-2xl font-medium'>Upcoming Movies</h2>
+      </div>
+      <div className=" flex overflow-x-scroll md:overflow-hidden gap-3 py-2 md:p-5 ">
+        
         <button className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
           Filter
         </button>
@@ -71,19 +67,11 @@ function Upcoming() {
           3D
         </button>
       </div>
-        <div className='flex gap-10 w-full flex-wrap p-3'>
+       <div className='flex gap-10 w-full flex-wrap p-3'>
           {
             upcomingmovies.map((v, i) => {
               return (
-                <div className='w-[22%] h-[450px] border  rounded-b-lg ' key={i} onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
-                  <img src={v.poster.url} alt="" className='w-full h-[85%] ' />
-                  <p className='px-5 font-bold'>{v.name}</p>
-                  <div className='flex items-center px-5 gap-2 text-gray-500 text-[14px] py-1 font-bold'>
-                    <p className=''>{v.genre}</p>
-                    <span className="w-1 h-1 rounded-2xl bg-gray-500 "></span>
-                    <p>{v?.langauage.join(",")}</p>
-                  </div>
-                </div>
+                <MovieCard movie={v} key={i} />
               )
             })
           }
@@ -95,22 +83,16 @@ function Upcoming() {
           {
             releasedmovies.map((v, i) => {
               return (
-                <div className='w-[22%] h-[450px] border   rounded-b-lg ' key={i} onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
-                  <img src={v.poster.url} alt="" className='w-full h-[85%] ' />
-                  <p className='px-5 font-bold'>{v.name}</p>
-                  <div className='flex items-center px-5 gap-2 text-gray-500 text-[14px] py-1 font-bold'>
-                    <p className=''>{v.genre}</p>
-                    <span className="w-1 h-1 rounded-2xl bg-gray-500 "></span>
-                    <p>{v?.langauage.join(",")}</p>
-                  </div>        </div>
+                <MovieCard movie={v} key={i} />
               )
             })
           }
         </div>
       </div>
-      <ExLAng />
-      <ExGenre />
-    </div>
+      <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
+      <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
+   
+    </>
   )
 }
 

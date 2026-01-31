@@ -2,16 +2,17 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TimeCard from './TimeCard.jsx';
-import ExLAng from '../components/ExploreLanguage';
-import ExGenre from '../components/ExploreGenre .jsx';
+import CategoryNavigator from '../components/CategoryNavigator'
+import { categories, langauages } from '../assets/data'
 function Theater() {
   let [theater, setTheater] = useState([])
   let { name } = useParams();
+    let [loading, setLoading] = useState(true)
   const now = new Date();
   const gettheatres = async (name) => {
     try {
       const { data } = await axios.get(
-        `/api/theatres/filterTheatre/${name}`
+        ` /api/theatres/filterTheatre/${name}`
       );
       setTheater(data.data);
     } catch (err) {
@@ -21,7 +22,17 @@ function Theater() {
   useEffect(() => {
     gettheatres(name);
   }, [name]);
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 1200);
+  }, [name])
   return (
+     <>
+      {loading ? <div className='w-full h-screen flex items-center justify-center'>
+        <div className="loader"></div>
+      </div> :
     <div className="py-5 md:p-10 max-w-5xl mx-auto space-y-8">
 
       <div className="flex gap-6 p-5 bg-white rounded-full ">
@@ -48,16 +59,7 @@ function Theater() {
             </div>
           ))}
         </div>
-        <div className="flex gap-4 overflow-scroll">
-          {["Filter", "After 10 PM", "NewRelease"].map((b) => (
-            <button
-              key={b}
-              className="px-4 py-2 border border-gray-300 rounded-xl hover:bg-gray-200 transition"
-            >
-              {b}
-            </button>
-          ))}
-        </div>
+        
         <div className="bg-gray-100 flex justify-start gap-8 px-6 py-3 rounded-xl shadow">
           <p className="flex items-center gap-2">
             <span className="w-3 h-3 bg-black rounded-full"></span> Available
@@ -100,10 +102,12 @@ function Theater() {
             </div>
           )
         })}
-        <ExLAng />
-        <ExGenre />
+         <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
+      <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
+ 
       </div>
-    </div>
+    </div>}
+    </>
   )
 }
 

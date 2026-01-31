@@ -12,48 +12,7 @@ function Content1() {
   const navigate = useNavigate();
 
   return (
-    // <Swiper
-    //   spaceBetween={40}
-    //   centeredSlides
-    //   autoplay={{ delay: 3000, disableOnInteraction: false }}
-    //   pagination={{ clickable: true }}
-    //   modules={[Autoplay, Pagination]}
-    //   className="mySwiper  h-100  w-full  "
-    // >
-    //   {Mov.map((v, i) => (
-    //     <SwiperSlide
-    //       key={v.encodeName}
-    //       onClick={() => navigate(`/movies/${movie.encodeName}`)}
-    //       className="cursor-pointer  text-black w-50 h-150 shadow-2xl my-5 "
-    //     >
-    //       <div className=" justify-between w-full h-full  gap-3 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 items-center m-10">
-            
-    //         <div className="flex flex-col justify-center  items-center w-[50%] gap-3 space-y-6 text-center md:text-left">
-    //           <h1 className="text-3xl font-bold  md:text-5xl  text-gray-900">
-    //             {v.name}
-    //           </h1>
-
-    //           <p className="text-2xl font-bold text-gray-500">
-    //             {v.genre} • {v.category}
-    //           </p>
-
-    //           <button className="bg-gray-800  shadow-2xl text-white font-bold py-2 px-4 rounded  hover:bg-gray-950 transition cursor-pointer inline-block    ">
-    //             🎟 Book Now
-    //           </button>
-    //         </div>
-
-    //         <div className="w-[50%] text-center  p-1 flex justify-center">
-    //           <img
-    //             src={v.poster.url}
-    //             alt={v.name}
-    //             className="w-[50%] mx-39 h-[90%] p-2 flex justify-end rounded-2xl object-cover  md:w-[380px]   shadow-2xl hover:scale-105 transition-transform duration-300"
-    //           />
-    //         </div>
-
-    //       </div>
-    //     </SwiperSlide>
-    //   ))}
-    // </Swiper>
+    
       <Swiper
             spaceBetween={30}
             centeredSlides={true}
@@ -66,7 +25,7 @@ function Content1() {
             }}
             navigation={true}
             modules={[Autoplay, Pagination, Navigation]}
-            className="mySwiper sm:h-100 w-full  "
+            className="mySwiper sm:h-100 w-full max-w-[1450px] 2xl:m-auto "
           >
             {Mov.map((v, i) => {
               return (

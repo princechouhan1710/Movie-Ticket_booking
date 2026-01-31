@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { moviecontext, theatrescontext } from '../App'
 import { Dialog, DialogPanel } from '@headlessui/react'
-import ExGenre from '../components/ExploreGenre .jsx';
-import ExLAng from '../components/ExploreLanguage.jsx';
+import CategoryNavigator from '../components/CategoryNavigator'
+import { categories, langauages } from '../assets/data'
 import Upmovie from '../components/Upcoming_movie_Home';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -169,10 +169,12 @@ function Ineer() {
                 </div>
               </div>
             ))}
-            <ExLAng />
-            <ExGenre />
-          </div>
+           
+         <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
+      <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
           <Upmovie />
+          </div>
+          
 
 <Dialog open={view} onClose={() => setView(false)} className="relative z-50 ">
             <div className="fixed inset-0 bg-black/40 backdrop-blur-sm " onClick={() => setView(false)} />
@@ -268,6 +270,7 @@ function Ineer() {
                     <div className="flex justify-center">
                       {/* <img src={movie?.video?.url}></img> */}
                       <iframe  className='w-100 md:w-[560px] md:h-[315px]' src="https://www.youtube.com/embed/bK6ldnjE3Y0?si=fMj8UG_GnBRgDtaz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <video src={movie?.video?.url}  controls autoplay muted loop></video>
                     </div>
                   </section>
                   <section className="mb-6">

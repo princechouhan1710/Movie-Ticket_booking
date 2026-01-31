@@ -65,7 +65,7 @@ function Movie() {
           3D
         </button>
       </div>
-      <div className='flex gap-10  w-full flex-wrap  py-3 lg:gap-15 xl:gap-10 '>
+      <div className='flex gap-10  w-full flex-wrap lg:gap-5  xl:gap-10 '>
         {
           releasedmovies.map((v, i) => {
             return (

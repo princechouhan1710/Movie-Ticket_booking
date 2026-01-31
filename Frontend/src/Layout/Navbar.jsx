@@ -176,27 +176,24 @@ function Navbar() {
 
   return (
     <div className='sticky top-0 z-40 bg-white mb-15' >
-      <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
-  <div className="mx-auto flex items-center justify-between py-4 px-7">
+      <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
+  <div className= " max-w-10xl mx-auto flex items-center justify-between py-2 px-3 sm:px-8">
     <div
-      className="text-amber-800 text-2xl font-extrabold cursor-pointer hover:scale-105 transition"
+      className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
       onClick={() => navigate("/")}
     >
-      Ticket Wala{" "}
-      <span className="text-gray-400 font-light hidden lg:inline">|</span>{" "}
-      <span className="text-blue-500 hidden lg:inline text-xl">
-        <FontAwesomeIcon icon={faLocationDot} /> Indore
-      </span>
+       <p>Ticket Wala | Indore</p>
+      
     </div>
 
     {!isHistoryPage ? (
       <>
-        <div className="hidden md:flex items-center gap-10 text-lg font-medium text-zinc-600">
-          <NavLink to="/" className="hover:text-amber-700 transition">
+        <div className="hidden md:flex items-center gap-10 text-lg font-medium text-gray-700">
+          <NavLink to="/" className="hover:text-amber-700 transition text-xs">
             Home
           </NavLink>
           <NavLink
-            className="hover:text-amber-700 transition"
+            className="hover:text-amber-700 cursor-pointer transition text-xs"
             onMouseEnter={() => {
               setOpent(false);
               setOpen(true);
@@ -205,7 +202,7 @@ function Navbar() {
             Movies
           </NavLink>
           <button
-            className="hover:text-amber-700 transition"
+            className="hover:text-amber-700 cursor-pointer transition text-xs"
             onMouseEnter={() => {
               setOpen(false);
               setOpent(true);
@@ -214,38 +211,38 @@ function Navbar() {
             Theatres
           </button>
           <button
-            className="hover:text-amber-700 transition"
+            className="hover:text-amber-700 cursor-pointer transition text-xs"
             onClick={ordercheck}
           >
             Orders
           </button>
         </div>
 
-        <div className="hidden md:flex items-center gap-5">
+        <div className="hidden sm:flex items-center gap-5">
           <input
             type="search"
             placeholder="🔍 Search movies or cinemas"
             onClick={() => setSearch(true)}
-            className="border border-gray-300 pl-4 lg:px-4 py-2 rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none w-15 lg:w-65 xl:w-72 "
+            className="border   border-gray-300 pl-4 lg:px-4 py-2 rounded-lg shadow-sm focus:ring-2 text-xs focus:ring-amber-500 focus:outline-none w-12 lg:w-65 xl:w-72 "
           />
           <div
-            className="w-11 h-11 rounded-full bg-gray-200 flex justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+            className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
             onClick={() => setProfile(true)}
           >
             🧑🏻
           </div>
         </div>
 
-        <div className="flex items-center gap-4 md:hidden">
+        <div className="flex items-center gap-4 sm:hidden">
           <input
             type="search"
             placeholder="🔍"
             onClick={() => setSearch(true)}
-            className="border border-gray-300 py-1 text-xs rounded-lg shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none w-9 pl-2"
+            className="border border-gray-300 py-1 flex lg:hidden rounded-lg shadow-sm text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none w-9 pl-2"
           />
 
           <div
-            className="text-2xl"
+            className="text-2xl flex sm:hidden "
             onClick={(e) => {
               e.stopPropagation();
               setshowMenu(!showMenu);
@@ -337,7 +334,7 @@ function Navbar() {
                       <img
                         src={v.poster.url}
                         alt="Teri Ishk Mein"
-                        className="w-20 rounded size-fit h-10"
+                        className="hidden sm:block w-20 rounded size-fit h-10"
                       />
                       <div>
                         <p className="font-bold">{v.name}</p>
@@ -516,7 +513,7 @@ function Navbar() {
                     >
                       <img
                         src={v.poster.url}
-                        className="w-20 h-10 rounded object-cover"
+                        className="hidden sm:block w-20 h-10 rounded object-cover"
                         alt={v.name}
                       />
                       <div>
