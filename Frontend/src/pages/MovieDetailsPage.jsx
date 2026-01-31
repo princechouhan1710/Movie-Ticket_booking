@@ -67,7 +67,7 @@ function Ineer() {
       </div> :
         <>
           <div className="py-10 md:p-10 max-w-5xl mx-auto space-y-8">
-            <div className="flex gap-6 py-5 md:p-5 bg-white rounded-xl shadow">
+            <div className="flex gap-6 py-5 px-2 md:p-5 bg-white rounded-xl shadow">
               <img
                 src={movie?.poster?.url}
                 alt=""
