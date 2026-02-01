@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { theatrescontext } from '../App'
 import { NavLink, useNavigate } from 'react-router-dom';
+import CategoryNavigator from '../components/CategoryNavigator'
+import { categories, langauages } from '../assets/data'
 
 function AllTheaters() {
   let { theatres } = useContext(theatrescontext);
-  
-    const navigate = useNavigate();
-    return (
+
+  const navigate = useNavigate();
+  return (
     <>
       <div className="p-10 max-w-5xl mx-auto space-y-8">
-    <div className="space-y-10">
+        <div className="space-y-10">
           {theatres.map((v, i) => (
             <div
               key={i}
@@ -33,6 +35,8 @@ function AllTheaters() {
             </div>
           ))}
         </div>
+        <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
+        <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
 
       </div>
     </>

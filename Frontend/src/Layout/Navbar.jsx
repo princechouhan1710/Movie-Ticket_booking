@@ -164,14 +164,13 @@ function Navbar() {
         }
       })
       console.log(data)
-      if (data.response.success) {
-        console.log("Ddd")
+      if (data.response.success ) {
         navigate("/history")
       } else {
         setLogin(true)
       }
     } catch (error) {
-      console.log(error?.response?.data)
+      console.log(error?.responsne?.data)
       setLogin(true)
     }
   }

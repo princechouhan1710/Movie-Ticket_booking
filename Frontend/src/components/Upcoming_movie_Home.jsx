@@ -16,7 +16,7 @@ function Upmovie() {
   const nextRef = useRef(null);
 
   return (
-    <div className="md:p-5 md:m-10">
+    <div className="mt-5">
       <div className="flex justify-between w-full items-center mb-4">
         <h2 className="text-2xl font-medium">UpComing Movies</h2>
         <NavLink

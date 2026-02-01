@@ -10,7 +10,7 @@ function Home() {
   return (
     < >
       <Content1 />
-      <div className='p-2 xl:px-20 lg:p-5 max-w-[1450px] 2xl:m-auto'>
+      <div className='py-2 md:p-5 md:m-10 max-w-[1450px] 2xl:m-auto'>
         <Movie />
         <Upmovie />
         <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
