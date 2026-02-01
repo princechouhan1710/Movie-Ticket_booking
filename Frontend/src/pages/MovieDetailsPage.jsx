@@ -77,7 +77,7 @@ function Ineer() {
                 <div>
                   <p className="text-2xl md:text-3xl font-bold">{movie.name}</p>
                   <p className='text-gray-500 text-sm mt-1'> {movie?.langauage.join(",")} </p>
-                   <p className="text-gray-500 text-sm mt-1">
+                  <p className="text-gray-500 text-sm mt-1">
                     {movie.genre} | {movie.length} hr
                   </p>
                 </div>
@@ -118,7 +118,7 @@ function Ineer() {
               ))}
             </div>
 
-            
+
 
             <div className="bg-gray-100 flex justify-start gap-8 px-6 py-3 rounded-xl shadow">
               <p className="flex items-center gap-2">
@@ -160,14 +160,14 @@ function Ineer() {
                 </div>
               </div>
             ))}
-           
-         <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
-      <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
-          <Upmovie />
-          </div>
-          
 
-<Dialog open={view} onClose={() => setView(false)} className="relative z-50 ">
+            <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
+            <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
+            <Upmovie />
+          </div>
+
+
+          <Dialog open={view} onClose={() => setView(false)} className="relative z-50 ">
             <div className="fixed inset-0 bg-black/40 backdrop-blur-sm " onClick={() => setView(false)} />
             <div className="fixed inset-0 flex justify-center items-start p-6  ">
               <DialogPanel
@@ -197,27 +197,27 @@ function Ineer() {
                     <h3 className="text-xl font-bold mb-4">⭐ Reviews</h3>
                     <div className='hidden md:inline'>
                       <Swiper
-                      slidesPerView={2}
-                      spaceBetween={20}
-                      autoplay={{ delay: 2500, disableOnInteraction: false }}
-                      modules={[Autoplay]}
-                      className=" w-full"
-                    >
-                      {review?.map((rev, index) => (
-                        <SwiperSlide
-                          key={index}
-                          className="bg-white border rounded-xl  p-5 shadow-sm hover:shadow-md transition"
-                        >
-                          <div className="flex justify-between items-center ">
-                            <p className="font-bold text-gray-700">{rev.platform}</p>
-                            <p className="text-yellow-500 font-semibold">⭐ {rev.rating}</p>
-                          </div>
-                          <p className="mt-3 text-gray-600 text-sm">{rev.review}</p>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
+                        slidesPerView={2}
+                        spaceBetween={20}
+                        autoplay={{ delay: 2500, disableOnInteraction: false }}
+                        modules={[Autoplay]}
+                        className=" w-full"
+                      >
+                        {review?.map((rev, index) => (
+                          <SwiperSlide
+                            key={index}
+                            className="bg-white border rounded-xl  p-5 shadow-sm hover:shadow-md transition"
+                          >
+                            <div className="flex justify-between items-center ">
+                              <p className="font-bold text-gray-700">{rev.platform}</p>
+                              <p className="text-yellow-500 font-semibold">⭐ {rev.rating}</p>
+                            </div>
+                            <p className="mt-3 text-gray-600 text-sm">{rev.review}</p>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
                     </div>
-                <div className='flex flex-col gap-5'>
+                    <div className='flex flex-col gap-5'>
                       {review?.map((rev, index) => (
                         <div
                           key={index}
@@ -230,7 +230,7 @@ function Ineer() {
                           <p className="mt-3 text-gray-600 text-sm">{rev.review}</p>
                         </div>
                       ))}
-                </div>
+                    </div>
                     <style>
                       {`
             .swiper-pagination {
@@ -261,7 +261,7 @@ function Ineer() {
                     <div className="flex justify-center">
                       {/* <img src={movie?.video?.url}></img> */}
                       {/* <iframe  className='w-100 md:w-[560px] md:h-[315px]' src="https://www.youtube.com/embed/bK6ldnjE3Y0?si=fMj8UG_GnBRgDtaz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
-                    <video src={movie?.video?.url}  controls autoplay muted loop></video>
+                      <video src={movie?.video?.url} controls autoplay muted loop></video>
                     </div>
                   </section>
                   <section className="mb-6">
@@ -278,7 +278,7 @@ function Ineer() {
               </DialogPanel>
             </div>
           </Dialog>
-         </>}
+        </>}
     </>
   );
 }
@@ -287,4 +287,3 @@ export default Ineer;
 
 
 
- 

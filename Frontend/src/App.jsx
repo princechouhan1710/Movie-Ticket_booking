@@ -14,14 +14,15 @@ export const theatrescontext = createContext();
 export const moviecontext = createContext();
 
 function App() {
-    let location = useLocation();
+  let location = useLocation();
   let [open, setOpen] = useState([])
   const [Mov, setMovie] = useState([]);
-  const fetchMovies = async () => {const res = await fetch(" /api/movie/getmovies");
-    const data = await res.json();setMovie(data.data);
- };
+  const fetchMovies = async () => {
+    const res = await fetch(" /api/movie/getmovies");
+    const data = await res.json(); setMovie(data.data);
+  };
   useEffect(() => {
-fetchMovies();
+    fetchMovies();
   }, []);
   let [theatres, setTheatres] = useState([])
   const fetchTheatres = async () => {
@@ -29,33 +30,34 @@ fetchMovies();
     const data = await res.json();
     setTheatres(data.data)
   };
-  useEffect(() => {fetchTheatres();
+  useEffect(() => {
+    fetchTheatres();
   }, [])
-   let pathname = location.pathname
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, [pathname]);
-  
+  let pathname = location.pathname
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
 
   return (<div>  <moviecontext.Provider value={{ Mov, setMovie }}>
-        <theatrescontext.Provider value={{ theatres, setTheatres }}>
-          
-            <Navbar />
-            <Routes>
-              <Route path='/' element={<Home />}> </Route>
-              <Route path='/history' element={<History />}></Route>
-              <Route path='/movies' element={<AllMovies />}></Route>
-              <Route path='/theatres' element={<AllTheaters />}></Route>
-              <Route path='/UpComing' element={<Upcoming />}></Route>
-              <Route path='/movies/:name' element={<Ineerpage />}></Route>
-              <Route path='/theatre/list/:name' element={<Theaters />}></Route>
-              <Route path='/movies/list/:key/:value' element={<MovieList />}></Route>
-            </Routes>
-              {!location.pathname.includes("history") && <Footer />}
+    <theatrescontext.Provider value={{ theatres, setTheatres }}>
 
-        </theatrescontext.Provider>
-      </moviecontext.Provider>
-    </div>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />}> </Route>
+        <Route path='/history' element={<History />}></Route>
+        <Route path='/movies' element={<AllMovies />}></Route>
+        <Route path='/theatres' element={<AllTheaters />}></Route>
+        <Route path='/UpComing' element={<Upcoming />}></Route>
+        <Route path='/movies/:name' element={<Ineerpage />}></Route>
+        <Route path='/theatre/list/:name' element={<Theaters />}></Route>
+        <Route path='/movies/list/:key/:value' element={<MovieList />}></Route>
+      </Routes>
+      {!location.pathname.includes("history") && <Footer />}
+
+    </theatrescontext.Provider>
+  </moviecontext.Provider>
+  </div>
   )
 }
 

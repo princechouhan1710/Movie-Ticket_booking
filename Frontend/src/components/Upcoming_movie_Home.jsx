@@ -2,8 +2,8 @@ import React, { useContext, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/navigation"; 
-import {  Navigation ,Autoplay } from "swiper/modules";
+import "swiper/css/navigation";
+import { Navigation, Autoplay } from "swiper/modules";
 import { moviecontext } from "../App";
 import { NavLink, useNavigate } from "react-router-dom";
 import MovieCard from "./MovieCard";
@@ -33,7 +33,7 @@ function Upmovie() {
         >
           ‹
         </button>
-       <button
+        <button
           ref={nextRef}
           className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-20 h-20  shadow flex items-center justify-center  text-7xl text-white  "
           aria-label="Next"
@@ -55,13 +55,13 @@ function Upmovie() {
             swiper.params.navigation.prevEl = prevRef.current;
             swiper.params.navigation.nextEl = nextRef.current;
           }}
-                  autoplay={{ delay: 2500, disableOnInteraction: false }}
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
 
-          modules={[Navigation,Autoplay]}
+          modules={[Navigation, Autoplay]}
           className="mySwiper" >
           {upcomingmovies.map((v, i) => (
             <SwiperSlide key={v.id ?? i} className="w-auto!">
-            <MovieCard movie={v} key={i} />
+              <MovieCard movie={v} key={i} />
             </SwiperSlide>
           ))}
         </Swiper>

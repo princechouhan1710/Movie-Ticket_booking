@@ -101,8 +101,8 @@ function Upcoming() {
           }
         </div>
         
-      <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
-      <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
+        <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
+        <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
       </div>
    
     </>

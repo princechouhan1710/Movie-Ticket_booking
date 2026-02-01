@@ -15,7 +15,7 @@ const lang = [
 ];
 function ExGenre() {
   return (
-    <CategoryNavigator category={"Genre"}  redirecturl={"category"} data={lang}/>
-      )
+    <CategoryNavigator category={"Genre"} redirecturl={"category"} data={lang} />
+  )
 }
 export default ExGenre;

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 function Footer() {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <footer className="bg-white mt-10 border-t border-gray-300 shadow-inner">
       <div className="relative mx-auto max-w-7xl px-6 py-16">
@@ -33,24 +33,24 @@ function Footer() {
               Fast, simple & secure ticket booking.
             </p>
           </div>
-           <div className="mt-10 lg:mt-0">
+          <div className="mt-10 lg:mt-0">
             <div className="flex flex-wrap gap-10 text-gray-700">
 
-              <p  onClick={() => navigate("/")} className="flex items-center gap-2 hover:text-amber-700 transition">
-  Home
-</p>
+              <p onClick={() => navigate("/")} className="flex items-center gap-2 hover:text-amber-700 transition">
+                Home
+              </p>
 
-<p   onClick={() => navigate("/movies")} className="flex items-center gap-2 hover:text-amber-700 transition">
-  Movies
-</p>
+              <p onClick={() => navigate("/movies")} className="flex items-center gap-2 hover:text-amber-700 transition">
+                Movies
+              </p>
 
-<p   onClick={() => navigate("/theatres")} className="flex items-center gap-2 hover:text-amber-700 transition">
-  Theatres
-</p>
+              <p onClick={() => navigate("/theatres")} className="flex items-center gap-2 hover:text-amber-700 transition">
+                Theatres
+              </p>
 
-<p   onClick={() => navigate("/history")} className="flex items-center gap-2 hover:text-amber-700 transition">
-  Orders
-</p>
+              <p onClick={() => navigate("/history")} className="flex items-center gap-2 hover:text-amber-700 transition">
+                Orders
+              </p>
 
 
             </div>

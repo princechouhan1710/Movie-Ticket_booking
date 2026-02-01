@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
- 
+
 export default function TimeCard({ time }) {
     let [timePop, setTimePop] = useState(false)
     return (
@@ -16,11 +16,10 @@ export default function TimeCard({ time }) {
                     return <div className='top-11  px-3 py-2'>
                         <p className=' font-thin'>{v.categoryName}</p>
                         <p className=' font-medium'> ₹{v.price}</p>
-                         </div>
+                    </div>
                 })}
             </div>}
         </div>
     )
 }
- 
- 
+
