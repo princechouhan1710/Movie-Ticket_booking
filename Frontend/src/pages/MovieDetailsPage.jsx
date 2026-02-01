@@ -118,16 +118,7 @@ function Ineer() {
               ))}
             </div>
 
-            <div className="flex gap-4 overflow-scroll">
-              {["Filter", "After 10 PM", "Premium Seats"].map((b) => (
-                <button
-                  key={b}
-                  className="px-4 py-2 border  border-gray-300 rounded-xl hover:bg-gray-200 transition"
-                >
-                  {b}
-                </button>
-              ))}
-            </div>
+            
 
             <div className="bg-gray-100 flex justify-start gap-8 px-6 py-3 rounded-xl shadow">
               <p className="flex items-center gap-2">

@@ -49,6 +49,7 @@ function Navbar() {
         "/api/user/register",
         { ...formData }
       );
+      console.log(response.data.success)
       if (response.data.success) {
         alert("Registration successful ✅ OTP sent to your email.");
         setProfile(false);
@@ -112,6 +113,7 @@ function Navbar() {
       setOtpResend(false)
       setLoginForm({
         email: "",
+        otp:""
       })
       console.log(data.message)
     } catch (error) {
@@ -179,13 +181,7 @@ function Navbar() {
     <div className='sticky top-0 z-40 bg-white mb-15' >
       <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
   <div className= " max-w-10xl mx-auto flex items-center justify-between py-2 px-3 sm:px-8">
-    {/* <div
-      className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
-      onClick={() => navigate("/")}
-    >
-       <p>Ticket Wala | Indore</p>
-      
-    </div> */}
+    
 
     {!isHistoryPage ? (
       <>
@@ -315,7 +311,7 @@ function Navbar() {
           Review  Your Orders
         </h2>
         <div
-            className="sm:w-11 sm:h-11 rounded-full flex bg-gray-200  justify-center items-center text-xl sm:text-2xl cursor-pointer hover:bg-gray-300 transition"
+            className="sm:w-11 sm:/h-11 rounded-full flex bg-gray-200  justify-center items-center text-xl sm:text-2xl cursor-pointer hover:bg-gray-300 transition"
             onClick={() => setProfile(true)}
           >
             🧑🏻
