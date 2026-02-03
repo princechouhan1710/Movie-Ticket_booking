@@ -6,7 +6,7 @@ function Footer() {
     const ordercheck = async () => {
       try {
         const token = await localStorage.getItem("token");
-        const { data } = await axios.get("http://localhost:4000/api/user/profile", {
+        const { data } = await axios.get("/api/user/profile", {
           headers: {
             token: token
           }

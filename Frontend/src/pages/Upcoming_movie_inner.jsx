@@ -18,7 +18,7 @@ function Upcoming() {
   const [filter, setfilter] = useState({ langauage: null, category: null })
   const FilterMovie = async () => {
     try {
-      const { data } = await axios(`http://localhost:4000/api/movie/filtermovie-query/?langauage=${filter.langauage}&category=${filter.category}`)
+      const { data } = await axios(`/api/movie/filtermovie-query/?langauage=${filter.langauage}&category=${filter.category}`)
       const upcomingdOnly = data.data.filter(
         movie => movie.released === false
       );

@@ -34,11 +34,15 @@ function Navbar() {
 
   );
   const location = useLocation();
+  
+  const isMainPage = location.pathname === "/";
   const isHistoryPage = location.pathname === "/history";
+  const isFrequentlyQuestion = location.pathname === "/movies/frequently-asked-questions";  
+  const isTermAndCondition = location.pathname === "/movies/terms-and-condition";
 
 const getUser =async ()=>{
   try {
-    const {data } =await axios('http://localhost:4000/api/user/profile',{
+    const {data } =await axios('/api/user/profile',{
     headers:{
       "token":localStorage.getItem("token")
     }
@@ -71,7 +75,7 @@ getUser()
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/user/register",
+        "/api/user/register",
         { ...formData }
       );
       if (response.data.success) {
@@ -107,7 +111,7 @@ getUser()
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/user/verify-otp",
+        "/api/user/verify-otp",
         { ...otpform }
       );
       alert("OTP verified successfully ✅");
@@ -130,7 +134,7 @@ getUser()
   const otpResendHandler = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post("http://localhost:4000/api/user/resend-otp",
+      const data = await axios.post("/api/user/resend-otp",
         { ...Resendotpform }
       )
       setOtp(true)
@@ -156,7 +160,7 @@ getUser()
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/user/login",
+        "/api/user/login",
         { ...loginform }
       );
 
@@ -179,7 +183,7 @@ getUser()
   const ordercheck = async () => {
     try {
       const token = await localStorage.getItem("token");
-      const { data } = await axios.get("http://localhost:4000/api/user/profile", {
+      const { data } = await axios.get("/api/user/profile", {
         headers: {
           token: token
         }
@@ -198,7 +202,7 @@ getUser()
   const orderLogin =async () =>{
     try {
        const token = await localStorage.getItem("token");
-      const { data } = await axios.get("http://localhost:4000/api/user/profile", {
+      const { data } = await axios.get("/api/user/profile", {
         headers: {
           token: token
         }
@@ -219,8 +223,78 @@ getUser()
       <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
         <div className=" max-w-10xl mx-auto flex items-center justify-between py-2 px-3 sm:px-8">
 
-          {!isHistoryPage ? (
+          {isFrequentlyQuestion ? (
+             <>
+              <div
+                className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
+                onClick={() => navigate("/")}
+              >
+                <p>Ticket Wala | Indore</p>
+
+              </div>
+              <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
+                onClick={() => navigate("/")}
+              ><FaArrowLeft /></div>
+              <h2 className="text-lg font-bold flex text-amber-800 tracking-wide ">
+                Frequently Asked Question
+              </h2>
+              <div
+                  className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                // onClick={() => setProfile(true)}
+                onClick={orderLogin}
+              >
+                🧑🏻
+              </div>
+            </>
+          ) : (
+            isHistoryPage ?(
             <>
+              <div
+                className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
+                onClick={() => navigate("/")}
+              >
+                <p>Ticket Wala | Indore</p>
+
+              </div>
+              <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
+                onClick={() => navigate("/")}
+              ><FaArrowLeft /></div>
+              <h2 className="text-lg font-bold flex text-amber-800 tracking-wide ">
+                Review  Your Orders
+              </h2>
+              <div
+                  className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                // onClick={() => setProfile(true)}
+                onClick={orderLogin}
+              >
+                🧑🏻
+              </div>
+            </>):(
+              isTermAndCondition ?(
+                <>
+              <div
+                className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
+                onClick={() => navigate("/")}
+              >
+                <p>Ticket Wala | Indore</p>
+
+              </div>
+              <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
+                onClick={() => navigate("/")}
+              ><FaArrowLeft /></div>
+              <h2 className="text-lg font-bold flex text-amber-800 tracking-wide ">
+                Term and Condition
+              </h2>
+              <div
+                  className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                // onClick={() => setProfile(true)}
+                onClick={orderLogin}
+              >
+                🧑🏻
+              </div>
+            </>
+            ):(
+               <>
               <div
                 className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
                 onClick={() => navigate("/")}
@@ -330,30 +404,15 @@ getUser()
                 </div>
               </div>
             </>
-          ) : (
-            <>
-              <div
-                className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
-                onClick={() => navigate("/")}
-              >
-                <p>Ticket Wala | Indore</p>
-
-              </div>
-              <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
-                onClick={() => navigate("/")}
-              ><FaArrowLeft /></div>
-              <h2 className="text-lg font-bold flex text-amber-800 tracking-wide ">
-                Review  Your Orders
-              </h2>
-              <div
-                className="sm:w-11 sm:/h-11 rounded-full flex bg-gray-200  justify-center items-center text-xl sm:text-2xl cursor-pointer hover:bg-gray-300 transition"
-                // onClick={() => setProfile(true)}
-                onClick={orderLogin}
-              >
-                🧑🏻
-              </div>
-            </>
+          
+            ))
           )}
+
+          
+         
+ 
+
+          
         </div>
       </nav>
 
@@ -619,8 +678,8 @@ getUser()
                  </div>
      
                  <div className="shadow-md rounded-xl p-4 cursor-pointer bg-gray-50 transition">
-                   <div className="flex justify-between items-center text-sm">
-                     <h3 className="font-medium flex gap-5 items-center"> <span><BiBorderRadius /></span> <p> View All Booking </p></h3>
+                   <div className="flex justify-between items-center text-sm" onClick={() =>{setUser(false); navigate("/history")}}>
+                     <h3 className="font-medium flex gap-5 items-center"   > <span><BiBorderRadius /></span> <p> View All Booking </p></h3>
                      <span>➪</span>
                    </div>
                  </div>
@@ -628,12 +687,12 @@ getUser()
                  <p className="my-8  text-sm font-bold text-gray-700">Support</p>
      
                  <div className="shadow-md rounded-xl">
-                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl">
+                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl" onClick={() =>{setUser(false); navigate("/movies/frequently-asked-questions")}}>
                       <h3 className="font-medium flex gap-5 items-center"> <span><LuMessageCircleQuestion /> </span> <p> Frequently Asked Questions </p></h3>
                      <span>➪</span>
                    </div>
                   <hr className='text-gray-300 mx-4' />
-                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl">
+                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl" onClick={() =>{setUser(false); navigate("/movies/contact")}}>
                       <h3 className="font-medium flex gap-5 items-center"> <span><RiContactsBook3Line /></span> <p> Contact Us</p></h3>
                      <span>➪</span>
                    </div>
@@ -641,7 +700,7 @@ getUser()
      
                  <p className="my-8  text-sm font-bold text-gray-700">More</p>
      
-                 <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer bg-gray-50">
+                 <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer bg-gray-50" onClick={() =>{setUser(false); navigate("/movies/terms-and-condition")}}>
                     <h3 className="font-medium flex gap-5 items-center"> <span><RiFileCopy2Line /></span> <p> Terms and Conditions</p></h3>
                    <span>➪</span>
                  </div>

@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 function CategoryNavigator({ category, redirecturl, data }) {
 
   return (
-    <div className="my-10  flex flex-col gap-10">
+    <div className=" my-10 flex flex-col ">
       <h2 className="text-2xl font-medium p-3">
         Explore Latest Movies in Indore by {category}
       </h2>
