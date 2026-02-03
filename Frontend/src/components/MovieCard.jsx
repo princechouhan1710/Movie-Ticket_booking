@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 function MovieCard({ movie }) {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className={`w-75 h-[450px] border  border-gray-300   m-auto md:m-0 rounded-b-lg sm:w-73 lg:w-72  xl:w-72 overflow-hidden ${!movie.released && 'border-b-0'}`} onClick={() => { navigate(`/movies/${movie.encodeName}`); }}>
       <div className="w-full h-[80%] object-cover relative">

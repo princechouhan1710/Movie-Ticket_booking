@@ -1,21 +1,19 @@
+import { useEffect, useState } from 'react';
 import CategoryNavigator from './CategoryNavigator';
-const lang = [
-  { lan: 'Comedy' },
-  { lan: 'Action' },
-  { lan: 'Drama' },
-  { lan: 'Romance' },
-  { lan: 'Horror' },
-  { lan: 'Thriller' },
-  { lan: 'Crime' },
-  { lan: 'Mystery' },
-  { lan: 'Biography' },
-  { lan: 'Adventure' },
-  { lan: 'Animation' },
-  { lan: 'Family' }
-];
+import axios from 'axios';
+
 function ExGenre() {
+   const [genre, setGenre] = useState([]);
+      const getlanguage = async () => {
+      const { data } = await axios(' /api/movie/getcategory');
+      setGenre(data.data);
+      };
+      useEffect(() => {
+        getlanguage();
+      }, []);
+      
   return (
-    <CategoryNavigator category={"Genre"} redirecturl={"category"} data={lang} />
+    <CategoryNavigator category="Genre" redirecturl="category" data={genre} />
   )
 }
 export default ExGenre;

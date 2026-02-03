@@ -2,16 +2,16 @@ import { useContext, useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { moviecontext, theatrescontext } from '../App'
 import { Dialog, DialogPanel } from '@headlessui/react'
-import CategoryNavigator from '../components/CategoryNavigator'
-import { categories, langauages } from '../assets/data'
 import Upmovie from '../components/Upcoming_movie_Home';
+import Language from '../components/ExploreLanguage.jsx'
+import Category from '../components/ExploreGenre .jsx'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
 import TimeCard from './TimeCard.jsx';
 function Ineer() {
-  let [review, setReview] = useState([
+  const [review, setReview] = useState([
     { platform: "Hungama News", review: "Amazing movie!", rating: 4.2 },
     { platform: "Times of India", review: "Great direction.", rating: 4.0 },
     { platform: "India Times", review: "Good storyline.", rating: 4.1 },
@@ -21,15 +21,15 @@ function Ineer() {
 
   ])
   const { name } = useParams();
-  let [view, setView] = useState(false)
-  let [movie, setMovie] = useState(null)
-  let [show, setShow] = useState([])
-  let [loading, setLoading] = useState(true)
+  const [view, setView] = useState(false)
+  const [movie, setMovie] = useState(null)
+  const [show, setShow] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  let getMovie = async () => {
+  const getMovie = async () => {
     try {
-      let data = await fetch(`/api/movie/getmovie/${name}`);
-      let res = await data.json();
+      const data = await fetch(`/api/movie/getmovie/${name}`);
+      const res = await data.json();
       if (res.success) {
         setMovie({ ...res.data })
         getShow(res.data._id)
@@ -42,9 +42,9 @@ function Ineer() {
   useEffect(() => {
     getMovie();
   }, [name])
-  let getShow = async (movieId) => {
-    let data = await fetch("/api/show/getshow/" + movieId);
-    let res = await data.json();
+  const getShow = async (movieId) => {
+    const data = await fetch("/api/show/getshow/" + movieId);
+    const res = await data.json();
     if (res.success) {
       setShow([...res.data])
     }
@@ -160,9 +160,8 @@ function Ineer() {
                 </div>
               </div>
             ))}
-
-            <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
-            <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
+            <Language/>
+             <Category/>
             <Upmovie />
           </div>
 
@@ -261,7 +260,8 @@ function Ineer() {
                     <div className="flex justify-center">
                       {/* <img src={movie?.video?.url}></img> */}
                       {/* <iframe  className='w-100 md:w-[560px] md:h-[315px]' src="https://www.youtube.com/embed/bK6ldnjE3Y0?si=fMj8UG_GnBRgDtaz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
-                      <video src={movie?.video?.url} controls autoplay muted loop></video>
+                      <video src={movie?.video?.url} controls autoPslay muted loop></video>
+                      
                     </div>
                   </section>
                   <section className="mb-6">

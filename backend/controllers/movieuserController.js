@@ -174,7 +174,7 @@ let profile = (req, res) => {
         if (!req.user) {
             return res.status(500).json({ success: false, message: "not found" })
         }
-        res.send({ data: req.user })
+        res.send({success:true,message: "user found", data: req.user })
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
     }

@@ -1,24 +1,25 @@
+import { useEffect, useState } from "react";
 import CategoryNavigator from "./CategoryNavigator.jsx";
-
-const lang = [
-  { lan: 'Hindi' },
-  { lan: 'English' },
-  { lan: 'Telugu' },
-  { lan: 'Tamil' },
-  { lan: 'Kannada' },
-  { lan: 'Bengali' },
-  { lan: 'Malayalam' },
-  { lan: 'Bhojpuri' },
-  { lan: 'Odia' },
-  { lan: 'Marathi' },
-  { lan: 'Punjabi' }
-];
+import axios from "axios";
 
 function ExLAng() {
-  return (
+  const [lang, setLang] = useState([]);
+  const getlanguage = async () => {
+    const { data } = await axios(' /api/movie/getlanguage');
+        setLang(data.data);
+  };
+  useEffect(() => {
+    getlanguage();
+  }, []);
+    return (
     <>
-      <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={lang} />
+    <CategoryNavigator
+      category="Language"
+      redirecturl="langauage"
+      data={lang}/>
     </>
   );
 }
-export default ExLAng
+
+export default ExLAng;
+

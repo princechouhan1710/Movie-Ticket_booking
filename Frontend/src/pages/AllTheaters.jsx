@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { theatrescontext } from '../App'
 import { NavLink, useNavigate } from 'react-router-dom';
-import CategoryNavigator from '../components/CategoryNavigator'
-import { categories, langauages } from '../assets/data'
-
 function AllTheaters() {
   let { theatres } = useContext(theatrescontext);
 
@@ -35,9 +32,7 @@ function AllTheaters() {
             </div>
           ))}
         </div>
-        <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
-        <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
-
+       
       </div>
     </>
   );

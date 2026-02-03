@@ -2,12 +2,13 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TimeCard from './TimeCard.jsx';
-import CategoryNavigator from '../components/CategoryNavigator'
-import { categories, langauages } from '../assets/data'
+import Language from '../components/ExploreLanguage.jsx'
+import Category from '../components/ExploreGenre .jsx'
+
 function Theater() {
-  let [theater, setTheater] = useState([])
-  let { name } = useParams();
-  let [loading, setLoading] = useState(true)
+  const [theater, setTheater] = useState([])
+  const { name } = useParams();
+  const [loading, setLoading] = useState(true)
   const now = new Date();
   const gettheatres = async (name) => {
     try {
@@ -102,9 +103,8 @@ function Theater() {
                 </div>
               )
             })}
-            <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
-            <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
-
+           <Language/>
+        <Category/>
           </div>
         </div>}
     </>

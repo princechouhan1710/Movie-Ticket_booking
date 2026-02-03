@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useContext } from 'react'
 import { moviecontext, theatrescontext } from '../App';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa";
@@ -13,17 +11,17 @@ import { FaArrowLeft } from "react-icons/fa";
 function Navbar() {
   const [open, setOpen] = useState(false)
   const [opent, setOpent] = useState(false)
-  const [order, setOrder] = useState(false)
   const [search, setSearch] = useState(false)
   const [profile, setProfile] = useState(false)
+  const [user, setUser] = useState(false)
   const [otp, setOtp] = useState(false)
   const [login, setLogin] = useState(false)
-  let [showMenu, setshowMenu] = useState(false)
+  const [showMenu, setshowMenu] = useState(false)
   const [resendOtp, setResendOtp] = useState(false)
-  let { Mov, setMovie } = useContext(moviecontext)
-  let [filter, setFilter] = useState("");
-  let { theatres, setMovietheatres } = useContext(theatrescontext)
-
+  const { Mov, setMovie } = useContext(moviecontext)
+  const [filter, setFilter] = useState("");
+  const { theatres, setMovietheatres } = useContext(theatrescontext)
+  const [userProfile,setUserProfile]=useState([]);
   const navigate = useNavigate();
   const releasedmov = Mov.filter(movie => movie.released === true)
   const filtermovie = Mov.filter((m) =>
@@ -32,6 +30,15 @@ function Navbar() {
   );
   const location = useLocation();
   const isHistoryPage = location.pathname === "/history";
+
+const getUser =async ()=>{
+  const {data } =await axios('/api/user/profile')
+  setUserProfile(data.data);
+  console.log(data.data)
+};
+useEffect(()=>{
+getUser()
+},[])
 
   // Registration
   const [formData, setFormdata] = useState({
@@ -49,7 +56,6 @@ function Navbar() {
         "/api/user/register",
         { ...formData }
       );
-      console.log(response.data.success)
       if (response.data.success) {
         alert("Registration successful ✅ OTP sent to your email.");
         setProfile(false);
@@ -115,7 +121,6 @@ function Navbar() {
         email: "",
         otp: ""
       })
-      console.log(data.message)
     } catch (error) {
       console.error(error)
     }
@@ -153,24 +158,41 @@ function Navbar() {
     setLoginForm({ ...loginform, [e.target.name]: e.target.value });
   };
 
-  let ordercheck = async () => {
-    console.log("order")
+  const ordercheck = async () => {
     try {
-      let token = await localStorage.getItem("token");
-      console.log(token)
-      let { data } = await axios.get("/api/user/profile", {
+      const token = await localStorage.getItem("token");
+      const { data } = await axios.get("/api/user/profile", {
         headers: {
           token: token
         }
       })
-      console.log(data)
-      if (data.response.success) {
+      if (data.success) {
         navigate("/history")
       } else {
         setLogin(true)
       }
     } catch (error) {
-      console.log(error?.responsne?.data)
+      console.log(error?.response?.data)
+      setLogin(true)
+    }
+  }
+
+  const orderLogin =async () =>{
+    try {
+       const token = await localStorage.getItem("token");
+      const { data } = await axios.get("/api/user/profile", {
+        headers: {
+          token: token
+        }
+      })
+      if (data.success) {
+        setProfile(false)
+        setUser(true)
+      } else {
+        setLogin(true)
+      }
+    } catch (error) {
+      console.log(error?.response?.data)
       setLogin(true)
     }
   }
@@ -226,7 +248,8 @@ function Navbar() {
                 />
                 <div
                   className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
-                  onClick={() => setProfile(true)}
+                  // onClick={() => setProfile(true)}
+                  onClick={orderLogin}
                 >
                   🧑🏻
                 </div>
@@ -306,7 +329,8 @@ function Navbar() {
               </h2>
               <div
                 className="sm:w-11 sm:/h-11 rounded-full flex bg-gray-200  justify-center items-center text-xl sm:text-2xl cursor-pointer hover:bg-gray-300 transition"
-                onClick={() => setProfile(true)}
+                // onClick={() => setProfile(true)}
+                onClick={orderLogin}
               >
                 🧑🏻
               </div>
@@ -321,7 +345,7 @@ function Navbar() {
         open={open}
         onClose={() => { setOpen(false); }}
         className="relative z-10"      >
-        <div className="fixed backdrop-blur-md inset-0 flex my-20 justify-center p-4 pointer-events-none "  >
+        <div className="fixed backdrop-blur-md inset-0 flex my-20 justify-center p-4 pointer-events-none  h-fit"  >
           <div
             className="pointer-events-auto"
             onMouseEnter={() => {
@@ -334,7 +358,7 @@ function Navbar() {
               <div className="flex flex-wrap gap-4 ">
                 {Mov.map((v, i) => {
                   return (
-                    <div className="flex w-[45%] gap-3 items-center" key={i} onClick={() => {
+                    <div className="flex w-[45%] gap-3 items-center  cursor-pointer" key={i} onClick={() => {
                       navigate(`/movies/${v.encodeName}`)
                       setOpen(false);
                     }}
@@ -345,8 +369,8 @@ function Navbar() {
                         className="hidden sm:block w-20 rounded size-fit h-10"
                       />
                       <div>
-                        <p className="font-bold">{v.name}</p>
-                        <p>{v.genre} </p>
+                        <p className="font--medium text-sm">{v.name}</p>
+                        <p className='text-xs font-light'>{v.genre}, {v.langauage?.slice(0, 1).join(" ")} </p>
                       </div>
                     </div>
                   )
@@ -362,7 +386,7 @@ function Navbar() {
         open={opent}
         onClose={() => { setOpent(false); }}
         className="relative z-10" >
-        <div className="fixed backdrop-blur-md inset-0 flex my-20 justify-center p-4 pointer-events-none "  >
+        <div className="fixed backdrop-blur-md inset-0 flex my-20 justify-center p-4 pointer-events-none h-full "  >
           <div className="pointer-events-auto"
             onMouseEnter={() => {
               setOpent(true);
@@ -371,12 +395,12 @@ function Navbar() {
           >
             <DialogPanel className="bg-white rounded-lg w-screen max-w-4xl p-6 ">
               <DialogTitle className="text-xl font-bold mb-4 ">Theatres </DialogTitle>
-              <div className="flex flex-wrap gap-10 justify-center ">
+              <div className="flex flex-wrap  gap-x-10 gap-y-7 justify-center ">
                 {theatres.map((v, i) => {
                   return (
                     <NavLink to={"/theatre/list/" + v.name} onClick={() => { setOpent(false) }} className='w-[45%]'  >
-                      {v.name},{v.location},{v.city}
-                      <hr />
+                      <p className='mb-1 text-[11px] font-medium'>{v.name},{v.location},{v.city}</p>  
+                      <hr className='text-gray-300' />
                     </NavLink>
 
                   )
@@ -480,7 +504,6 @@ function Navbar() {
                 onClick={() => {
                   setProfile(false);
                   setOtp(false);
-                  setOrder(false);
                   setLogin(true);
                 }}>
                 Login
@@ -537,106 +560,82 @@ function Navbar() {
         </div>
       </Dialog>
 
-      {/* profile */}
-      <Dialog
-        open={profile}
-        onClose={() => setProfile(false)}
-        className="relative z-50"
-      >
-        <div
-          className=" fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity"
-          onClick={() => setProfile(false)}
-        />
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <DialogPanel
-            onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md rounded-xl bg-white shadow-xl border border-gray-200"
-          >
-            <h1 className="text-center text-3xl font-extrabold text-amber-700 mt-6">
-              Ticket Wala
-            </h1>
-            <p className="text-center text-gray-500 text-sm mb-6">
-              Create your account
-            </p>
-            <form onSubmit={submitHandler} className="px-6 space-y-4">
-              <input
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
-                name="name"
-                value={formData.name}
-                onChange={inputhandler}
-                placeholder="Full Name"
-                required
-              />
-              <input
-                type="email"
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
-                name="email"
-                value={formData.email}
-                onChange={inputhandler}
-                placeholder="Email Address"
-                required
-              />
-              <input
-                type="password"
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
-                name="password"
-                value={formData.password}
-                onChange={inputhandler}
-                placeholder="Password"
-                required
-              />
-              <input
-                type="number"
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
-                name="mobileNumber"
-                value={formData.mobileNumber}
-                onChange={inputhandler}
-                placeholder="Mobile Number"
-                required
-              />
-              <input
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
-                name="address"
-                value={formData.address}
-                onChange={inputhandler}
-                placeholder="Address"
-              />
-              <select
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"
-                name="interest"
-                value={formData.interest}
-                onChange={inputhandler}
-                required
-              >
-                <option value="">Favourite Genre</option>
-                <option>Action</option>
-                <option>Comedy</option>
-                <option>Romance</option>
-                <option>Thriller</option>
-                <option>Horror</option>
-              </select>
-              <button
-                type="submit"
-                className="w-full py-3 rounded-lg bg-amber-500 hover:bg-amber-600 text-black font-semibold transition"
-              >
-                Register
-              </button>
-            </form>
-            <p className="text-center text-sm text-gray-500 mt-6 mb-6">
-              Already have an account?{" "}
-              <span className="text-amber-600 cursor-pointer font-semibold"
-                onClick={() => {
-                  setProfile(false);
-                  setOtp(false);
-                  setOrder(false);
-                  setLogin(true);
-                }}>
-                Login
-              </span>
-            </p>
-          </DialogPanel>
-        </div>
-      </Dialog>
+      {/* User */}
+     <Dialog
+             open={user}
+             onClose={() => setUser(false)}
+             className="relative z-50"
+           >
+             <div
+               className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity"
+               onClick={() => setUser(false)}
+             />
+     
+             <div className="fixed inset-0 flex justify-end">
+               <DialogPanel
+                 className="w-[340px] h-full bg-white shadow-2xl p-6 rounded-l-3xl 
+                             transform transition-all duration-300 animate-slideIn"
+                 onClick={(e) => e.stopPropagation()}
+               >
+                {/* <div className='border '>
+                {
+                  
+                  userProfile.map((v,i)=>{
+                    return(
+                      <p>{v.name}</p>
+                    )
+                  })
+                }
+                </div> */}
+
+                 <h1 className="text-3xl font-semibold mb-6">Profile</h1>
+     
+                 <div className="flex items-center gap-4 mb-8">
+                   <p className="w-14 h-14 rounded-full bg-indigo-500 flex justify-center 
+                                  items-center text-white text-2xl font-semibold">
+                     U
+                   </p>
+     
+                   <div>
+                     <h2 className="text-lg font-bold">User</h2>
+                     <h3 className="text-gray-600 text-sm">Email</h3>
+                   </div>
+                 </div>
+     
+                 <div className="shadow-md rounded-xl p-4 cursor-pointer hover:bg-gray-50 transition">
+                   <div className="flex justify-between items-center text-sm">
+                     <h3 className="font-medium">View All Booking</h3>
+                     <span>➪</span>
+                   </div>
+                 </div>
+     
+                 <p className="mt-8 mb-2 text-sm font-bold text-gray-700">Support</p>
+     
+                 <div className="shadow-md rounded-xl">
+                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer hover:bg-gray-50">
+                     <h3>Frequently Asked Questions</h3>
+                     <span>➪</span>
+                   </div>
+                   <hr />
+                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer hover:bg-gray-50">
+                     <h3>Contact Us</h3>
+                     <span>➪</span>
+                   </div>
+                 </div>
+     
+                 <p className="mt-8 mb-2 text-sm font-bold text-gray-700">More</p>
+     
+                 <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+                   <h3>Terms and Conditions</h3>
+                   <span>➪</span>
+                 </div>
+     
+                 <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 mt-3">
+                   <h3 className="text-red-600 font-semibold">Logout</h3>
+                 </div>
+               </DialogPanel>
+             </div>
+           </Dialog>
 
       {/* otp  */}
       <Dialog
@@ -657,7 +656,7 @@ function Navbar() {
               Verify OTP
             </h1>
             <p className="text-center text-gray-500 text-sm mb-6">
-              Please enter the OTP sent to your email to complete registration.
+              Please enter the OTP sent to your email to compconste registration.
             </p>
             <form onSubmit={otpsubmitHandler} className="px-6 space-y-4">
               <input
@@ -693,7 +692,6 @@ function Navbar() {
                 onClick={() => {
                   setOtp(false);
                   setProfile(false);
-                  setOrder(false);
                   setResendOtp(true);
                 }}
               >
@@ -723,7 +721,7 @@ function Navbar() {
               Resend OTP
             </h1>
             <p className="text-center text-gray-500 text-sm mb-6">
-              Enter your email below and we will send you a new OTP to complete registration.
+              Enter your email below and we will send you a new OTP to compconste registration.
             </p>
             <form onSubmit={otpResendHandler} className="px-6 space-y-4">
               <input

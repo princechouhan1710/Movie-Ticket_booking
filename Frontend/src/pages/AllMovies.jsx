@@ -2,13 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { moviecontext } from '../App'
 import { useNavigate } from 'react-router-dom'
 import MovieCard from '../components/MovieCard'
-import CategoryNavigator from '../components/CategoryNavigator'
-import { categories, langauages } from '../assets/data'
 
 
 function AllMovie() {
-  let { Mov, setMovie } = useContext(moviecontext)
-  let navigate = useNavigate();
+  const { Mov, setMovie } = useContext(moviecontext)
+  const navigate = useNavigate();
 
   const [upcomingmovies, setUpomingmovies] = useState([]);
   useEffect(() => {
@@ -32,9 +30,7 @@ function AllMovie() {
             })
           }
         </div>
-        <CategoryNavigator category={"Genre"} redirecturl={"category"} data={categories} />
-        <CategoryNavigator category={"langauage"} redirecturl={"langauage"} data={langauages} />
-
+        {/* <Lang/> */}
       </div>
     </>
   )

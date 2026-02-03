@@ -4,16 +4,15 @@ import MovieCard from './MovieCard.jsx';
 import axios from 'axios';
 
 function Movie() {
-  let { Mov, setMovie } = useContext(moviecontext)
+  const { Mov, setMovie } = useContext(moviecontext)
 const [releasedmovies, setReleasedMovies] = useState([]);
 useEffect(() => {
   setReleasedMovies(Mov.filter(movie => movie.released !== false));
 }, [Mov]);
     const [filter, setfilter] = useState({ langauage: null, category: null })
-  let FilterMovie = async () => {
+  const FilterMovie = async () => {
     try {
-      let { data } = await axios(`/api/movie/filtermovie-query/?langauage=${filter.langauage}&category=${filter.category}`)
-      console.log(data)      
+      const { data } = await axios(`/api/movie/filtermovie-query/?langauage=${filter.langauage}&category=${filter.category}`)
     const releasedOnly = data.data.filter(
       movie => movie.released !== false
     );
@@ -23,7 +22,6 @@ useEffect(() => {
  
     }
   }
-  console.log(filter)
   useEffect(() => {
     FilterMovie()
   }, [filter])

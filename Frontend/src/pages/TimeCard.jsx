@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function TimeCard({ time }) {
-    let [timePop, setTimePop] = useState(false)
+    const [timePop, setTimePop] = useState(false)
     return (
         <div className='border relative border-gray-500  px-8 py-2 rounded  ' onMouseLeave={() => { setTimePop(false) }} onMouseEnter={(e) => {
             e.preventDefault();

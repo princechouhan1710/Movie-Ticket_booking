@@ -99,6 +99,24 @@ let FilterMovieQuery = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 }
+
+let getlanguage = async (req, res) => {
+    try {
+        let movies = await Movie.find().distinct("langauage");
+        res.json({ success: true, message: "Movie Get Successfully", data: movies })
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+    }
+}
  
- 
-module.exports = { createMovie, getMovies, getMovie,updateMovies,deleteMovies ,FilterMovie,FilterMovieQuery}
+let getcategory = async (req, res) => {
+    try {
+        let movies = await Movie.find().distinct("category");
+        res.json({ success: true, message: "Movie Get Successfully", data: movies })
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+    }
+}
+module.exports = { createMovie, getMovies, getMovie,updateMovies,deleteMovies ,FilterMovie,FilterMovieQuery,getlanguage,getcategory}

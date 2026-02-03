@@ -9,13 +9,12 @@ import History from './pages/History.jsx'
 import Theaters from './pages/Theaters.jsx'
 import MovieList from './pages/MovieList.jsx'
 import AllTheaters from './pages/AllTheaters.jsx'
-import AllMovies from './pages/AllMovies.jsx'
 export const theatrescontext = createContext();
 export const moviecontext = createContext();
 
 function App() {
-  let location = useLocation();
-  let [open, setOpen] = useState([])
+  const location = useLocation();
+  const [open, setOpen] = useState([])
   const [Mov, setMovie] = useState([]);
   const fetchMovies = async () => {
     const res = await fetch(" /api/movie/getmovies");
@@ -24,7 +23,7 @@ function App() {
   useEffect(() => {
     fetchMovies();
   }, []);
-  let [theatres, setTheatres] = useState([])
+  const [theatres, setTheatres] = useState([])
   const fetchTheatres = async () => {
     const res = await fetch("/api/theatres/gettheatres")
     const data = await res.json();
@@ -33,7 +32,7 @@ function App() {
   useEffect(() => {
     fetchTheatres();
   }, [])
-  let pathname = location.pathname
+  const pathname = location.pathname
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -46,7 +45,6 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />}> </Route>
         <Route path='/history' element={<History />}></Route>
-        <Route path='/movies' element={<AllMovies />}></Route>
         <Route path='/theatres' element={<AllTheaters />}></Route>
         <Route path='/UpComing' element={<Upcoming />}></Route>
         <Route path='/movies/:name' element={<Ineerpage />}></Route>

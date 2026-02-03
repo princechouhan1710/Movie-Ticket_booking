@@ -4,14 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import MovieCard from '../components/MovieCard';
 
 export default function MovieList() {
-  let { key, value } = useParams();
-  let [movies, setMovies] = useState([])
-  let navigate = useNavigate()
+  const { key, value } = useParams();
+  const [movies, setMovies] = useState([])
+  const navigate = useNavigate()
 
-  let getMovies = async () => {
-    let { data } = await axios(`/api/movie/filtermovie/${key}/${value}`)
-    console.log(data)
-    setMovies([...data.data])
+  const getMovies = async () => {
+    const { data } = await axios(` /api/movie/filtermovie/${key}/${value}`)
+        setMovies([...data.data])
   }
   useEffect(() => {
     getMovies()
