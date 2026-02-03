@@ -13,7 +13,7 @@ function Theater() {
   const gettheatres = async (name) => {
     try {
       const { data } = await axios.get(
-        ` /api/theatres/filterTheatre/${name}`
+        ` http://localhost:4000/api/theatres/filterTheatre/${name}`
       );
       setTheater(data.data);
     } catch (err) {
@@ -34,15 +34,16 @@ function Theater() {
       {loading ? <div className='w-full h-screen flex items-center justify-center'>
         <div className="loader"></div>
       </div> :
-        <div className="py-5 md:p-10 max-w-5xl mx-auto space-y-8">
+          <div className="py-10 md:p-10 max-w-5xl mx-auto space-y-8">
 
-          <div className="flex gap-6 p-5 bg-white rounded-full ">
-            <div className='flex gap-3  ' >
-              <img src={theater[0]?.theatre?.image?.url} alt="" height={"100px"} width={"100px"} className='w-25 h-25 md:w-28 md:h-30 object-cover rounded-full shadow' />
+
+            <div className="flex gap-6 py-5 px-2 md:p-5 bg-white rounded-xl shadow">            <div className='flex gap-3  ' >
+              <img src={theater[0]?.theatre?.image?.url} alt=""                className="w-28 h-0 object-cover rounded-lg shadow"
+ />
               <div >
-                <p className='font-bold text-xl md:text-3xl '>{name},{theater[0]?.theatre?.location}  🤍 </p>
-                <p className='text-gray-500 text-xl mt-1'>{theater[0]?.theatre?.screens}</p>
-                <p className='  md:text-2xl text-gray-500'>{theater[0]?.theatre?.city}</p>
+                <p className='text-2xl md:text-2xl font-bold '>{name},{theater[0]?.theatre?.location}  🤍 </p>
+                <p className='text-gray-500 text-sm mt-1'>{theater[0]?.theatre?.screens}</p>
+                <p className='  text-gray-500 text-sm mt-1'>{theater[0]?.theatre?.city}</p>
               </div>
             </div>
           </div>

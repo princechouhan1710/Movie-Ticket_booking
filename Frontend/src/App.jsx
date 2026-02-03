@@ -17,7 +17,7 @@ function App() {
   const [open, setOpen] = useState([])
   const [Mov, setMovie] = useState([]);
   const fetchMovies = async () => {
-    const res = await fetch(" /api/movie/getmovies");
+    const res = await fetch(" http://localhost:4000/api/movie/getmovies");
     const data = await res.json(); setMovie(data.data);
   };
   useEffect(() => {
@@ -25,7 +25,7 @@ function App() {
   }, []);
   const [theatres, setTheatres] = useState([])
   const fetchTheatres = async () => {
-    const res = await fetch("/api/theatres/gettheatres")
+    const res = await fetch("http://localhost:4000/api/theatres/gettheatres")
     const data = await res.json();
     setTheatres(data.data)
   };

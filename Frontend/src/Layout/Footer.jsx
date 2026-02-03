@@ -3,6 +3,24 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 function Footer() {
   const navigate = useNavigate();
+    const ordercheck = async () => {
+      try {
+        const token = await localStorage.getItem("token");
+        const { data } = await axios.get("http://localhost:4000/api/user/profile", {
+          headers: {
+            token: token
+          }
+        })
+        if (data.success) {
+          navigate("/history")
+        } else {
+          setLogin(true)
+        }
+      } catch (error) {
+        console.log(error?.response?.data)
+        setLogin(true)
+      }
+    }
   return (
     <footer className="bg-white mt-10 border-t border-gray-300 shadow-inner">
       <div className="relative mx-auto max-w-7xl px-6 py-16">
@@ -25,7 +43,8 @@ function Footer() {
             <h2
               className="text-3xl font-extrabold text-amber-800 tracking-wide"
               style={{ fontFamily: "Pacifico" }}
-             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+             onClick={() =>{navigate("/");
+              window.scrollTo({ top: 0, behavior: "smooth" })}}>
               Ticket Wala
             </h2>
             <p className="mt-4 max-w-md text-gray-600 leading-relaxed">
@@ -36,11 +55,13 @@ function Footer() {
           <div className="mt-10 lg:mt-0">
             <div className="flex flex-wrap gap-10 text-gray-700">
 
-              <p onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-2 hover:text-amber-700 transition">
+              <p onClick={() =>{navigate("/");
+               window.scrollTo({ top: 0, behavior: "smooth" })}} className="flex items-center gap-2 hover:text-amber-700 transition">
                 Home
               </p>
 
-              <p onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-2 hover:text-amber-700 transition">
+              <p onClick={() =>{navigate("/");
+               window.scrollTo({ top: 0, behavior: "smooth" })}} className="flex items-center gap-2 hover:text-amber-700 transition">
                 Movies
               </p>
 
@@ -48,7 +69,7 @@ function Footer() {
                 Theatres
               </p>
 
-              <p onClick={() => navigate("/history")} className="flex items-center gap-2 hover:text-amber-700 transition">
+              <p  onClick={ordercheck} className="flex items-center gap-2 hover:text-amber-700 transition">
                 Orders
               </p>
 

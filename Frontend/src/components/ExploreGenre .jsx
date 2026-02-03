@@ -5,7 +5,7 @@ import axios from 'axios';
 function ExGenre() {
    const [genre, setGenre] = useState([]);
       const getlanguage = async () => {
-      const { data } = await axios(' /api/movie/getcategory');
+      const { data } = await axios(' http://localhost:4000/api/movie/getcategory');
       setGenre(data.data);
       };
       useEffect(() => {

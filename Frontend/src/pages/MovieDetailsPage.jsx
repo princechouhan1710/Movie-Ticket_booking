@@ -28,11 +28,11 @@ function Ineer() {
 
   const getMovie = async () => {
     try {
-      const data = await fetch(`/api/movie/getmovie/${name}`);
+      const data = await fetch(`http://localhost:4000/api/movie/getmovie/${name}`);
       const res = await data.json();
       if (res.success) {
-        setMovie({ ...res.data })
         getShow(res.data._id)
+        setMovie({ ...res.data })
       }
     } catch (error) {
 
@@ -43,7 +43,7 @@ function Ineer() {
     getMovie();
   }, [name])
   const getShow = async (movieId) => {
-    const data = await fetch("/api/show/getshow/" + movieId);
+    const data = await fetch("http://localhost:4000/api/show/getshow/" + movieId);
     const res = await data.json();
     if (res.success) {
       setShow([...res.data])
@@ -103,7 +103,7 @@ function Ineer() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-4 overflow-x-auto pb-2">
+             <div className="flex items-center gap-4 overflow-x-auto pb-2">
               <p className=" text-gray-500 font-semibold px-3 py-1 rounded-full bg-gray-200">
                 {now.toLocaleString("default", { month: "short" })}
               </p>

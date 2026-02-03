@@ -7,6 +7,11 @@ import axios from 'axios';
 import { IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa";
+import { BiBorderRadius } from "react-icons/bi";
+import { LuMessageCircleQuestion } from "react-icons/lu";
+import { RiContactsBook3Line } from "react-icons/ri";
+import { RiFileCopy2Line } from "react-icons/ri";
+import { IoIosLogOut } from "react-icons/io";
 
 function Navbar() {
   const [open, setOpen] = useState(false)
@@ -32,14 +37,27 @@ function Navbar() {
   const isHistoryPage = location.pathname === "/history";
 
 const getUser =async ()=>{
-  const {data } =await axios('/api/user/profile')
-  setUserProfile(data.data);
-  console.log(data.data)
+  try {
+    const {data } =await axios('http://localhost:4000/api/user/profile',{
+    headers:{
+      "token":localStorage.getItem("token")
+    }
+  })
+  setUserProfile([data.data]);
+  } catch (error) {
+    console.log(error.response)
+  }
 };
 useEffect(()=>{
 getUser()
 },[])
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(false);
+    navigate("/");
+    setLogin(true);
+  };
   // Registration
   const [formData, setFormdata] = useState({
     name: "",
@@ -53,7 +71,7 @@ getUser()
     e.preventDefault();
     try {
       const response = await axios.post(
-        "/api/user/register",
+        "http://localhost:4000/api/user/register",
         { ...formData }
       );
       if (response.data.success) {
@@ -89,7 +107,7 @@ getUser()
     e.preventDefault();
     try {
       const response = await axios.post(
-        "/api/user/verify-otp",
+        "http://localhost:4000/api/user/verify-otp",
         { ...otpform }
       );
       alert("OTP verified successfully ✅");
@@ -112,7 +130,7 @@ getUser()
   const otpResendHandler = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post("/api/user/resend-otp",
+      const data = await axios.post("http://localhost:4000/api/user/resend-otp",
         { ...Resendotpform }
       )
       setOtp(true)
@@ -138,7 +156,7 @@ getUser()
     e.preventDefault();
     try {
       const response = await axios.post(
-        "/api/user/login",
+        "http://localhost:4000/api/user/login",
         { ...loginform }
       );
 
@@ -161,7 +179,7 @@ getUser()
   const ordercheck = async () => {
     try {
       const token = await localStorage.getItem("token");
-      const { data } = await axios.get("/api/user/profile", {
+      const { data } = await axios.get("http://localhost:4000/api/user/profile", {
         headers: {
           token: token
         }
@@ -180,7 +198,7 @@ getUser()
   const orderLogin =async () =>{
     try {
        const token = await localStorage.getItem("token");
-      const { data } = await axios.get("/api/user/profile", {
+      const { data } = await axios.get("http://localhost:4000/api/user/profile", {
         headers: {
           token: token
         }
@@ -519,12 +537,12 @@ getUser()
         onClose={() => setSearch(false)}
         className="relative z-10"
       >
-        <div className="fixed inset-0 flex items-center justify-center p-4 backdrop-blur-md">
+        <div className="fixed backdrop-blur-md inset-0 flex my-20 justify-center p-4 pointer-events-none  h-fit"  >
           <div className="pointer-events-auto">
             <DialogPanel className="bg-white rounded-lg w-screen max-w-4xl p-6">
               <input
                 type="search"
-                className="border w-[90%] p-2 rounded-md"
+                className="border w-[90%] p-2    border-gray-300 pl-4 lg:px-4 py-2 rounded-lg shadow-sm focus:ring-2 text-xs focus:ring-amber-500 focus:outline-none "
                 placeholder="🔍 Search for movies, cinemas and more"
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
@@ -544,12 +562,12 @@ getUser()
                     >
                       <img
                         src={v.poster.url}
-                        className="hidden sm:block w-20 h-10 rounded object-cover"
+                        className="hidden sm:block w-20 rounded size-fit h-10"
                         alt={v.name}
                       />
-                      <div>
-                        <p className="font-bold">{v.name}</p>
-                        <p className="text-sm">{v.genre} • {v.language}</p>
+                      <div> <p className="font--medium text-sm">{v.name}</p>
+                        <p className='text-xs font-light'>{v.genre}, {v.langauage?.slice(0, 1).join(" ")} </p>
+                     
                       </div>
                     </div>
                   ))
@@ -573,66 +591,69 @@ getUser()
      
              <div className="fixed inset-0 flex justify-end">
                <DialogPanel
-                 className="w-[340px] h-full bg-white shadow-2xl p-6 rounded-l-3xl 
+                 className="w-[40%] h-full bg-slate-100 shadow-2xl  rounded-l-3xl 
                              transform transition-all duration-300 animate-slideIn"
                  onClick={(e) => e.stopPropagation()}
                >
-                {/* <div className='border '>
+               
                 {
                   
-                  userProfile.map((v,i)=>{
+                  userProfile?.map((v,i)=>{
                     return(
-                      <p>{v.name}</p>
-                    )
-                  })
-                }
-                </div> */}
+                      <div key={i}>
+                
 
-                 <h1 className="text-3xl font-semibold mb-6">Profile</h1>
-     
-                 <div className="flex items-center gap-4 mb-8">
+                 <h1 className="text-2xl w-full  font-medium mb-6 shadow-md rounded-xl p-4 px-8 flex gap-5  items-center cursor-pointer bg-gray-50 " key={i}> <FaArrowLeft className='text-lg font-normal'  onClick={() => setUser(false)}/> <p> Profile </p></h1>
+     <div className='px-6'>
+        <div className="flex items-center gap-4 mb-8">
                    <p className="w-14 h-14 rounded-full bg-indigo-500 flex justify-center 
                                   items-center text-white text-2xl font-semibold">
-                     U
+                    {v?.name?.charAt(0).toUpperCase()}
+
                    </p>
      
                    <div>
-                     <h2 className="text-lg font-bold">User</h2>
-                     <h3 className="text-gray-600 text-sm">Email</h3>
+                     <h2 className="text-lg font-bold">{v?.name}</h2>
+                     <h3 className="text-gray-600 text-sm">{v?.email}</h3>
                    </div>
                  </div>
      
-                 <div className="shadow-md rounded-xl p-4 cursor-pointer hover:bg-gray-50 transition">
+                 <div className="shadow-md rounded-xl p-4 cursor-pointer bg-gray-50 transition">
                    <div className="flex justify-between items-center text-sm">
-                     <h3 className="font-medium">View All Booking</h3>
+                     <h3 className="font-medium flex gap-5 items-center"> <span><BiBorderRadius /></span> <p> View All Booking </p></h3>
                      <span>➪</span>
                    </div>
                  </div>
      
-                 <p className="mt-8 mb-2 text-sm font-bold text-gray-700">Support</p>
+                 <p className="my-8  text-sm font-bold text-gray-700">Support</p>
      
                  <div className="shadow-md rounded-xl">
-                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer hover:bg-gray-50">
-                     <h3>Frequently Asked Questions</h3>
+                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl">
+                      <h3 className="font-medium flex gap-5 items-center"> <span><LuMessageCircleQuestion /> </span> <p> Frequently Asked Questions </p></h3>
                      <span>➪</span>
                    </div>
-                   <hr />
-                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer hover:bg-gray-50">
-                     <h3>Contact Us</h3>
+                  <hr className='text-gray-300 mx-4' />
+                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl">
+                      <h3 className="font-medium flex gap-5 items-center"> <span><RiContactsBook3Line /></span> <p> Contact Us</p></h3>
                      <span>➪</span>
                    </div>
                  </div>
      
-                 <p className="mt-8 mb-2 text-sm font-bold text-gray-700">More</p>
+                 <p className="my-8  text-sm font-bold text-gray-700">More</p>
      
-                 <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-                   <h3>Terms and Conditions</h3>
+                 <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer bg-gray-50">
+                    <h3 className="font-medium flex gap-5 items-center"> <span><RiFileCopy2Line /></span> <p> Terms and Conditions</p></h3>
                    <span>➪</span>
                  </div>
      
-                 <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 mt-3">
-                   <h3 className="text-red-600 font-semibold">Logout</h3>
+                 <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer bg-gray-50 mt-3">
+                   <button className="text-red-600 font-semibold flex gap-5 items-center"  onClick={handleLogout}> <span><IoIosLogOut /></span> <p>Logout</p></button>
                  </div>
+     </div>
+               
+                    </div> )
+                  })
+                }
                </DialogPanel>
              </div>
            </Dialog>
