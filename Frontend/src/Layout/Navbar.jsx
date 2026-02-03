@@ -396,7 +396,7 @@ getUser()
                     </button>
                     <div
                       className="cursor-pointer hover:text-amber-300"
-                      onClick={() => setProfile(true)}
+                      onClick={orderLogin}
                     >
                       Profile
                     </div>
