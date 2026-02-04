@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function MovieCard({ movie }) {
   const navigate = useNavigate();
   return (
-    <div className={`w-75 h-[450px] border  border-gray-300   m-auto md:m-0 rounded-b-lg sm:w-73 lg:w-72  xl:w-7 overflow-hidden cursor-pointer ${!movie.released && 'border-b-0'}`} onClick={() => { navigate(`/movies/${movie.encodeName}`); }}>
+    <div className={`w-75 h-[450px] border  border-gray-300   m-auto md:m-0 rounded-b-lg sm:w-73 lg:w-72  xl:w-75 overflow-hidden cursor-pointer ${!movie.released && 'border-b-0'}`} onClick={() => { navigate(`/movies/${movie.encodeName}`); }}>
       <div className="w-full h-[80%] object-cover relative">
         <img src={movie.poster.url} alt="" className='w-full h-full object-cover' />
         {!movie.released && <div className=" absolute bottom-2 left-2 bg-black/80 text-white text-xs p-2  rounded ">
