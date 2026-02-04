@@ -47,21 +47,16 @@ const getUser =async ()=>{
       "token":localStorage.getItem("token")
     }
   })
-  setUserProfile([data.data]);
+  if(data.success){
+    setUserProfile(data.data);
+  }
   } catch (error) {
     console.log(error.response)
   }
 };
-useEffect(()=>{
-getUser()
-},[])
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setUser(false);
-    navigate("/");
-    setLogin(true);
-  };
+
+  
   // Registration
   const [formData, setFormdata] = useState({
     name: "",
@@ -159,17 +154,24 @@ getUser()
   const loginHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      const {data} = await axios.post(
         "/api/user/login",
         { ...loginform }
       );
 
-      if (response.data.success) {
-        localStorage.setItem("token", response.data.token);
+      if (data.success) {
+        localStorage.setItem("token", data.token);
         setLogin(false);
+
+      // 👇 check source
+      if ( location.pathname === "/history") {
+        
         navigate("/history");
       } else {
-        alert(response.data.message);
+        setUser(true);
+      }
+      } else {
+        alert(data.message);
       }
     } catch (err) {
       console.error(err);
@@ -190,17 +192,23 @@ getUser()
       })
       if (data.success) {
         navigate("/history")
+        setshowMenu(false)
       } else {
         setLogin(true)
+        navigate("/history")
+        setshowMenu(false)
       }
     } catch (error) {
       console.log(error?.response?.data)
-      setLogin(true)
+      setLogin(true)      
+        navigate("/history")
+      setshowMenu(false)
     }
   }
 
   const orderLogin =async () =>{
     try {
+     
        const token = await localStorage.getItem("token");
       const { data } = await axios.get("/api/user/profile", {
         headers: {
@@ -208,16 +216,25 @@ getUser()
         }
       })
       if (data.success) {
+        getUser()
         setProfile(false)
         setUser(true)
+        setshowMenu(false)
       } else {
         setLogin(true)
+        setshowMenu(false)
       }
     } catch (error) {
       console.log(error?.response?.data)
       setLogin(true)
+      setshowMenu(false)
     }
   }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(false);
+    navigate("/");
+  };
   return (
     <div className='sticky top-0 z-40 bg-white mb-15' >
       <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
@@ -235,7 +252,7 @@ getUser()
               <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
                 onClick={() => navigate("/")}
               ><FaArrowLeft /></div>
-              <h2 className="text-lg font-bold flex text-amber-800 tracking-wide ">
+              <h2 className="text-sm sm:text-lg font-bold flex text-amber-800 tracking-wide ">
                 Frequently Asked Question
               </h2>
               <div
@@ -370,24 +387,22 @@ getUser()
                     }`}
                 >
                   <div className="flex flex-col gap-2 p-3 items-center text-sm">
-                    <NavLink to="/" className="hover:text-amber-300">
+                    <NavLink to="/" onClick={()=>setshowMenu(false)} className="hover:text-amber-300">
                       Home
                     </NavLink>
                     <NavLink
                       className="hover:text-amber-300"
-                      onMouseEnter={() => {
-                        setOpent(false);
-                        setOpen(true);
-                      }}
+                      onClick={()=>{setshowMenu(false); setOpent(false);
+                        setOpen(true);}}
+                     
                     >
                       Movies
                     </NavLink>
                     <button
                       className="hover:text-amber-300"
-                      onMouseEnter={() => {
-                        setOpen(false);
-                        setOpent(true);
-                      }}
+                      onClick={()=>{setshowMenu(false) ;setOpen(false);
+                        setOpent(true);}}
+                      
                     >
                       Theatres
                     </button>
@@ -475,7 +490,7 @@ getUser()
               <div className="flex flex-wrap  gap-x-10 gap-y-7 justify-center ">
                 {theatres.map((v, i) => {
                   return (
-                    <NavLink to={"/theatre/list/" + v.name} onClick={() => { setOpent(false) }} className='w-[45%]'  >
+                    <NavLink to={"/theatre/list/" + v.name} key={i} onClick={() => { setOpent(false) }} className='w-[45%]'  >
                       <p className='mb-1 text-[11px] font-medium'>{v.name},{v.location},{v.city}</p>  
                       <hr className='text-gray-300' />
                     </NavLink>
@@ -613,11 +628,12 @@ getUser()
                 {filtermovie.length === 0 ? (
                   <p className="text-gray-500">No results found</p>
                 ) : (
-                  filtermovie.map((v) => (
+                  filtermovie.map((v,i) => (
                     <div
-                      key={v.id}
+                      key={i}
                       className="flex w-[45%] gap-3 items-center cursor-pointer"
-                      onClick={() => navigate(`/movies/${v.encodeName}`)}
+                      onClick={() => {navigate(`/movies/${v.encodeName}`)
+                    setSearch(false);}}
                     >
                       <img
                         src={v.poster.url}
@@ -650,30 +666,27 @@ getUser()
      
              <div className="fixed inset-0 flex justify-end">
                <DialogPanel
-                 className="w-[40%] h-full bg-slate-100 shadow-2xl  rounded-l-3xl 
+                 className="w-full sm:w-[60%] lg:w-[50%] xl:w-[40%] min-h-full max-h-fit bg-slate-100 shadow-2xl  sm:rounded-l-3xl 
                              transform transition-all duration-300 animate-slideIn"
                  onClick={(e) => e.stopPropagation()}
                >
                
-                {
-                  
-                  userProfile?.map((v,i)=>{
-                    return(
-                      <div key={i}>
+                
+                   <div>
                 
 
-                 <h1 className="text-2xl w-full  font-medium mb-6 shadow-md rounded-xl p-4 px-8 flex gap-5  items-center cursor-pointer bg-gray-50 " key={i}> <FaArrowLeft className='text-lg font-normal'  onClick={() => setUser(false)}/> <p> Profile </p></h1>
+                 <h1 className="text-2xl w-full  font-medium mb-6 shadow-md rounded-xl p-4 px-8 flex gap-5  items-center cursor-pointer bg-gray-50 " > <FaArrowLeft className='text-lg font-normal'  onClick={() => setUser(false)}/> <p> Profile </p></h1>
      <div className='px-6'>
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-4 mb-4 lg:mb-6 xl:mb-8">
                    <p className="w-14 h-14 rounded-full bg-indigo-500 flex justify-center 
                                   items-center text-white text-2xl font-semibold">
-                    {v?.name?.charAt(0).toUpperCase()}
+                    {userProfile?.name?.charAt(0).toUpperCase()}
 
                    </p>
      
                    <div>
-                     <h2 className="text-lg font-bold">{v?.name}</h2>
-                     <h3 className="text-gray-600 text-sm">{v?.email}</h3>
+                     <h2 className="text-lg font-bold">{userProfile?.name}</h2>
+                     <h3 className="text-gray-600 text-sm">{userProfile?.email}</h3>
                    </div>
                  </div>
      
@@ -684,7 +697,7 @@ getUser()
                    </div>
                  </div>
      
-                 <p className="my-8  text-sm font-bold text-gray-700">Support</p>
+                 <p className=" my-4 lg:my-6 xl:my-8  text-sm font-bold text-gray-700">Support</p>
      
                  <div className="shadow-md rounded-xl">
                    <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl" onClick={() =>{setUser(false); navigate("/movies/frequently-asked-questions")}}>
@@ -698,7 +711,7 @@ getUser()
                    </div>
                  </div>
      
-                 <p className="my-8  text-sm font-bold text-gray-700">More</p>
+                 <p className=" my-2 lg:my-6 xl:my-8   text-sm font-bold text-gray-700">More</p>
      
                  <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer bg-gray-50" onClick={() =>{setUser(false); navigate("/movies/terms-and-condition")}}>
                     <h3 className="font-medium flex gap-5 items-center"> <span><RiFileCopy2Line /></span> <p> Terms and Conditions</p></h3>
@@ -710,9 +723,9 @@ getUser()
                  </div>
      </div>
                
-                    </div> )
-                  })
-                }
+                    </div> 
+                  
+               
                </DialogPanel>
              </div>
            </Dialog>

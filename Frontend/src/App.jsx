@@ -57,7 +57,7 @@ function App() {
         <Route path='/theatre/list/:name' element={<Theaters />}></Route>
         <Route path='/movies/list/:key/:value' element={<MovieList />}></Route>
       </Routes>
-      {!location.pathname.includes("/history"  ) && <Footer />}
+      { !["/history","/movies/frequently-asked-questions","/movies/contact","/movies/terms-and-condition"].includes(location.pathname) && <Footer />}
 
     </theatrescontext.Provider>
   </moviecontext.Provider>

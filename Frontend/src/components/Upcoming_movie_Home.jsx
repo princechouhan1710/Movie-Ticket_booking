@@ -28,14 +28,14 @@ function Upmovie() {
       <div className="relative">
         <button
           ref={prevRef}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 shadow flex items-center justify-center text-7xl text-white  "
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-transparent shadow flex items-center justify-center text-7xl text-white cursor-pointer "
           aria-label="Previous"
         >
           ‹
         </button>
         <button
           ref={nextRef}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-20 h-20  shadow flex items-center justify-center  text-7xl text-white  "
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-20 h-20 bg-transparent shadow flex items-center justify-center  text-7xl text-white cursor-pointer  "
           aria-label="Next"
         >
           ›

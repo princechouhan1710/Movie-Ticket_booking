@@ -83,7 +83,7 @@ function Ineer() {
                 </div>
 
                 <NavLink
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow text-center hover:bg-blue-700 transition "
+                  className="bg-blue-600 text-white w-30 px-4 py-2 rounded-lg shadow text-center hover:bg-blue-700 transition "
                   onClick={() => setView(true)}
                 >
                   View Details
@@ -258,9 +258,9 @@ function Ineer() {
                   <section className="mb-10">
                     <h3 className="text-xs font-bold mb-4">🎥 Trailer</h3>
                     <div className="flex justify-center">
-                      {/* <img src={movie?.video?.url}></img> */}
+                      {/* <video controls src={movie?.video.url}></video> */}
                       {/* <iframe  className='w-100 md:w-[560px] md:h-[315px]' src="https://www.youtube.com/embed/bK6ldnjE3Y0?si=fMj8UG_GnBRgDtaz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
-                      <video src={movie?.video?.url} controls autoPslay muted loop></video>
+                      <video src={movie?.video?.url} controls></video>
                       
                     </div>
                   </section>

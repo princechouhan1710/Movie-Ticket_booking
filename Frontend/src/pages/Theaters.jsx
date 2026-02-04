@@ -38,7 +38,7 @@ function Theater() {
 
 
             <div className="flex gap-6 py-5 px-2 md:p-5 bg-white rounded-xl shadow">            <div className='flex gap-3  ' >
-              <img src={theater[0]?.theatre?.image?.url} alt=""                className="w-28 h-0 object-cover rounded-lg shadow"
+              <img src={theater[0]?.theatre?.image?.url} alt=""                className="w-25 h-25 object-cover rounded-full shadow"
  />
               <div >
                 <p className='text-2xl md:text-2xl font-bold '>{name},{theater[0]?.theatre?.location}  🤍 </p>

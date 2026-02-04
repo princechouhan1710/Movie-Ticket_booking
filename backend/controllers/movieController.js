@@ -1,4 +1,7 @@
+
 let Movie = require("../models/movieModel")
+let fs = require("fs");
+let path = require("path")
 let createMovie = async (req, res) => {
     let poster = {
         filename: req.files["poster"][0].filename,
@@ -38,21 +41,35 @@ let getMovie = async (req, res) => {
 let updateMovies = async (req, res) => {
     let { id } = req.params;
     let movie = await Movie.findByIdAndUpdate(
-         id,
+        id,
         { "$set": { ...req.body } },
     )
-         if (!updateMovies) {
-      return res.status(404).json({ message: "Movie not found" });
+    if (!updateMovies) {
+        return res.status(404).json({ message: "Movie not found" });
     }
 
-        res.json({message:"Blog Update Successfully",data:movie})
+    res.json({ message: "Blog Update Successfully", data: movie })
 }
 let deleteMovies = async (req, res) => {
-   try{
-     let { id } = req.params;
-    await Movie.findByIdAndDelete(id)
-         res.status(200).json({ message: "Movie Details Deleted" });
-       } catch (error) {
+    try {
+        let { id } = req.params;
+        let movie = await Movie.findById(id);
+        if (!movie) {
+            res.status(404).json({ success: false, message: "Movie not found" })
+        }
+        if (movie.poster.filename) {
+            let imgpath = path.resolve(__dirname, "../uploads/" + movie.poster.filename)
+            fs.unlinkSync(imgpath);
+             console.log("poster deleted",imgpath)
+        }
+        if (movie.video.filename) {
+            let imgpath = path.resolve(__dirname, "../uploads/" + movie.video.filename)
+            fs.unlinkSync(imgpath);
+            console.log("video deleted",imgpath)
+        }
+        let deletemovie = await Movie.findByIdAndDelete(id);
+        res.status(200).json({ success: true, message: "Movie Details Deleted" });
+    } catch (error) {
         res.status(404).json({ success: false, message: error.message })
     }
 
@@ -76,21 +93,21 @@ let FilterMovie = async (req, res) => {
 let FilterMovieQuery = async (req, res) => {
     try {
         const { langauage, category } = req.query;
- 
+
         let filter = [];
-       if (langauage != "null" && langauage) {
-            console.log("langauage",langauage)
+        if (langauage != "null" && langauage) {
+            console.log("langauage", langauage)
             filter.push({ langauage: { $in: langauage.split(",").map(l => new RegExp(`^${l}$`, "i")) } })
             // {langauage:[hindi,english]}
         }
- 
+
         if (category != "null" && category) {
-            console.log("category",category)
+            console.log("category", category)
             filter.push({ category: { $in: category.split(",").map(l => new RegExp(`^${l}$`, "i")) } })
- 
+
         }
-        console.log("filter",filter)
- 
+        console.log("filter", filter)
+
         const movies = await Movie.find({
             "$and": [...filter]
         });
@@ -109,7 +126,7 @@ let getlanguage = async (req, res) => {
         res.status(400).json({ success: false, message: error.message })
     }
 }
- 
+
 let getcategory = async (req, res) => {
     try {
         let movies = await Movie.find().distinct("category");
@@ -119,4 +136,4 @@ let getcategory = async (req, res) => {
         res.status(400).json({ success: false, message: error.message })
     }
 }
-module.exports = { createMovie, getMovies, getMovie,updateMovies,deleteMovies ,FilterMovie,FilterMovieQuery,getlanguage,getcategory}
+module.exports = { createMovie, getMovies, getMovie, updateMovies, deleteMovies, FilterMovie, FilterMovieQuery, getlanguage, getcategory }

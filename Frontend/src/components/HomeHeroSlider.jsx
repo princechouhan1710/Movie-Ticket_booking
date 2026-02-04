@@ -29,7 +29,7 @@ function Content1() {
     >
       {Mov.map((v, i) => {
         return (
-          <SwiperSlide className=' text-black w-50 h-150 shadow-2xl my-5 py-5 sm:p-0 ' onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
+          <SwiperSlide className=' text-black w-50 h-150 shadow-2xl my-5 py-5 sm:p-0 cursor-pointer ' onClick={() => { navigate(`/movies/${v.encodeName}`); }}>
             <div className='flex flex-col-reverse sm:flex-row  justify-between w-full h-full gap-3  '>
               <div className='flex flex-col justify-center text-center items-center w-full sm:w-[50%] gap-3'>
                 <h1 className='text-3xl m-auto sm:m-0 sm:text-2xl md:text-3xl font-bold'>{v.name}</h1>
@@ -38,7 +38,7 @@ function Content1() {
                   Book me
                 </button>
               </div>
-              <div className='w-full sm:w-[50%] text-center  sm:p-1 '>
+              <div className='w-full sm:w-[50%] text-center  sm:p-1 cursor-pointer '>
                 <img src={v.poster.url} className="w-[80%] h-full m-auto sm:w-[70%]  xl:w-[50%]  sm:h-[90%] sm:p-2 sm:flex sm:justify-end rounded-2xl object-cover " alt="..." />
               </div>
             </div>

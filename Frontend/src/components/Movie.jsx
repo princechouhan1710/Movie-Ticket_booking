@@ -32,39 +32,39 @@ useEffect(() => {
       </div>
       <div className=" flex overflow-x-scroll md:overflow-hidden gap-3 py-2 md:p-5 ">
         
-        <button className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+        <button className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition ">
           Filter
         </button>
  
         <button onClick={() => {
           setfilter({ ...filter, langauage: "English" })
  
-        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition cursor-pointer">
           English
         </button>
  
         <button onClick={() => {
           setfilter({ ...filter, langauage: "Hindi" })
  
-        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition cursor-pointer">
           Hindi
         </button>
  
         <button onClick={() => {
           setfilter({ ...filter, category: "action" })
  
-        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition cursor-pointer">
           Action
         </button>
  
         <button onClick={() => {
           setfilter({ ...filter, category: "biography" })
  
-        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+        }} className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition cursor-pointer">
           Biography
         </button>
  
-        <button className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition">
+        <button className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition cursor-pointer">
           3D
         </button>
       </div>
