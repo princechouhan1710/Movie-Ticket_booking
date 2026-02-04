@@ -12,7 +12,6 @@ let register = async (req, res) => {
         if (!name || !email || !password || !mobileNumber || !address || !interest) {
             return res.status(500).json({ success: false, message: "Please provide all the details" })
         }
-
         let hashed = await hashpassword(password)
         let newotp = otp();
         let expiretime = Date.now() + 10 * 60 * 1000;
