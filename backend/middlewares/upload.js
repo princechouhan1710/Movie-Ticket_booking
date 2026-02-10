@@ -7,12 +7,10 @@ const storage = multer.diskStorage({
         cb(null, uploadpath)
     },
     filename: function (req, file, cb) {
-        console.log("insideupload", file)
-        cb(null, Date.now() + file.originalname)
+        // cb(null, Date.now() + file.originalname)
+        cb(null ,file.originalname)
     }
 })
 
 const upload = multer({ storage: storage });
 module.exports = upload;
-// req.files
-// req.body

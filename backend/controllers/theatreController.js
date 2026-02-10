@@ -1,5 +1,7 @@
 let Theatre = require("../models/theatreModel");
 let Show = require("../models/showModel");
+let fs = require("fs");
+let path = require("path")
 let createTheatre = async (req, res) => {
     try {
         let image = {
@@ -43,8 +45,17 @@ let updateTheatre = async (req, res) => {
 let deleteTheatre = async (req, res) => {
     try {
         let {id}=req.params;
-         await Theatre.findByIdAndDelete(id);
-        
+        let theatre= await Theatre.findById(id);
+        if(!theatre){
+          res.status(404).json({ success: false, message: "Theatre not found" })
+        }
+        if (theatre.image.filename){
+                    let imgpath = path.resolve(__dirname, "../uploads/" + theatre.image.filename)
+                       fs.unlinkSync(imgpath);
+                                 console.log("image deleted",imgpath)
+        }
+                let deletetheater= await Theatre.findByIdAndDelete(id);
+
         res.status(200).json({ success: true, message:"Theater detail deleted" })
     } catch (error) {
         res.status(404).json({ success: false, message: error.message })

@@ -87,7 +87,7 @@ function AddMovie() {
 
   try {
     await axios.post(
-      "/api/movie/createmovie",
+      "movie/createmovie",
       data,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
@@ -273,7 +273,7 @@ const DynamicInput = ({
       {label}
     </label>
 
-    <div className="flex gap-2">
+    <div className="flex gap-2 flex-col md:flex-row">
       <input
         className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
         value={value}
@@ -283,7 +283,7 @@ const DynamicInput = ({
       <button
         type="button"
         onClick={addItem}
-        className="bg-green-600 text-white px-4 rounded-lg hover:bg-green-700"
+        className="w-20 bg-green-600 text-white px-4 rounded-lg hover:bg-green-700"
       >
         Add
       </button>

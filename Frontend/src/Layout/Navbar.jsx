@@ -42,7 +42,7 @@ function Navbar() {
 
   const getUser = async () => {
     try {
-      const { data } = await axios('/api/user/profile', {
+      const { data } = await axios('user/profile', {
         headers: {
           "token": localStorage.getItem("token")
         }
@@ -70,7 +70,7 @@ function Navbar() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "/api/user/register",
+        "user/register",
         { ...formData }
       );
       if (response.data.success) {
@@ -106,7 +106,7 @@ function Navbar() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "/api/user/verify-otp",
+        "user/verify-otp",
         { ...otpform }
       );
       alert("OTP verified successfully ✅");
@@ -129,7 +129,7 @@ function Navbar() {
   const otpResendHandler = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post("/api/user/resend-otp",
+      const data = await axios.post("user/resend-otp",
         { ...Resendotpform }
       )
       setOtp(true)
@@ -155,7 +155,7 @@ function Navbar() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "/api/user/login",
+        "user/login",
         { ...loginform }
       );
 
@@ -185,12 +185,11 @@ function Navbar() {
   const ordercheck = async () => {
     try {
       const token = await localStorage.getItem("token");
-      const { data } = await axios.get("/api/user/profile", {
+      const { data } = await axios.get("user/profile", {
         headers: {
           token: token
         }
       })
-      console.log(data)
       if (data.success) {
         navigate("/history")
         setshowMenu(false)
@@ -209,7 +208,7 @@ function Navbar() {
     try {
 
       const token = await localStorage.getItem("token");
-      const { data } = await axios.get("/api/user/profile", {
+      const { data } = await axios.get("user/profile", {
         headers: {
           token: token
         }

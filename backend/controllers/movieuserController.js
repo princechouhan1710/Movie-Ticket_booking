@@ -15,7 +15,6 @@ let register = async (req, res) => {
         let hashed = await hashpassword(password)
         let newotp = otp();
         let expiretime = Date.now() + 10 * 60 * 1000;
-        console.time('first')
         await sendEmail(email, "verification otp", "check this " + newotp, `<!DOCTYPE html>
         <html>
  
@@ -38,7 +37,6 @@ let register = async (req, res) => {
         </body>
  
         </html>`)
-        console.timeEnd('first')
         // let newuser = await MovieUser({
         //     name,
         //     email,

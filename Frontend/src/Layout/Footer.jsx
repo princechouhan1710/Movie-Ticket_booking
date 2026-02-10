@@ -14,7 +14,7 @@ function Footer() {
         e.preventDefault();
         try {
           const {data} = await axios.post(
-            "/api/user/login",
+            "user/login",
             { ...loginform }
           );
     
@@ -36,7 +36,7 @@ function Footer() {
      const ordercheck = async () => {
     try {
       const token = await localStorage.getItem("token");
-      const { data } = await axios.get("/api/user/profile", {
+      const { data } = await axios.get("user/profile", {
         headers: {
           token: token
         }

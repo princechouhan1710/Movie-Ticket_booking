@@ -127,17 +127,14 @@ let FilterMovieQuery = async (req, res) => {
 
         let filter = [];
         if (langauage != "null" && langauage) {
-            console.log("langauage", langauage)
             filter.push({ langauage: { $in: langauage.split(",").map(l => new RegExp(`^${l}$`, "i")) } })
             // {langauage:[hindi,english]}
         }
 
         if (category != "null" && category) {
-            console.log("category", category)
             filter.push({ category: { $in: category.split(",").map(l => new RegExp(`^${l}$`, "i")) } })
 
         }
-        console.log("filter", filter)
 
         const movies = await Movie.find({
             "$and": [...filter]

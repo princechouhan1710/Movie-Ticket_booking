@@ -8,7 +8,7 @@ export default function ProtectedRoute({ children }) {
     let check = async () => {
         setLoading(true)
         try {
-            let { data } = await axios.get("/api/admin/profile", { withCredentials: true });
+            let { data } = await axios.get("http://localhost:4000/api/admin/profile", { withCredentials: true });
             
             if (data.success) {
                 

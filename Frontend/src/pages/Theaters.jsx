@@ -13,7 +13,7 @@ function Theater() {
   const gettheatres = async (name) => {
     try {
       const { data } = await axios.get(
-        ` /api/theatres/filterTheatre/${name}`
+        ` theatres/filterTheatre/${name}`
       );
       setTheater(data.data);
     } catch (err) {

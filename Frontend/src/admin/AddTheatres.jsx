@@ -50,7 +50,7 @@ function AddTheatres() {
 
     try {
       const res = await axios.post(
-        "/api/theatres/createtheatre",
+        "theatres/createtheatre",
         data
       );
 

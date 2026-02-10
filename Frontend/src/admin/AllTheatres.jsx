@@ -2,19 +2,18 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 function AllTheatres() {
-
-
+    let [loading, setLoading] = useState(true);
   const [theatres, setTheatres] = useState([]);
-
- 
-  
-
   const getTheatres = async () => {
-    const res = await axios.get(
-      "/api/theatres/gettheatres"
+    try {
+      const res = await axios.get(
+      "theatres/gettheatres"
     );
     if (res.data.success) {
       setTheatres(res.data.data);
+    }
+    } catch (error) {
+      console.log(error?.response?.message)
     }
   };
 
@@ -25,7 +24,7 @@ function AllTheatres() {
 
      try {
       const res = await axios.delete(
-      `/api/theatres/deletetheatre/${id}`
+      `theatres/deletetheatre/${id}`
     );
      if (res.status === 200 || res.data.success) {
         alert("Theatre deleted successfully!");
@@ -40,10 +39,19 @@ function AllTheatres() {
 
   useEffect(() => {
     getTheatres();
+      setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 2200);
   }, []);
 
   return (
-     <div className="min-h-fit bg-gray-100 p-6 flex justify-center">
+    <>
+    {loading ? <div className='w-full h-screen flex items-center justify-center'>
+        <div className="loader1"></div>
+        </div> :
+    
+     <div className="min-h-fit bg-gray-100 py-3 sm:p-6 flex justify-center">
   <div className="max-w-3xl w-full bg-white rounded-xl shadow-lg overflow-hidden">
     <div className="bg-blue-600 text-white text-center font-bold py-3 text-xl">
       ALL Theatres
@@ -64,7 +72,7 @@ function AllTheatres() {
 
             <tbody>
               {theatres.map((t) => (
-                <tr key={t._id} className="border-t">
+                <tr key={t._id} className="hover:bg-gray-50 transition">
                   <td className="py-2">
                     <img
                       src={t?.image?.url}
@@ -99,6 +107,8 @@ function AllTheatres() {
         </div>
       </div>
     </div>
+}
+    </>
   );
 }
 

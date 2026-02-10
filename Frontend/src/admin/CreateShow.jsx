@@ -10,7 +10,12 @@ export default function AddShow() {
     movie: "",
     theatre: "",
     showDates: [{ date: "" }],
-    showTimings: [{ time: "", seatCategories: [{ categoryName: "", price: "" }] }],
+    showTimings: [
+      {
+        time: "",
+        seatCategories: [{ categoryName: "", price: "" }],
+      },
+    ],
     totalSeats: "",
     bookedSeats: 0,
   });
@@ -29,24 +34,47 @@ export default function AddShow() {
     load();
   }, []);
 
-  const addDate = () => setForm({ ...form, showDates: [...form.showDates, { date: "" }] });
+  /* ---------- Show Dates ---------- */
+  const addDate = () =>
+    setForm({ ...form, showDates: [...form.showDates, { date: "" }] });
+
   const changeDate = (i, val) => {
     const arr = [...form.showDates];
     arr[i].date = val;
     setForm({ ...form, showDates: arr });
   };
 
+  const removeDate = (i) => {
+    setForm({
+      ...form,
+      showDates: form.showDates.filter((_, idx) => idx !== i),
+    });
+  };
+
+  /* ---------- Show Timings ---------- */
   const addTiming = () =>
     setForm({
       ...form,
-      showTimings: [...form.showTimings, { time: "", seatCategories: [{ categoryName: "", price: "" }] }],
+      showTimings: [
+        ...form.showTimings,
+        { time: "", seatCategories: [{ categoryName: "", price: "" }] },
+      ],
     });
+
   const changeTiming = (i, val) => {
     const arr = [...form.showTimings];
     arr[i].time = val;
     setForm({ ...form, showTimings: arr });
   };
 
+  const removeTiming = (i) => {
+    setForm({
+      ...form,
+      showTimings: form.showTimings.filter((_, idx) => idx !== i),
+    });
+  };
+
+  /* ---------- Seat Categories ---------- */
   const addCategory = (ti) => {
     const arr = [...form.showTimings];
     arr[ti].seatCategories.push({ categoryName: "", price: "" });
@@ -59,6 +87,15 @@ export default function AddShow() {
     setForm({ ...form, showTimings: arr });
   };
 
+  const removeCategory = (ti, ci) => {
+    const arr = [...form.showTimings];
+    arr[ti].seatCategories = arr[ti].seatCategories.filter(
+      (_, idx) => idx !== ci
+    );
+    setForm({ ...form, showTimings: arr });
+  };
+
+  /* ---------- Submit ---------- */
   const submit = async (e) => {
     e.preventDefault();
     try {
@@ -68,21 +105,26 @@ export default function AddShow() {
         showDates: form.showDates.map((d) => ({ date: new Date(d.date) })),
         showTimings: form.showTimings.map((t) => ({
           time: new Date(t.time),
-          seatCategories: t.seatCategories.map((s) => ({ categoryName: s.categoryName, price: Number(s.price) })),
+          seatCategories: t.seatCategories.map((s) => ({
+            categoryName: s.categoryName,
+            price: Number(s.price),
+          })),
         })),
         totalSeats: Number(form.totalSeats),
         bookedSeats: Number(form.bookedSeats),
       };
 
       await axios.post("/api/show/createshow", payload);
+
       setAlert({ type: "success", message: "Show created successfully!" });
 
-      // Reset form
       setForm({
         movie: "",
         theatre: "",
         showDates: [{ date: "" }],
-        showTimings: [{ time: "", seatCategories: [{ categoryName: "", price: "" }] }],
+        showTimings: [
+          { time: "", seatCategories: [{ categoryName: "", price: "" }] },
+        ],
         totalSeats: "",
         bookedSeats: 0,
       });
@@ -90,7 +132,10 @@ export default function AddShow() {
       setTimeout(() => setAlert({ type: "", message: "" }), 3000);
     } catch (err) {
       console.error(err);
-      setAlert({ type: "error", message: err.response?.data?.message || "Failed to create show" });
+      setAlert({
+        type: "error",
+        message: err.response?.data?.message || "Failed to create show",
+      });
       setTimeout(() => setAlert({ type: "", message: "" }), 3000);
     }
   };
@@ -105,7 +150,9 @@ export default function AddShow() {
         {alert.message && (
           <div
             className={`text-center py-2 font-medium ${
-              alert.type === "success" ? "bg-green-600 text-white" : "bg-red-600 text-white"
+              alert.type === "success"
+                ? "bg-green-600 text-white"
+                : "bg-red-600 text-white"
             }`}
           >
             {alert.message}
@@ -113,30 +160,37 @@ export default function AddShow() {
         )}
 
         <form onSubmit={submit} className="p-6 space-y-4">
-
           {/* Movie & Theatre */}
           <div className="grid md:grid-cols-2 gap-4">
             <select
               value={form.movie}
-              onChange={(e) => setForm({ ...form, movie: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, movie: e.target.value })
+              }
               className="border p-2 rounded w-full"
               required
             >
               <option value="">Select Movie</option>
               {movies.map((m) => (
-                <option key={m._id} value={m._id}>{m.name}</option>
+                <option key={m._id} value={m._id}>
+                  {m.name}
+                </option>
               ))}
             </select>
 
             <select
               value={form.theatre}
-              onChange={(e) => setForm({ ...form, theatre: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, theatre: e.target.value })
+              }
               className="border p-2 rounded w-full"
               required
             >
               <option value="">Select Theatre</option>
               {theatres.map((t) => (
-                <option key={t._id} value={t._id}>{t.name}</option>
+                <option key={t._id} value={t._id}>
+                  {t.name}
+                </option>
               ))}
             </select>
           </div>
@@ -145,16 +199,30 @@ export default function AddShow() {
           <div className="space-y-2">
             <h3 className="font-semibold">Show Dates</h3>
             {form.showDates.map((d, i) => (
-              <input
-                key={i}
-                type="date"
-                value={d.date}
-                onChange={(e) => changeDate(i, e.target.value)}
-                className="border p-2 rounded w-full"
-                required
-              />
+              <div key={i} className="flex gap-2">
+                <input
+                  type="date"
+                  value={d.date}
+                  onChange={(e) => changeDate(i, e.target.value)}
+                  className="border p-2 rounded w-full"
+                  required
+                />
+                {i !== form.showDates.length - 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeDate(i)}
+                    className="bg-red-500 text-white px-3 rounded"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
             ))}
-            <button type="button" onClick={addDate} className="border px-3 py-1 rounded bg-gray-200 hover:bg-gray-300">
+            <button
+              type="button"
+              onClick={addDate}
+              className="border px-3 py-1 rounded bg-gray-200"
+            >
               Add Date
             </button>
           </div>
@@ -164,45 +232,82 @@ export default function AddShow() {
             <h3 className="font-semibold">Show Timings</h3>
             {form.showTimings.map((t, ti) => (
               <div key={ti} className="border p-3 rounded space-y-2">
-                <input
-                  type="datetime-local"
-                  value={t.time}
-                  onChange={(e) => changeTiming(ti, e.target.value)}
-                  className="border p-2 rounded w-full"
-                  required
-                />
+                <div className="flex gap-2">
+                  <input
+                    type="datetime-local"
+                    value={t.time}
+                    onChange={(e) =>
+                      changeTiming(ti, e.target.value)
+                    }
+                    className="border p-2 rounded w-full"
+                    required
+                  />
+                  {ti !== form.showTimings.length - 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeTiming(ti)}
+                      className="bg-red-500 text-white px-3 rounded"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
 
                 {t.seatCategories.map((c, ci) => (
                   <div key={ci} className="flex gap-2">
                     <input
                       placeholder="Category"
                       value={c.categoryName}
-                      onChange={(e) => changeCategory(ti, ci, "categoryName", e.target.value)}
+                      onChange={(e) =>
+                        changeCategory(
+                          ti,
+                          ci,
+                          "categoryName",
+                          e.target.value
+                        )
+                      }
                       className="border p-2 rounded w-1/2"
                     />
                     <input
                       type="number"
                       placeholder="Price"
                       value={c.price}
-                      onChange={(e) => changeCategory(ti, ci, "price", e.target.value)}
+                      onChange={(e) =>
+                        changeCategory(
+                          ti,
+                          ci,
+                          "price",
+                          e.target.value
+                        )
+                      }
                       className="border p-2 rounded w-1/2"
                     />
+                    {ci !== t.seatCategories.length - 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeCategory(ti, ci)}
+                        className="bg-red-500 text-white px-3 rounded"
+                      >
+                        ✕
+                      </button>
+                    )}
                   </div>
                 ))}
 
                 <button
                   type="button"
                   onClick={() => addCategory(ti)}
-                  className="border px-3 py-1 rounded bg-gray-200 hover:bg-gray-300"
+                  className="border px-3 py-1 rounded bg-gray-200"
                 >
                   Add Category
                 </button>
               </div>
             ))}
+
             <button
               type="button"
               onClick={addTiming}
-              className="border px-3 py-1 rounded bg-gray-200 hover:bg-gray-300"
+              className="border px-3 py-1 rounded bg-gray-200"
             >
               Add Timing
             </button>
@@ -213,7 +318,9 @@ export default function AddShow() {
             type="number"
             placeholder="Total Seats"
             value={form.totalSeats}
-            onChange={(e) => setForm({ ...form, totalSeats: e.target.value })}
+            onChange={(e) =>
+              setForm({ ...form, totalSeats: e.target.value })
+            }
             className="border p-2 rounded w-full"
             required
           />

@@ -12,7 +12,7 @@ export default function Dash() {
   let [show,setShow]=useState([])
   let getAdmin = async () => {
     try {
-      let { data } = await axios("/api/admin/getadmin");
+      let { data } = await axios("admin/getadmin");
       setAdmin(data.data);
     } catch (error) {
       console.log(error);
@@ -21,7 +21,7 @@ export default function Dash() {
 
   let getUser = async () => {
     try {
-      const { data } = await axios("/api/admin/profile", {
+      const { data } = await axios("admin/profile", {
         withCredentials: true,
       });
       if (data.success) setUser(data.data);
@@ -31,7 +31,7 @@ export default function Dash() {
   };
 let getCount =async ()=>{
   try {
-    let {data} =await axios("/api/user/getuser");
+    let {data} =await axios("user/getuser");
     setUserCount(data.data);
   } catch (error) {
           console.log(error);
@@ -39,7 +39,7 @@ let getCount =async ()=>{
 }
 let getShow =async ()=>{
   try {
-    let {data} =await axios("/api/show/getallshow")
+    let {data} =await axios("show/getallshow")
     setShow(data.data)
   } catch (error) {
     console.log(error);

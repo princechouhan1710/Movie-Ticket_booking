@@ -9,7 +9,7 @@ export default function MovieList() {
   const navigate = useNavigate()
 
   const getMovies = async () => {
-    const { data } = await axios(` /api/movie/filtermovie/${key}/${value}`)
+    const { data } = await axios(` movie/filtermovie/${key}/${value}`)
         setMovies([...data.data])
   }
   useEffect(() => {

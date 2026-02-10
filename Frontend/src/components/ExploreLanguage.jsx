@@ -5,7 +5,7 @@ import axios from "axios";
 function ExLAng() {
   const [lang, setLang] = useState([]);
   const getlanguage = async () => {
-    const { data } = await axios(' /api/movie/getlanguage');
+    const { data } = await axios(' movie/getlanguage');
         setLang(data.data);
   };
   useEffect(() => {

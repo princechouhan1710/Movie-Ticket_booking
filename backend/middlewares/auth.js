@@ -11,7 +11,6 @@ let authAdmin = async (req, res, next) => {
             return res.status(500).json({ success: false, message: "Please provide token" })
         }
         let decodedvalue = await decodetoken(token, process.env.SECRETKEY);
-        console.log(decodedvalue)
         let admin = await Admin.findOne({ "_id": new ObjectId(decodedvalue.adminId) })
         req.admin = admin;
         next()

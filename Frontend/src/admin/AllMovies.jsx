@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 
 function AllMovies() {
   const [movie, setMovie] = useState([]);
-
+  const [loading, setLoading] = useState(true)
   const getMovie = async () => {
     try {
-      const res = await axios.get("/api/movie/getmovies");
+      const res = await axios.get("movie/getmovies");
       if (res.data.success) {
         setMovie(res.data.data);
       }
@@ -20,7 +20,7 @@ function AllMovies() {
     if (!window.confirm("Are you sure you want to delete this movie?")) return;
 
     try {
-      const res = await axios.delete(`/api/movie/deletemovie/${id}`);
+      const res = await axios.delete(`movie/deletemovie/${id}`);
       if (res.status === 200 || res.data.success) {
         alert("Movie deleted successfully!");
         getMovie();
@@ -35,10 +35,18 @@ function AllMovies() {
 
   useEffect(() => {
     getMovie();
+      setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 2200);
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <>
+    {loading ? <div className='w-full h-screen flex items-center justify-center'>
+        <div className="loader1"></div>
+        </div> :
+    <div className="min-h-screen bg-gray-100 py-3 sm:p-6">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="bg-blue-600 text-white text-center font-semibold py-3 text-xl">
           Movie Management
@@ -46,7 +54,7 @@ function AllMovies() {
 
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm text-left">
-            <thead className="bg-gray-100 text-gray-700 border-b">
+            <thead className="bg-gray-100 text-gray-700 overflow-auto">
               <tr>
                 <th className="px-4 py-3">Poster</th>
                 <th className="px-4 py-3">Name</th>
@@ -72,7 +80,7 @@ function AllMovies() {
               )}
 
               {movie.map((v) => (
-                <tr key={v._id} className="border-b hover:bg-gray-50 transition">
+                <tr key={v._id} className=" hover:bg-gray-50 transition">
                   <td className="px-4 py-2">
                     <img
                       src={v?.poster?.url}
@@ -107,9 +115,9 @@ function AllMovies() {
                       <span className="text-gray-400 text-xs">N/A</span>
                     )}
                   </td>
-                  <td className="px-4 py-2 text-center">
+                  <td className="px-4 w-31 text-center">
                     <span
-                      className={`px-2 py-1 rounded-full text-xs font-semibold ${v?.released
+                      className={`px-2  rounded-full text-xs font-semibold ${v?.released
                         ? "bg-green-100 text-green-700"
                         : "bg-red-100 text-red-700"
                         }`}
@@ -132,6 +140,8 @@ function AllMovies() {
         </div>
       </div>
     </div>
+}
+</>
   );
 }
 
