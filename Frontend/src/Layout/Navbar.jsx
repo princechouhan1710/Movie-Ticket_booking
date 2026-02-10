@@ -26,7 +26,7 @@ function Navbar() {
   const { Mov, setMovie } = useContext(moviecontext)
   const [filter, setFilter] = useState("");
   const { theatres, setMovietheatres } = useContext(theatrescontext)
-  const [userProfile,setUserProfile]=useState([]);
+  const [userProfile, setUserProfile] = useState([]);
   const navigate = useNavigate();
   const releasedmov = Mov.filter(movie => movie.released === true)
   const filtermovie = Mov.filter((m) =>
@@ -34,29 +34,29 @@ function Navbar() {
 
   );
   const location = useLocation();
-  
+
   const isMainPage = location.pathname === "/";
   const isHistoryPage = location.pathname === "/history";
-  const isFrequentlyQuestion = location.pathname === "/movies/frequently-asked-questions";  
+  const isFrequentlyQuestion = location.pathname === "/movies/frequently-asked-questions";
   const isTermAndCondition = location.pathname === "/movies/terms-and-condition";
 
-const getUser =async ()=>{
-  try {
-    const {data } =await axios('/api/user/profile',{
-    headers:{
-      "token":localStorage.getItem("token")
+  const getUser = async () => {
+    try {
+      const { data } = await axios('/api/user/profile', {
+        headers: {
+          "token": localStorage.getItem("token")
+        }
+      })
+      if (data.success) {
+        setUserProfile(data.data);
+      }
+    } catch (error) {
+      console.log(error.response)
     }
-  })
-  if(data.success){
-    setUserProfile(data.data);
-  }
-  } catch (error) {
-    console.log(error.response)
-  }
-};
+  };
 
 
-  
+
   // Registration
   const [formData, setFormdata] = useState({
     name: "",
@@ -154,7 +154,7 @@ const getUser =async ()=>{
   const loginHandler = async (e) => {
     e.preventDefault();
     try {
-      const {data} = await axios.post(
+      const { data } = await axios.post(
         "/api/user/login",
         { ...loginform }
       );
@@ -163,13 +163,13 @@ const getUser =async ()=>{
         localStorage.setItem("token", data.token);
         setLogin(false);
 
-      // 👇 check source
-      if ( location.pathname === "/history") {
-        
-        navigate("/history");
-      } else {
-        setUser(true);
-      }
+        // 👇 check source
+        if (location.pathname === "/history") {
+
+          navigate("/history");
+        } else {
+          setUser(true);
+        }
       } else {
         alert(data.message);
       }
@@ -190,26 +190,25 @@ const getUser =async ()=>{
           token: token
         }
       })
+      console.log(data)
       if (data.success) {
         navigate("/history")
         setshowMenu(false)
       } else {
         setLogin(true)
-        navigate("/history")
         setshowMenu(false)
       }
     } catch (error) {
       console.log(error?.response?.data)
-      setLogin(true)      
-        navigate("/history")
+      setLogin(true)
       setshowMenu(false)
     }
   }
 
-  const orderLogin =async () =>{
+  const orderLogin = async () => {
     try {
-     
-       const token = await localStorage.getItem("token");
+
+      const token = await localStorage.getItem("token");
       const { data } = await axios.get("/api/user/profile", {
         headers: {
           token: token
@@ -241,7 +240,7 @@ const getUser =async ()=>{
         <div className=" max-w-10xl mx-auto flex items-center justify-between py-2 px-3 sm:px-8">
 
           {isFrequentlyQuestion ? (
-             <>
+            <>
               <div
                 className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
                 onClick={() => navigate("/")}
@@ -256,178 +255,195 @@ const getUser =async ()=>{
                 Frequently Asked Question
               </h2>
               <div
-                  className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
-                // onClick={() => setProfile(true)}
                 onClick={orderLogin}
               >
-                🧑🏻
+                {userProfile?.name
+                  ? (<p className="w-8 h-8 rounded-full bg-amber-800 flex justify-center items-center text-white text-xl font-semibold">
+                    {userProfile?.name?.charAt(0).toUpperCase()}
+                  </p>)
+                  : (<p className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                  >🧑🏻 </p>)}
               </div>
             </>
           ) : (
-            isHistoryPage ?(
-            <>
-              <div
-                className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
-                onClick={() => navigate("/")}
-              >
-                <p>Ticket Wala | Indore</p>
-
-              </div>
-              <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
-                onClick={() => navigate("/")}
-              ><FaArrowLeft /></div>
-              <h2 className="text-lg font-bold flex text-amber-800 tracking-wide ">
-                Review  Your Orders
-              </h2>
-              <div
-                  className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
-                // onClick={() => setProfile(true)}
-                onClick={orderLogin}
-              >
-                🧑🏻
-              </div>
-            </>):(
-              isTermAndCondition ?(
-                <>
-              <div
-                className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
-                onClick={() => navigate("/")}
-              >
-                <p>Ticket Wala | Indore</p>
-
-              </div>
-              <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
-                onClick={() => navigate("/")}
-              ><FaArrowLeft /></div>
-              <h2 className="text-lg font-bold flex text-amber-800 tracking-wide ">
-                Term and Condition
-              </h2>
-              <div
-                  className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
-                // onClick={() => setProfile(true)}
-                onClick={orderLogin}
-              >
-                🧑🏻
-              </div>
-            </>
-            ):(
-               <>
-              <div
-                className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
-                onClick={() => navigate("/")}
-              >
-                <p>Ticket Wala | Indore</p>
-              </div>
-              <div className="hidden md:flex items-center gap-10 text-lg font-medium text-gray-700">
-                <NavLink to="/" className="hover:text-amber-700 transition text-xs">
-                  Home
-                </NavLink>
-                <NavLink
-                  className="hover:text-amber-700 cursor-pointer transition text-xs"
-                  onMouseEnter={() => {
-                    setOpent(false);
-                    setOpen(true);
-                  }}
-                >
-                  Movies
-                </NavLink>
-                <button
-                  className="hover:text-amber-700 cursor-pointer transition text-xs"
-                  onMouseEnter={() => {
-                    setOpen(false);
-                    setOpent(true);
-                  }}
-                >
-                  Theatres
-                </button>
-                <button
-                  className="hover:text-amber-700 cursor-pointer transition text-xs"
-                  onClick={ordercheck}
-                >
-                  Orders
-                </button>
-              </div>
-
-              <div className="hidden sm:flex items-center gap-5">
-                <input
-                  type="search"
-                  placeholder="🔍 Search movies or cinemas"
-                  onClick={() => setSearch(true)}
-                  className="border   border-gray-300 pl-4 lg:px-4 py-2 rounded-lg shadow-sm focus:ring-2 text-xs focus:ring-amber-500 focus:outline-none w-12 lg:w-65 xl:w-72 "
-                />
+            isHistoryPage ? (
+              <>
                 <div
-                  className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
-                  // onClick={() => setProfile(true)}
+                  className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
+                  onClick={() => navigate("/")}
+                >
+                  <p>Ticket Wala | Indore</p>
+
+                </div>
+                <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
+                  onClick={() => navigate("/")}
+                ><FaArrowLeft /></div>
+                <h2 className="text-lg font-bold flex text-amber-800 tracking-wide ">
+                  Review  Your Orders
+                </h2>
+                <div
                   onClick={orderLogin}
                 >
-                  🧑🏻
+                  {userProfile?.name
+                    ? (<p className="w-8 h-8 rounded-full bg-amber-800 flex justify-center items-center text-white text-xl font-semibold">
+                      {userProfile?.name?.charAt(0).toUpperCase()}
+                    </p>)
+                    : (<p className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                    >🧑🏻 </p>)}
                 </div>
-              </div>
+              </>
+            ) : (
+              isTermAndCondition ? (
+                <>
+                  <div
+                    className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
+                    onClick={() => navigate("/")}
+                  >
+                    <p>Ticket Wala | Indore</p>
 
-              <div className="flex items-center gap-4 sm:hidden">
-                <input
-                  type="search"
-                  placeholder="🔍"
-                  onClick={() => setSearch(true)}
-                  className="border border-gray-300 py-1 flex lg:hidden rounded-lg shadow-sm text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none w-9 pl-2"
-                />
-
-                <div
-                  className="text-2xl flex sm:hidden "
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setshowMenu(!showMenu);
-                  }}
-                >
-                  {!showMenu ? <IoMdMenu /> : <IoClose />}
-                </div>
-
-                <div
-                  className={`absolute right-3 top-16 w-32 rounded-xl bg-gray-500 text-white transition-all duration-300 ${showMenu ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-                    }`}
-                >
-                  <div className="flex flex-col gap-2 p-3 items-center text-sm">
-                    <NavLink to="/" onClick={()=>setshowMenu(false)} className="hover:text-amber-300">
+                  </div>
+                  <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
+                    onClick={() => navigate("/")}
+                  ><FaArrowLeft /></div>
+                  <h2 className="text-lg font-bold flex text-amber-800 tracking-wide ">
+                    Term and Condition
+                  </h2>
+                  <div
+                    onClick={orderLogin}
+                  >
+                    {userProfile?.name
+                      ? (<p className="w-8 h-8 rounded-full bg-amber-800 flex justify-center items-center text-white text-xl font-semibold">
+                        {userProfile?.name?.charAt(0).toUpperCase()}
+                      </p>)
+                      : (<p className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                      >🧑🏻 </p>)}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div
+                    className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
+                    onClick={() => navigate("/")}
+                  >
+                    <p>Ticket Wala | Indore</p>
+                  </div>
+                  <div className="hidden md:flex items-center gap-10 text-lg font-medium text-gray-700">
+                    <NavLink to="/" className="hover:text-amber-700 transition text-xs">
                       Home
                     </NavLink>
                     <NavLink
-                      className="hover:text-amber-300"
-                      onClick={()=>{setshowMenu(false); setOpent(false);
-                        setOpen(true);}}
-                     
+                      className="hover:text-amber-700 cursor-pointer transition text-xs"
+                      onMouseEnter={() => {
+                        setOpent(false);
+                        setOpen(true);
+                      }}
                     >
                       Movies
                     </NavLink>
                     <button
-                      className="hover:text-amber-300"
-                      onClick={()=>{setshowMenu(false) ;setOpen(false);
-                        setOpent(true);}}
-                      
+                      className="hover:text-amber-700 cursor-pointer transition text-xs"
+                      onMouseEnter={() => {
+                        setOpen(false);
+                        setOpent(true);
+                      }}
                     >
                       Theatres
                     </button>
-                    <button className="hover:text-amber-300" onClick={ordercheck}>
+                    <button
+                      className="hover:text-amber-700 cursor-pointer transition text-xs"
+                      onClick={ordercheck}
+                    >
                       Orders
                     </button>
+                  </div>
+
+                  <div className="hidden sm:flex items-center gap-5">
+                    <input
+                      type="search"
+                      placeholder="🔍 Search movies or cinemas"
+                      onClick={() => setSearch(true)}
+                      className="border   border-gray-300 pl-4 lg:px-4 py-2 rounded-lg shadow-sm focus:ring-2 text-xs focus:ring-amber-500 focus:outline-none w-12 lg:w-65 xl:w-72 "
+                    />
                     <div
-                      className="cursor-pointer hover:text-amber-300"
                       onClick={orderLogin}
                     >
-                      Profile
+                      {userProfile?.name
+                        ? (<p className="w-8 h-8 rounded-full bg-amber-800 flex justify-center items-center text-white text-xl font-semibold">
+                          {userProfile?.name?.charAt(0).toUpperCase()}
+                        </p>)
+                        : (<p className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                        >🧑🏻 </p>)}
                     </div>
                   </div>
-                </div>
-              </div>
-            </>
-          
-            ))
+
+                  <div className="flex items-center gap-4 sm:hidden">
+                    <input
+                      type="search"
+                      placeholder="🔍"
+                      onClick={() => setSearch(true)}
+                      className="border border-gray-300 py-1 flex lg:hidden rounded-lg shadow-sm text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none w-9 pl-2"
+                    />
+
+                    <div
+                      className="text-2xl flex sm:hidden "
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setshowMenu(!showMenu);
+                      }}
+                    >
+                      {!showMenu ? <IoMdMenu /> : <IoClose />}
+                    </div>
+
+                    <div
+                      className={`absolute right-3 top-16 w-32 rounded-xl bg-gray-500 text-white transition-all duration-300 ${showMenu ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                        }`}
+                    >
+                      <div className="flex flex-col gap-2 p-3 items-center text-sm">
+                        <NavLink to="/" onClick={() => setshowMenu(false)} className="hover:text-amber-300">
+                          Home
+                        </NavLink>
+                        <NavLink
+                          className="hover:text-amber-300"
+                          onClick={() => {
+                            setshowMenu(false); setOpent(false);
+                            setOpen(true);
+                          }}
+
+                        >
+                          Movies
+                        </NavLink>
+                        <button
+                          className="hover:text-amber-300"
+                          onClick={() => {
+                            setshowMenu(false); setOpen(false);
+                            setOpent(true);
+                          }}
+
+                        >
+                          Theatres
+                        </button>
+                        <button className="hover:text-amber-300" onClick={ordercheck}>
+                          Orders
+                        </button>
+                        <div
+                          className="cursor-pointer hover:text-amber-300"
+                          onClick={orderLogin}
+                        >
+                          Profile
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+
+              ))
           )}
 
-          
-         
- 
 
-          
+
+
+
+
         </div>
       </nav>
 
@@ -491,7 +507,7 @@ const getUser =async ()=>{
                 {theatres.map((v, i) => {
                   return (
                     <NavLink to={"/theatre/list/" + v.name} key={i} onClick={() => { setOpent(false) }} className='w-[45%]'  >
-                      <p className='mb-1 text-[11px] font-medium'>{v.name},{v.location},{v.city}</p>  
+                      <p className='mb-1 text-[11px] font-medium'>{v.name},{v.location},{v.city}</p>
                       <hr className='text-gray-300' />
                     </NavLink>
 
@@ -628,12 +644,14 @@ const getUser =async ()=>{
                 {filtermovie.length === 0 ? (
                   <p className="text-gray-500">No results found</p>
                 ) : (
-                  filtermovie.map((v,i) => (
+                  filtermovie.map((v, i) => (
                     <div
                       key={i}
                       className="flex w-[45%] gap-3 items-center cursor-pointer"
-                      onClick={() => {navigate(`/movies/${v.encodeName}`)
-                    setSearch(false);}}
+                      onClick={() => {
+                        navigate(`/movies/${v.encodeName}`)
+                        setSearch(false);
+                      }}
                     >
                       <img
                         src={v.poster.url}
@@ -642,7 +660,7 @@ const getUser =async ()=>{
                       />
                       <div> <p className="font--medium text-sm">{v.name}</p>
                         <p className='text-xs font-light'>{v.genre}, {v.langauage?.slice(0, 1).join(" ")} </p>
-                     
+
                       </div>
                     </div>
                   ))
@@ -654,81 +672,81 @@ const getUser =async ()=>{
       </Dialog>
 
       {/* User */}
-     <Dialog
-             open={user}
-             onClose={() => setUser(false)}
-             className="relative z-50"
-           >
-             <div
-               className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity"
-               onClick={() => setUser(false)}
-             />
-     
-             <div className="fixed inset-0 flex justify-end">
-               <DialogPanel
-                 className="w-full sm:w-[60%] lg:w-[50%] xl:w-[40%] min-h-full max-h-fit bg-slate-100 shadow-2xl  sm:rounded-l-3xl 
-                             transform transition-all duration-300 animate-slideIn"
-                 onClick={(e) => e.stopPropagation()}
-               >
-               
-                
-                   <div>
-                
+      <Dialog
+        open={user}
+        onClose={() => setUser(false)}
+        className="relative z-50"
+      >
+        <div
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity"
+          onClick={() => setUser(false)}
+        />
 
-                 <h1 className="text-2xl w-full  font-medium mb-6 shadow-md rounded-xl p-4 px-8 flex gap-5  items-center cursor-pointer bg-gray-50 " > <FaArrowLeft className='text-lg font-normal'  onClick={() => setUser(false)}/> <p> Profile </p></h1>
-     <div className='px-6'>
-        <div className="flex items-center gap-4 mb-4 lg:mb-6 xl:mb-8">
-                   <p className="w-14 h-14 rounded-full bg-indigo-500 flex justify-center 
+        <div className="fixed inset-0 flex justify-end">
+          <DialogPanel
+            className="w-full sm:w-[60%] lg:w-[50%] xl:w-[40%] min-h-full max-h-fit bg-slate-100 shadow-2xl  sm:rounded-l-3xl 
+                             transform transition-all duration-300 animate-slideIn"
+            onClick={(e) => e.stopPropagation()}
+          >
+
+
+            <div>
+
+
+              <h1 className="text-2xl w-full  font-medium mb-6 shadow-md rounded-xl p-4 px-8 flex gap-5  items-center cursor-pointer bg-gray-50 " > <FaArrowLeft className='text-lg font-normal' onClick={() => setUser(false)} /> <p> Profile </p></h1>
+              <div className='px-6'>
+                <div className="flex items-center gap-4 mb-4 lg:mb-6 xl:mb-8">
+                  <p className="w-14 h-14 rounded-full bg-indigo-500 flex justify-center 
                                   items-center text-white text-2xl font-semibold">
                     {userProfile?.name?.charAt(0).toUpperCase()}
 
-                   </p>
-     
-                   <div>
-                     <h2 className="text-lg font-bold">{userProfile?.name}</h2>
-                     <h3 className="text-gray-600 text-sm">{userProfile?.email}</h3>
-                   </div>
-                 </div>
-     
-                 <div className="shadow-md rounded-xl p-4 cursor-pointer bg-gray-50 transition">
-                   <div className="flex justify-between items-center text-sm" onClick={() =>{setUser(false); navigate("/history")}}>
-                     <h3 className="font-medium flex gap-5 items-center"   > <span><BiBorderRadius /></span> <p> View All Booking </p></h3>
-                     <span>➪</span>
-                   </div>
-                 </div>
-     
-                 <p className=" my-4 lg:my-6 xl:my-8  text-sm font-bold text-gray-700">Support</p>
-     
-                 <div className="shadow-md rounded-xl">
-                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl" onClick={() =>{setUser(false); navigate("/movies/frequently-asked-questions")}}>
-                      <h3 className="font-medium flex gap-5 items-center"> <span><LuMessageCircleQuestion /> </span> <p> Frequently Asked Questions </p></h3>
-                     <span>➪</span>
-                   </div>
+                  </p>
+
+                  <div>
+                    <h2 className="text-lg font-bold">{userProfile?.name}</h2>
+                    <h3 className="text-gray-600 text-sm">{userProfile?.email}</h3>
+                  </div>
+                </div>
+
+                <div className="shadow-md rounded-xl p-4 cursor-pointer bg-gray-50 transition">
+                  <div className="flex justify-between items-center text-sm" onClick={() => { setUser(false); navigate("/history") }}>
+                    <h3 className="font-medium flex gap-5 items-center"   > <span><BiBorderRadius /></span> <p> View All Booking </p></h3>
+                    <span>➪</span>
+                  </div>
+                </div>
+
+                <p className=" my-4 lg:my-6 xl:my-8  text-sm font-bold text-gray-700">Support</p>
+
+                <div className="shadow-md rounded-xl">
+                  <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl" onClick={() => { setUser(false); navigate("/movies/frequently-asked-questions") }}>
+                    <h3 className="font-medium flex gap-5 items-center"> <span><LuMessageCircleQuestion /> </span> <p> Frequently Asked Questions </p></h3>
+                    <span>➪</span>
+                  </div>
                   <hr className='text-gray-300 mx-4' />
-                   <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl" onClick={() =>{setUser(false); navigate("/movies/contact")}}>
-                      <h3 className="font-medium flex gap-5 items-center"> <span><RiContactsBook3Line /></span> <p> Contact Us</p></h3>
-                     <span>➪</span>
-                   </div>
-                 </div>
-     
-                 <p className=" my-2 lg:my-6 xl:my-8   text-sm font-bold text-gray-700">More</p>
-     
-                 <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer bg-gray-50" onClick={() =>{setUser(false); navigate("/movies/terms-and-condition")}}>
-                    <h3 className="font-medium flex gap-5 items-center"> <span><RiFileCopy2Line /></span> <p> Terms and Conditions</p></h3>
-                   <span>➪</span>
-                 </div>
-     
-                 <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer bg-gray-50 mt-3">
-                   <button className="text-red-600 font-semibold flex gap-5 items-center"  onClick={handleLogout}> <span><IoIosLogOut /></span> <p>Logout</p></button>
-                 </div>
-     </div>
-               
-                    </div> 
-                  
-               
-               </DialogPanel>
-             </div>
-           </Dialog>
+                  <div className="flex justify-between items-center h-12 px-4 cursor-pointer bg-gray-50 rounded-xl" onClick={() => { setUser(false); navigate("/movies/contact") }}>
+                    <h3 className="font-medium flex gap-5 items-center"> <span><RiContactsBook3Line /></span> <p> Contact Us</p></h3>
+                    <span>➪</span>
+                  </div>
+                </div>
+
+                <p className=" my-2 lg:my-6 xl:my-8   text-sm font-bold text-gray-700">More</p>
+
+                <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer bg-gray-50" onClick={() => { setUser(false); navigate("/movies/terms-and-condition") }}>
+                  <h3 className="font-medium flex gap-5 items-center"> <span><RiFileCopy2Line /></span> <p> Terms and Conditions</p></h3>
+                  <span>➪</span>
+                </div>
+
+                <div className="shadow-md rounded-xl p-4 flex justify-between items-center cursor-pointer bg-gray-50 mt-3">
+                  <button className="text-red-600 font-semibold flex gap-5 items-center" onClick={handleLogout}> <span><IoIosLogOut /></span> <p>Logout</p></button>
+                </div>
+              </div>
+
+            </div>
+
+
+          </DialogPanel>
+        </div>
+      </Dialog>
 
       {/* otp  */}
       <Dialog

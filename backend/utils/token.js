@@ -5,7 +5,7 @@ let generatetoken = async (details, secretKey, expiretime) => {
     return token
 }
 let decodetoken = async (token, secretKey) => {
-    let decodedvalue = await jwt.decode(token, secretKey)
+    let decodedvalue = await jwt.verify(token, secretKey)
     return decodedvalue
 }
 module.exports = { generatetoken, decodetoken }

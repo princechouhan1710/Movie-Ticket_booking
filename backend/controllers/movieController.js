@@ -2,20 +2,51 @@
 let Movie = require("../models/movieModel")
 let fs = require("fs");
 let path = require("path")
+
 let createMovie = async (req, res) => {
-    let poster = {
-        filename: req.files["poster"][0].filename,
-        url: process.env.BASEURL + req.files["poster"][0].filename
+  try {
+    const posterFile = req.files?.poster?.[0];
+    const videoFile = req.files?.video?.[0];
+
+    if (!posterFile || !videoFile) {
+      return res.status(400).json({
+        success: false,
+        message: "Poster and video files are required"
+      });
     }
-    let video = {
-        filename: req.files["video"][0].filename,
-        url: process.env.BASEURL + req.files["video"][0].filename
-    }
-    let newMovie = await Movie({ ...req.body, poster, video });
+
+    const poster = {
+      filename: posterFile.filename,
+      url: process.env.BASEURL + posterFile.filename
+    };
+
+    const video = {
+      filename: videoFile.filename,
+      url: process.env.BASEURL + videoFile.filename
+    };
+
+    const newMovie = new Movie({
+      ...req.body,
+      poster,
+      video
+    });
+
     await newMovie.save();
 
-    res.json({ success: true, message: "Movie Created Successfully", data: newMovie })
-}
+    res.json({
+      success: true,
+      message: "Movie Created Successfully",
+      data: newMovie
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error"
+    });
+  }
+};
+
 let getMovies = async (req, res) => {
     try {
         let movies = await Movie.find();

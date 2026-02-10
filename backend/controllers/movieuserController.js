@@ -147,7 +147,15 @@ let verifyOtp = async (req, res) => {
     }
 }
 
+let getUser =async (req,res)=>{
+    try {
+        let user =await MovieUser.find({isVerified: true});
+                res.status(200).json({ success: true, data: user })
 
+    } catch (error) {
+                res.status(404).json({ success: false, message: error.message })
+    }
+}
 
 let login = async (req, res) => {
     try {
@@ -190,7 +198,7 @@ let deleteuser = async (req, re) => {
     }
 }
 
-module.exports = { register, resendOtp, verifyOtp, login, profile }
+module.exports = { register, resendOtp, verifyOtp, login, profile,getUser }
 
 
 // ORM (Object-Relational Mapping) and ODM (Object-Document Mapping) are techniques that bridge the gap between object-oriented programming languages and databases, allowing developers to interact with data using code objects instead of writing raw queries. The key difference lies in the type of database they are designed for.

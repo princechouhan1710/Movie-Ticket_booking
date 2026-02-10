@@ -64,15 +64,13 @@ useEffect(() => {
           Biography
         </button>
  
-        <button className="px-4 py-2  border border-gray-300 rounded-xl hover:bg-gray-200 transition cursor-pointer">
-          3D
-        </button>
       </div>
-       <div className='flex gap-10  w-full flex-wrap lg:gap-5  xl:gap-10 '>
+       <div className='flex gap-10 justify-evenly  w-full flex-wrap lg:gap-5  xl:gap-10 '>
           {
           releasedmovies.map((v, i) => {
             return (
               <MovieCard key={i} movie={v} />
+            
             )
           })
         }

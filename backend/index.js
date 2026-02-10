@@ -2,8 +2,9 @@
   const errorhandler = require("./middlewares/errorhandler.js");
   const cors = require("cors");
   const bodyparser = require("body-parser");
-
-  let app = express();
+const cookieParser = require('cookie-parser')
+let app = express();
+app.use(cookieParser())
 
   const ConnectDB = require("./config/db.js")
   require("dotenv").config();
@@ -19,7 +20,7 @@
   app.use(cors({
     origin: ["http://127.0.0.1:5500"
   ,"http://localhost:5173","http://localhost:5174","http://localhost:5175","http://localhost:5176",
-  "https://movie-ticket-booking-savh.onrender.com"]
+  "https://movie-ticket-booking-savh.onrender.com"], credentials: true,  
   }));
 
   const path = require("path");
@@ -32,7 +33,9 @@
   let movieRoute = require("./routes/movieRoute.js");
   let theatresRoute = require("./routes/theatresRoute.js");
   let showRoute = require("./routes/showRoute.js");
-
+let adminRoute = require("./routes/adminRoute.js");
+ 
+  app.use("/api/admin", adminRoute)
   app.use("/api/user/", UserRoute)
   app.use("/api/movie", movieRoute)
   app.use("/api/theatres", theatresRoute)

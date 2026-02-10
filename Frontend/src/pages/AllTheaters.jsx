@@ -3,7 +3,6 @@ import { theatrescontext } from '../App'
 import { NavLink, useNavigate } from 'react-router-dom';
 function AllTheaters() {
   let { theatres } = useContext(theatrescontext);
-
   const navigate = useNavigate();
   return (
     <>
