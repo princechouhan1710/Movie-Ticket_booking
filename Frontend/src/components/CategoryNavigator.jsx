@@ -13,7 +13,7 @@ function CategoryNavigator({ category, redirecturl, data }) {
         <Swiper slidesPerView={'auto'} spaceBetween={12}>
           {data?.map((v, i) => {
             return (
-              <SwiperSlide className="w-auto! p-4"
+              <SwiperSlide className="w-auto! p-4 "
               >
                 <NavLink
                   to={`/movies/list/${redirecturl}/${v}`}

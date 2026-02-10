@@ -30,19 +30,19 @@ export default function Sidebar() {
 
       <div className="flex flex-col gap-8">
         <NavLink to="addmovie" className={({ isActive }) => `${linkStyle} ${isActive ? activeStyle : ""}`}>
-          🎬 Add Movie
+          Add Movie
         </NavLink>
         <NavLink to="allmovies" className={({ isActive }) => `${linkStyle} ${isActive ? activeStyle : ""}`}>
-          📽️ All Movies
+          All Movies
         </NavLink>
         <NavLink to="addtheatre" className={({ isActive }) => `${linkStyle} ${isActive ? activeStyle : ""}`}>
-          🏢 Add Theatre
+         Add Theatre
         </NavLink>
         <NavLink to="alltheatres" className={({ isActive }) => `${linkStyle} ${isActive ? activeStyle : ""}`}>
-          🎭 All Theatres
+          All Theatres
         </NavLink>
         <NavLink to="createshow" className={({ isActive }) => `${linkStyle} ${isActive ? activeStyle : ""}`}>
-          🗓️ Create Show
+          Create Show
         </NavLink>
       </div>
 
