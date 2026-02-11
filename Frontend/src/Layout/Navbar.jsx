@@ -39,10 +39,11 @@ function Navbar() {
   const isHistoryPage = location.pathname === "/history";
   const isFrequentlyQuestion = location.pathname === "/movies/frequently-asked-questions";
   const isTermAndCondition = location.pathname === "/movies/terms-and-condition";
+  const isPayment =location.pathname ==="/payment"
 
   const getUser = async () => {
     try {
-      const { data } = await axios('user/profile', {
+      const { data } = await axios('/api/user/profile', {
         headers: {
           "token": localStorage.getItem("token")
         }
@@ -70,7 +71,7 @@ function Navbar() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "user/register",
+        "/api/user/register",
         { ...formData }
       );
       if (response.data.success) {
@@ -106,7 +107,7 @@ function Navbar() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "user/verify-otp",
+        "/api/user/verify-otp",
         { ...otpform }
       );
       alert("OTP verified successfully ✅");
@@ -129,7 +130,7 @@ function Navbar() {
   const otpResendHandler = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post("user/resend-otp",
+      const data = await axios.post("/api/user/resend-otp",
         { ...Resendotpform }
       )
       setOtp(true)
@@ -155,7 +156,7 @@ function Navbar() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "user/login",
+        "/api/user/login",
         { ...loginform }
       );
 
@@ -185,7 +186,7 @@ function Navbar() {
   const ordercheck = async () => {
     try {
       const token = await localStorage.getItem("token");
-      const { data } = await axios.get("user/profile", {
+      const { data } = await axios.get("/api/user/profile", {
         headers: {
           token: token
         }
@@ -208,7 +209,7 @@ function Navbar() {
     try {
 
       const token = await localStorage.getItem("token");
-      const { data } = await axios.get("user/profile", {
+      const { data } = await axios.get("/api/user/profile", {
         headers: {
           token: token
         }
@@ -234,7 +235,7 @@ function Navbar() {
     navigate("/");
   };
   return (
-    <div className='sticky top-0 z-40 bg-white mb-15' >
+    <div className='sticky top-0 z-40 bg-white ' >
       <nav className=" top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 shadow-md border-b border-gray-200">
         <div className=" max-w-10xl mx-auto flex items-center justify-between py-2 px-3 sm:px-8">
 
@@ -319,7 +320,34 @@ function Navbar() {
                   </div>
                 </>
               ) : (
-                <>
+                isPayment ?(
+                  <>
+              <div
+                className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
+                onClick={() => navigate("/")}
+              >
+                <p>Ticket Wala | Indore</p>
+
+              </div>
+              <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
+                onClick={() => navigate("/")}
+              ><FaArrowLeft /></div>
+              <h2 className="text-sm sm:text-lg font-bold flex text-amber-800 tracking-wide ">
+                Review of your Booking
+              </h2>
+              <div
+                onClick={orderLogin}
+              >
+                {userProfile?.name
+                  ? (<p className="w-8 h-8 rounded-full bg-amber-800 flex justify-center items-center text-white text-xl font-semibold">
+                    {userProfile?.name?.charAt(0).toUpperCase()}
+                  </p>)
+                  : (<p className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                  >🧑🏻 </p>)}
+              </div>
+            </>
+                ):(
+                   <>
                   <div
                     className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
                     onClick={() => navigate("/")}
@@ -434,6 +462,8 @@ function Navbar() {
                     </div>
                   </div>
                 </>
+                )
+               
 
               ))
           )}

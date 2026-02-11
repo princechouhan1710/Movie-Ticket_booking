@@ -87,7 +87,7 @@ function AddMovie() {
 
   try {
     await axios.post(
-      "movie/createmovie",
+      "/api/movie/createmovie",
       data,
       { headers: { "Content-Type": "multipart/form-data" } }
     );

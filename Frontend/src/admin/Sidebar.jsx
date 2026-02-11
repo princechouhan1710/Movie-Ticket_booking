@@ -8,7 +8,7 @@ export default function Sidebar() {
 
   const logout = async () => {
     let { data } = await axios.get(
-      "admin/logout"
+      "/api/admin/logout"
     );
     if (data.success) {
       nav("/loginadmin");

@@ -9,7 +9,7 @@ export default function LoginAdmin() {
     let submitHandler = async (e) => {
         e.preventDefault();
         try {
-            let { data } = await axios.post("admin/login", { email, password }, { withCredentials: true })
+            let { data } = await axios.post("/api/admin/login", { email, password }, { withCredentials: true })
               if (data.success) {
                 nav("/dashboard")
             } else {

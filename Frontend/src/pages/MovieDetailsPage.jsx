@@ -28,7 +28,7 @@ function Ineer() {
 
   const getMovie = async () => {
     try {
-      const data = await fetch(`movie/getmovie/${name}`);
+      const data = await fetch(`/api/movie/getmovie/${name}`);
       const res = await data.json();
       if (res.success) {
         getShow(res.data._id)
@@ -43,7 +43,7 @@ function Ineer() {
     getMovie();
   }, [name])
   const getShow = async (movieId) => {
-    const data = await fetch("show/getshow/" + movieId);
+    const data = await fetch("/api/show/getshow/" + movieId);
     const res = await data.json();
     if (res.success) {
       setShow([...res.data])
@@ -152,9 +152,15 @@ function Ineer() {
                 </div>
 
                 <div className='flex gap-5 '>
+                  
                   {
                     v.showTimings?.map((time, index) => (
-                      <TimeCard key={index} time={time} />
+                      <TimeCard  key={index} 
+    time={time} 
+    movieId={movie._id}
+    movieName={movie.name}
+    theatre={v.theatre} />
+    
                     ))
                   }
                 </div>

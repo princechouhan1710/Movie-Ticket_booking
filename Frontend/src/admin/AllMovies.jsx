@@ -6,7 +6,7 @@ function AllMovies() {
   const [loading, setLoading] = useState(true)
   const getMovie = async () => {
     try {
-      const res = await axios.get("movie/getmovies");
+      const res = await axios.get("/api/movie/getmovies");
       if (res.data.success) {
         setMovie(res.data.data);
       }
@@ -20,7 +20,7 @@ function AllMovies() {
     if (!window.confirm("Are you sure you want to delete this movie?")) return;
 
     try {
-      const res = await axios.delete(`movie/deletemovie/${id}`);
+      const res = await axios.delete(`/api/movie/deletemovie/${id}`);
       if (res.status === 200 || res.data.success) {
         alert("Movie deleted successfully!");
         getMovie();

@@ -7,7 +7,7 @@ function AllTheatres() {
   const getTheatres = async () => {
     try {
       const res = await axios.get(
-      "theatres/gettheatres"
+      "/api/theatres/gettheatres"
     );
     if (res.data.success) {
       setTheatres(res.data.data);
@@ -24,7 +24,7 @@ function AllTheatres() {
 
      try {
       const res = await axios.delete(
-      `theatres/deletetheatre/${id}`
+      `/api/theatres/deletetheatre/${id}`
     );
      if (res.status === 200 || res.data.success) {
         alert("Theatre deleted successfully!");

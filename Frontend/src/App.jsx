@@ -21,6 +21,8 @@ import AddTheatres from './admin/AddTheatres.jsx'
 import AllTheatres from './admin/AllTheatres.jsx'
 import AllMovies from './admin/AllMovies.jsx'
 import CreateShow from './admin/CreateShow.jsx'
+import BookingTicket from './pages/BookingTicket.jsx'
+import Payment from './pages/Payment.jsx'
 export const theatrescontext = createContext();
 export const moviecontext = createContext();
 
@@ -66,6 +68,8 @@ function App() {
         <Route path='/movies/:name' element={<Ineerpage />}></Route>
         <Route path='/theatre/list/:name' element={<Theaters />}></Route>
         <Route path='/movies/list/:key/:value' element={<MovieList />}></Route>
+        <Route path='/booking/:id' element={<BookingTicket />}></Route>
+        <Route path='/payment' element={<Payment />}></Route>
 <Route path='/loginadmin' element={<LoginAdmin />}></Route>
         {/* dashboard routes */}
         <Route path='/Dashboard' element={<ProtectedRoute > <Dashboard /></ProtectedRoute>}>
@@ -78,7 +82,7 @@ function App() {
           <Route path='createshow' element={<CreateShow />}></Route>
         </Route>
       </Routes>
-      {/* {!["/dashboard", "/history", "/movies/frequently-asked-questions", "/movies/contact", "/movies/terms-and-condition"].includes(location.pathname) && <Footer />} */}
+      {/* {!["/dashboard", "/history", "/movies/frequently-asked-questions", "/movies/contact", "/movies/terms-and-condition","/loginadmin", "/dashboard","/dashboard/addmovie","/dashboard/addtheatre","/dashboard/allmovies","/dashboard/createshow","/dashboard/alltheatres"].includes(location.pathname) && <Footer />} */}
 
     </theatrescontext.Provider>
   </moviecontext.Provider>
