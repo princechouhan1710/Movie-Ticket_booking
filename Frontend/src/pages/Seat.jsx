@@ -171,8 +171,8 @@ const TheatreSeats = ({ movieName, theatre, selectedTime, moviePoster,movieGenre
       category:
         selectedSeats.length > 0 ? selectedSeats[0].type : "",
 
-      totalTickets: selectedSeats.length,
-      totalAmount: totalPrice,
+      totalTickets: selectedSeats.length, 
+      totalAmount: totalPrice ,
     };
 
     navigate("/payment", { state: bookingData
