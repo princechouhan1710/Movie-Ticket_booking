@@ -13,7 +13,7 @@ import { RiContactsBook3Line } from "react-icons/ri";
 import { RiFileCopy2Line } from "react-icons/ri";
 import { IoIosLogOut } from "react-icons/io";
 
-function Navbar() {
+function Navbar({ movieName, theatreName, movieId ,theatreCity,theatreLoacation}) {
   const [open, setOpen] = useState(false)
   const [opent, setOpent] = useState(false)
   const [search, setSearch] = useState(false)
@@ -39,8 +39,12 @@ function Navbar() {
   const isHistoryPage = location.pathname === "/history";
   const isFrequentlyQuestion = location.pathname === "/movies/frequently-asked-questions";
   const isTermAndCondition = location.pathname === "/movies/terms-and-condition";
-  const isPayment =location.pathname ==="/payment"
-
+  const isPayment = location.pathname === "/payment"
+  const isBooking = location.pathname === `/booking/${movieId}`
+ 
+{console.log(movieId)}
+{console.log(movieName)}
+console.log(theatreCity)
   const getUser = async () => {
     try {
       const { data } = await axios('/api/user/profile', {
@@ -55,7 +59,6 @@ function Navbar() {
       console.log(error.response)
     }
   };
-
 
 
   // Registration
@@ -320,77 +323,21 @@ function Navbar() {
                   </div>
                 </>
               ) : (
-                isPayment ?(
+                isPayment ? (
                   <>
-              <div
-                className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
-                onClick={() => navigate("/")}
-              >
-                <p>Ticket Wala | Indore</p>
+                    <div
+                      className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
+                      onClick={() => navigate("/")}
+                    >
+                      <p>Ticket Wala | Indore</p>
 
-              </div>
-              <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
-                onClick={() => navigate("/")}
-              ><FaArrowLeft /></div>
-              <h2 className="text-sm sm:text-lg font-bold flex text-amber-800 tracking-wide ">
-                Review of your Booking
-              </h2>
-              <div
-                onClick={orderLogin}
-              >
-                {userProfile?.name
-                  ? (<p className="w-8 h-8 rounded-full bg-amber-800 flex justify-center items-center text-white text-xl font-semibold">
-                    {userProfile?.name?.charAt(0).toUpperCase()}
-                  </p>)
-                  : (<p className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
-                  >🧑🏻 </p>)}
-              </div>
-            </>
-                ):(
-                   <>
-                  <div
-                    className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
-                    onClick={() => navigate("/")}
-                  >
-                    <p>Ticket Wala | Indore</p>
-                  </div>
-                  <div className="hidden md:flex items-center gap-10 text-lg font-medium text-gray-700">
-                    <NavLink to="/" className="hover:text-amber-700 transition text-xs">
-                      Home
-                    </NavLink>
-                    <NavLink
-                      className="hover:text-amber-700 cursor-pointer transition text-xs"
-                      onMouseEnter={() => {
-                        setOpent(false);
-                        setOpen(true);
-                      }}
-                    >
-                      Movies
-                    </NavLink>
-                    <button
-                      className="hover:text-amber-700 cursor-pointer transition text-xs"
-                      onMouseEnter={() => {
-                        setOpen(false);
-                        setOpent(true);
-                      }}
-                    >
-                      Theatres
-                    </button>
-                    <button
-                      className="hover:text-amber-700 cursor-pointer transition text-xs"
-                      onClick={ordercheck}
-                    >
-                      Orders
-                    </button>
-                  </div>
-
-                  <div className="hidden sm:flex items-center gap-5">
-                    <input
-                      type="search"
-                      placeholder="🔍 Search movies or cinemas"
-                      onClick={() => setSearch(true)}
-                      className="border   border-gray-300 pl-4 lg:px-4 py-2 rounded-lg shadow-sm focus:ring-2 text-xs focus:ring-amber-500 focus:outline-none w-12 lg:w-65 xl:w-72 "
-                    />
+                    </div>
+                    <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
+                      onClick={() => navigate("/")}
+                    ><FaArrowLeft /></div>
+                    <h2 className="text-sm sm:text-lg font-bold flex text-amber-800 tracking-wide ">
+                      Review of your Booking
+                    </h2>
                     <div
                       onClick={orderLogin}
                     >
@@ -401,69 +348,157 @@ function Navbar() {
                         : (<p className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
                         >🧑🏻 </p>)}
                     </div>
+                  </>
+                ) : (
+                  isBooking ? (
+                      <>
+                  <div
+                    className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
+                    onClick={() => navigate("/")}
+                  >
+                    <p>Ticket Wala | Indore</p>
+
                   </div>
-
-                  <div className="flex items-center gap-4 sm:hidden">
-                    <input
-                      type="search"
-                      placeholder="🔍"
-                      onClick={() => setSearch(true)}
-                      className="border border-gray-300 py-1 flex lg:hidden rounded-lg shadow-sm text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none w-9 pl-2"
-                    />
-
+                  <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
+                    onClick={() => navigate("/")}
+                  ><FaArrowLeft /></div>
+                  <div className=" flex flex-col items-center ">
+        <h1 className="text-amber-800 hidden sm:flex text-lg font-extrabold ">{movieName}</h1>
+        <p className="text-gray-500 text-md ">
+          {theatreName},{theatreLoacation},{theatreCity}
+        </p>
+       
+      </div>
+                  <div
+                    onClick={orderLogin}
+                  >
+                    {userProfile?.name
+                      ? (<p className="w-8 h-8 rounded-full bg-amber-800 flex justify-center items-center text-white text-xl font-semibold">
+                        {userProfile?.name?.charAt(0).toUpperCase()}
+                      </p>)
+                      : (<p className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                      >🧑🏻 </p>)}
+                  </div>
+                </>
+                  )
+                  :(
+                  <>
                     <div
-                      className="text-2xl flex sm:hidden "
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setshowMenu(!showMenu);
-                      }}
+                      className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
+                      onClick={() => navigate("/")}
                     >
-                      {!showMenu ? <IoMdMenu /> : <IoClose />}
+                      <p>Ticket Wala | Indore</p>
+                    </div>
+                    <div className="hidden md:flex items-center gap-10 text-lg font-medium text-gray-700">
+                      <NavLink to="/" className="hover:text-amber-700 transition text-xs">
+                        Home
+                      </NavLink>
+                      <NavLink
+                        className="hover:text-amber-700 cursor-pointer transition text-xs"
+                        onMouseEnter={() => {
+                          setOpent(false);
+                          setOpen(true);
+                        }}
+                      >
+                        Movies
+                      </NavLink>
+                      <button
+                        className="hover:text-amber-700 cursor-pointer transition text-xs"
+                        onMouseEnter={() => {
+                          setOpen(false);
+                          setOpent(true);
+                        }}
+                      >
+                        Theatres
+                      </button>
+                      <button
+                        className="hover:text-amber-700 cursor-pointer transition text-xs"
+                        onClick={ordercheck}
+                      >
+                        Orders
+                      </button>
                     </div>
 
-                    <div
-                      className={`absolute right-3 top-16 w-32 rounded-xl bg-gray-500 text-white transition-all duration-300 ${showMenu ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-                        }`}
-                    >
-                      <div className="flex flex-col gap-2 p-3 items-center text-sm">
-                        <NavLink to="/" onClick={() => setshowMenu(false)} className="hover:text-amber-300">
-                          Home
-                        </NavLink>
-                        <NavLink
-                          className="hover:text-amber-300"
-                          onClick={() => {
-                            setshowMenu(false); setOpent(false);
-                            setOpen(true);
-                          }}
+                    <div className="hidden md:flex items-center gap-5">
+                      <input
+                        type="search"
+                        placeholder="🔍 Search movies or cinemas"
+                        onClick={() => setSearch(true)}
+                        className="border   border-gray-300 pl-4 lg:px-4 py-2 rounded-lg shadow-sm focus:ring-2 text-xs focus:ring-amber-500 focus:outline-none w-12 lg:w-65 xl:w-72 "
+                      />
+                      <div
+                        onClick={orderLogin}
+                      >
+                        {userProfile?.name
+                          ? (<p className="w-8 h-8 rounded-full bg-amber-800 flex justify-center items-center text-white text-xl font-semibold">
+                            {userProfile?.name?.charAt(0).toUpperCase()}
+                          </p>)
+                          : (<p className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                          >🧑🏻 </p>)}
+                      </div>
+                    </div>
 
-                        >
-                          Movies
-                        </NavLink>
-                        <button
-                          className="hover:text-amber-300"
-                          onClick={() => {
-                            setshowMenu(false); setOpen(false);
-                            setOpent(true);
-                          }}
+                    <div className="flex items-center gap-4 md:hidden">
+                      <input
+                        type="search"
+                        placeholder="🔍"
+                        onClick={() => setSearch(true)}
+                        className="border border-gray-300 py-1 flex lg:hidden rounded-lg shadow-sm text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none w-9 pl-2"
+                      />
 
-                        >
-                          Theatres
-                        </button>
-                        <button className="hover:text-amber-300" onClick={ordercheck}>
-                          Orders
-                        </button>
-                        <div
-                          className="cursor-pointer hover:text-amber-300"
-                          onClick={orderLogin}
-                        >
-                          Profile
+                      <div
+                        className="text-2xl flex md:hidden "
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setshowMenu(!showMenu);
+                        }}
+                      >
+                        {!showMenu ? <IoMdMenu /> : <IoClose />}
+                      </div>
+
+                      <div
+                        className={`absolute right-3 top-16 w-32 rounded-xl bg-gray-500 text-white transition-all duration-300 ${showMenu ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                          }`}
+                      >
+                        <div className="flex flex-col gap-2 p-3 items-center text-sm">
+                          <NavLink to="/" onClick={() => setshowMenu(false)} className="hover:text-amber-300">
+                            Home
+                          </NavLink>
+                          <NavLink
+                            className="hover:text-amber-300"
+                            onClick={() => {
+                              setshowMenu(false); setOpent(false);
+                              setOpen(true);
+                            }}
+
+                          >
+                            Movies
+                          </NavLink>
+                          <button
+                            className="hover:text-amber-300"
+                            onClick={() => {
+                              setshowMenu(false); setOpen(false);
+                              setOpent(true);
+                            }}
+
+                          >
+                            Theatres
+                          </button>
+                          <button className="hover:text-amber-300" onClick={ordercheck}>
+                            Orders
+                          </button>
+                          <div
+                            className="cursor-pointer hover:text-amber-300"
+                            onClick={orderLogin}
+                          >
+                            Profile
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </>
+                  </>
                 )
-               
+              )
 
               ))
           )}

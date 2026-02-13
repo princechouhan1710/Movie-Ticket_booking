@@ -17,7 +17,7 @@ function CategoryNavigator({ category, redirecturl, data }) {
               >
                 <NavLink
                   to={`/movies/list/${redirecturl}/${v}`}
-                  className="border px-3 py-2  rounded-xl "
+                  className="border border-gray-400 px-3 py-2  rounded-xl "
                 >
                   {v} Movies
                 </NavLink>

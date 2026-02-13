@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
+
+
 const rows = 6;
 const cols = 8;
 
@@ -25,7 +27,9 @@ const generateSeats = () => {
   return seats;
 };
 
-const TheatreSeats = () => {
+const TheatreSeats = ({ movieName, theatre, selectedTime, moviePoster,movieGenre,movieLength,movieLang }) => {
+ 
+  const navigate = useNavigate();
   const [seats, setSeats] = useState(generateSeats());
   const [selectedSeats, setSelectedSeats] = useState([]);
 
@@ -142,18 +146,50 @@ const TheatreSeats = () => {
             ₹{totalPrice}
           </p>
 
-          <NavLink
-            disabled={selectedSeats.length === 0}
-            className={`mt-2 px-8 py-2 rounded-full font-semibold transition-all duration-300
-              ${
-                selectedSeats.length === 0
-                  ? "bg-gray-600 cursor-not-allowed"
-                  : "bg-green-500 hover:bg-green-600 hover:scale-105 shadow-lg"
-              }
-            `}
-         to={"/payment"} >
-           Proceed →
-          </NavLink>
+        <button
+  disabled={selectedSeats.length === 0}
+  onClick={() => {
+    const bookingData = {
+      movieName,
+      theatreName: theatre?.name,
+      theatreLocation: theatre?.location,
+      theatreCity: theatre?.city,
+      moviePoster,
+      movieGenre,
+      movieLength,
+      movieLang,
+      
+
+      date: new Date(selectedTime).toLocaleDateString("en-IN"),
+      time: new Date(selectedTime).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      }),
+
+      seats: selectedSeats.map(seat => seat.id),
+      category:
+        selectedSeats.length > 0 ? selectedSeats[0].type : "",
+
+      totalTickets: selectedSeats.length,
+      totalAmount: totalPrice,
+    };
+
+    navigate("/payment", { state: bookingData
+     });
+  }}
+  className={`mt-2 px-8 py-2 rounded-full font-semibold transition-all duration-300
+    ${
+      selectedSeats.length === 0
+        ? "bg-gray-600 cursor-not-allowed"
+        : "bg-green-500 hover:bg-green-600 hover:scale-105 shadow-lg"
+    }
+  `}
+>
+  Proceed →
+</button>
+
+
         </div>
       </div>
     </div>
@@ -167,4 +203,4 @@ const Legend = ({ color, label }) => (
   </div>
 );
 
-export default TheatreSeats;
+export default TheatreSeats; 
