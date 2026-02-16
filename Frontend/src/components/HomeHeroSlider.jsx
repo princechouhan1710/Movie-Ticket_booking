@@ -16,15 +16,14 @@ function Content1() {
     <Swiper
       spaceBetween={30}
       centeredSlides={true}
+      // loop={true}
       autoplay={{
         delay: 2500,
         disableOnInteraction: false,
       }}
-      pagination={{
-        clickable: true,
-      }}
+      
       navigation={true}
-      modules={[Autoplay, Pagination, Navigation]}
+      modules={[Autoplay,    Navigation]}
       className="mySwiper sm:h-100 w-full max-w-[1450px] 2xl:m-auto "
     >
       {Mov.map((v, i) => {

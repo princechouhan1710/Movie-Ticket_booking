@@ -1,4 +1,5 @@
 import React from 'react'
+<<<<<<< HEAD
 import Navbar from './Navbar'
 import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
@@ -10,10 +11,22 @@ export default function Layout() {
     <Outlet/>
     <Footer/>
       
+=======
+import { Outlet } from 'react-router-dom'
+import Footer from './Footer'
+
+
+function Layout() {
+  return (
+    <>
+        <Outlet/>
+      <Footer/>
+>>>>>>> a79176f88186b8693aa3c7a5661d8642a5de57ee
     </>
   )
 }
 
+<<<<<<< HEAD
 
 //   {
 //     name: "Border 2",
@@ -231,3 +244,6 @@ export default function Layout() {
 //     encodeName: "jawan-2"
 //   }
 // ];
+=======
+export default Layout
+>>>>>>> a79176f88186b8693aa3c7a5661d8642a5de57ee

@@ -4,47 +4,47 @@ let fs = require("fs");
 let path = require("path")
 
 let createMovie = async (req, res) => {
-  try {
-    const posterFile = req.files?.poster?.[0];
-    const videoFile = req.files?.video?.[0];
+    try {
+        const posterFile = req.files?.poster?.[0];
+        const videoFile = req.files?.video?.[0];
 
-    if (!posterFile || !videoFile) {
-      return res.status(400).json({
-        success: false,
-        message: "Poster and video files are required"
-      });
+        if (!posterFile || !videoFile) {
+            return res.status(400).json({
+                success: false,
+                message: "Poster and video files are required"
+            });
+        }
+
+        const poster = {
+            filename: posterFile.filename,
+            url: process.env.BASEURL + posterFile.filename
+        };
+
+        const video = {
+            filename: videoFile.filename,
+            url: process.env.BASEURL + videoFile.filename
+        };
+
+        const newMovie = new Movie({
+            ...req.body,
+            poster,
+            video
+        });
+
+        await newMovie.save();
+
+        res.json({
+            success: true,
+            message: "Movie Created Successfully",
+            data: newMovie
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: "Server Error"
+        });
     }
-
-    const poster = {
-      filename: posterFile.filename,
-      url: process.env.BASEURL + posterFile.filename
-    };
-
-    const video = {
-      filename: videoFile.filename,
-      url: process.env.BASEURL + videoFile.filename
-    };
-
-    const newMovie = new Movie({
-      ...req.body,
-      poster,
-      video
-    });
-
-    await newMovie.save();
-
-    res.json({
-      success: true,
-      message: "Movie Created Successfully",
-      data: newMovie
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      success: false,
-      message: "Server Error"
-    });
-  }
 };
 
 let getMovies = async (req, res) => {
@@ -91,12 +91,12 @@ let deleteMovies = async (req, res) => {
         if (movie.poster.filename) {
             let imgpath = path.resolve(__dirname, "../uploads/" + movie.poster.filename)
             fs.unlinkSync(imgpath);
-             console.log("poster deleted",imgpath)
+            console.log("poster deleted", imgpath)
         }
         if (movie.video.filename) {
             let imgpath = path.resolve(__dirname, "../uploads/" + movie.video.filename)
             fs.unlinkSync(imgpath);
-            console.log("video deleted",imgpath)
+            console.log("video deleted", imgpath)
         }
         let deletemovie = await Movie.findByIdAndDelete(id);
         res.status(200).json({ success: true, message: "Movie Details Deleted" });
@@ -133,7 +133,6 @@ let FilterMovieQuery = async (req, res) => {
 
         if (category != "null" && category) {
             filter.push({ category: { $in: category.split(",").map(l => new RegExp(`^${l}$`, "i")) } })
-
         }
 
         const movies = await Movie.find({
@@ -141,6 +140,7 @@ let FilterMovieQuery = async (req, res) => {
         });
         res.status(200).json({ success: true, message: "filter", data: movies, });
     } catch (error) {
+        console.log(error)
         res.status(500).json({ success: false, message: error.message });
     }
 }

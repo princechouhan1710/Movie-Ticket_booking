@@ -144,6 +144,7 @@ function MovieDetailPage() {
                 <span className="w-3 h-3 bg-orange-500 rounded-full"></span> Almost full
               </p>
             </div>
+            
             {show.map((v, i) => (
               <div
                 key={i}
@@ -165,7 +166,7 @@ function MovieDetailPage() {
                 </div>
 
                 <div className='flex gap-5 '>
-                  
+                
                   {
                     v.showTimings?.map((time, index) => (
                    <TimeCard  
