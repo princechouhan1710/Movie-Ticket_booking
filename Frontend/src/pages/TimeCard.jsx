@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-<<<<<<< HEAD
 export default function TimeCard({ time,
   selectedDate,
   movieId,
@@ -21,38 +20,10 @@ export default function TimeCard({ time,
       return;
     }
 
-=======
-export default function TimeCard({ 
-  time, 
-  movieId, 
-  movieName,
-  theatre,
-  moviePoster,
-  movieGenre,
-  movieLength,
-  movieLang
-}) {
-  const [timePop, setTimePop] = useState(false)
-  const [selected, setSelected] = useState(false) 
-  const navigate = useNavigate()
-
-  const handleClick = () => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      alert("Please login first to book tickets");
-      return; 
-    }
-
-    setSelected(true);
-
-   
->>>>>>> a79176f88186b8693aa3c7a5661d8642a5de57ee
     navigate(`/booking/${movieId}`, {
       state: {
         movieId,
         movieName,
-<<<<<<< HEAD
         theatre,
         duration,
         language,
@@ -90,25 +61,14 @@ export default function TimeCard({
     </div>
   )
 }
-=======
-        time,          
-        theatre,
-        moviePoster,
-        movieGenre,
-        movieLength,
-        movieLang
-      },
-    });
-  };
->>>>>>> a79176f88186b8693aa3c7a5661d8642a5de57ee
 
   return (
     <div
       className={`relative px-8 py-2 rounded-lg text-center cursor-pointer transition-all duration-300
   ${
     selected
-      ? "bg-gradient-to-br from-purple-300 via-pink-200 to-yellow-200 text-gray-900 shadow-2xl scale-105 ring-1 ring-purple-400"
-      : "border border-gray-300 bg-white hover:bg-gradient-to-br hover:from-purple-100 hover:via-pink-50 hover:to-yellow-50 shadow-md"
+      ? "bg-linear-to-br from-purple-300 via-pink-200 to-yellow-200 text-gray-900 shadow-2xl scale-105 ring-1 ring-purple-400"
+      : "border border-gray-300 bg-white hover:bg-linear-to-br hover:from-purple-100 hover:via-pink-50 hover:to-yellow-50 shadow-md"
   }
 `}
 
@@ -136,4 +96,4 @@ export default function TimeCard({
       )}
     </div>
   )
-}
+

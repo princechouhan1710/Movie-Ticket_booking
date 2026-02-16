@@ -27,7 +27,6 @@ const generateSeats = () => {
   return seats;
 };
 
-<<<<<<< HEAD
 const TheatreSeats = ({ 
    movieId,
   movieName,
@@ -40,11 +39,6 @@ const TheatreSeats = ({
   poster
 
 }) => {
-=======
-const TheatreSeats = ({ movieName, theatre, selectedTime, moviePoster,movieGenre,movieLength,movieLang }) => {
- 
-  const navigate = useNavigate();
->>>>>>> a79176f88186b8693aa3c7a5661d8642a5de57ee
   const [seats, setSeats] = useState(generateSeats());
   const [selectedSeats, setSelectedSeats] = useState([]);
   const handleSeatClick = (seatId) => {
@@ -160,7 +154,6 @@ const TheatreSeats = ({ movieName, theatre, selectedTime, moviePoster,movieGenre
             ₹{totalPrice}
           </p>
 
-<<<<<<< HEAD
       <NavLink
   to="/payment"
   state={{
@@ -181,54 +174,12 @@ const TheatreSeats = ({ movieName, theatre, selectedTime, moviePoster,movieGenre
     ${
       selectedSeats.length === 0 
         ? "bg-gray-600 cursor-not-allowed pointer-events-none"
-=======
-        <button
-  disabled={selectedSeats.length === 0}
-  onClick={() => {
-    const bookingData = {
-      movieName,
-      theatreName: theatre?.name,
-      theatreLocation: theatre?.location,
-      theatreCity: theatre?.city,
-      moviePoster,
-      movieGenre,
-      movieLength,
-      movieLang,
-      
-
-      date: new Date(selectedTime).toLocaleDateString("en-IN"),
-      time: new Date(selectedTime).toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      }),
-
-      seats: selectedSeats.map(seat => seat.id),
-      category:
-        selectedSeats.length > 0 ? selectedSeats[0].type : "",
-
-      totalTickets: selectedSeats.length, 
-      totalAmount: totalPrice ,
-    };
-
-    navigate("/payment", { state: bookingData
-     });
-  }}
-  className={`mt-2 px-8 py-2 rounded-full font-semibold transition-all duration-300
-    ${
-      selectedSeats.length === 0
-        ? "bg-gray-600 cursor-not-allowed"
->>>>>>> a79176f88186b8693aa3c7a5661d8642a5de57ee
         : "bg-green-500 hover:bg-green-600 hover:scale-105 shadow-lg"
     }
   `}
 >
   Proceed →
-<<<<<<< HEAD
 </NavLink>
-=======
-</button>
->>>>>>> a79176f88186b8693aa3c7a5661d8642a5de57ee
 
 
         </div>
