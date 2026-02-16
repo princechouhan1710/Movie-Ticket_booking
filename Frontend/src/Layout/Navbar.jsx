@@ -13,7 +13,7 @@ import { RiContactsBook3Line } from "react-icons/ri";
 import { RiFileCopy2Line } from "react-icons/ri";
 import { IoIosLogOut } from "react-icons/io";
 
-function Navbar() {
+function Navbar({movieId,movieName,theatre}) {
   const [open, setOpen] = useState(false)
   const [opent, setOpent] = useState(false)
   const [search, setSearch] = useState(false)
@@ -40,7 +40,7 @@ function Navbar() {
   const isFrequentlyQuestion = location.pathname === "/movies/frequently-asked-questions";
   const isTermAndCondition = location.pathname === "/movies/terms-and-condition";
   const isPayment = location.pathname === "/payment"
-
+  const isBooking =location.pathname ===`/booking/${movieId}`
   const getUser = async () => {
     try {
       const { data } = await axios('/api/user/profile', {
@@ -55,6 +55,7 @@ function Navbar() {
       console.log(error.response)
     }
   };
+
 
 
   // Registration
@@ -188,7 +189,7 @@ function Navbar() {
       if (!token) {
         setLogin(true);
         setshowMenu(false)
-        localStorage.setItem("redirectAfterLogin", "/order");
+         localStorage.setItem("redirectAfterLogin", "/order");
       } else {
         const { data } = await axios.get("/api/user/profile", {
           headers: {
@@ -219,21 +220,20 @@ function Navbar() {
         setLogin(true);
         setshowMenu(false)
       } else {
-        const { data } = await axios.get("/api/user/profile", {
-          headers: {
-            token: token
-          }
-        })
-        if (data.success) {
-          getUser()
-          setProfile(false)
-          setUser(true)
-          setshowMenu(false)
-        } else {
-          setLogin(true)
-          setshowMenu(false)
+      const { data } = await axios.get("/api/user/profile", {
+        headers: {
+          token: token
         }
-      }
+      })
+      if (data.success) {
+        getUser()
+        setProfile(false)
+        setUser(true)
+        setshowMenu(false)
+      } else {
+        setLogin(true)
+        setshowMenu(false)
+      }}
     } catch (error) {
       console.log(error?.response?.data)
       setLogin(true)
@@ -358,6 +358,39 @@ function Navbar() {
                     </div>
                   </>
                 ) : (
+                  isBooking ?(
+                  <>
+                  <div
+                    className="text-amber-800 hidden sm:flex text-lg font-extrabold cursor-pointer  transition"
+                    onClick={() => navigate("/")}
+                  >
+                    <p>Ticket Wala | Indore</p>
+
+                  </div>
+                  <div className="text-amber-800 sm:hidden flex text-lg font-extrabold cursor-pointer  transition"
+                    onClick={() => navigate("/")}
+                  ><FaArrowLeft /></div>
+                 
+                  <div className="text-lg flex flex-col m-auto justify-center items-center text-amber-800 tracking-wide">
+      <h1 className="text-xl font-bold  ">
+        {movieName}
+      </h1>
+      <p className="text-gray-500 font-medium text-sm">
+        at {theatre?.name},{theatre?.location},{theatre?.city}
+      </p>
+    </div>
+                  <div
+                    onClick={orderLogin}
+                  >
+                    {userProfile?.name
+                      ? (<p className="w-8 h-8 rounded-full bg-amber-800 flex justify-center items-center text-white text-xl font-semibold">
+                        {userProfile?.name?.charAt(0).toUpperCase()}
+                      </p>)
+                      : (<p className="w-11 h-11 rounded-full flex bg-gray-200  justify-center items-center text-2xl cursor-pointer hover:bg-gray-300 transition"
+                      >🧑🏻 </p>)}
+                  </div>
+                </>
+                ) : (
                   <>
                     <div
                       className="text-amber-800 text-lg font-extrabold cursor-pointer  transition"
@@ -475,7 +508,7 @@ function Navbar() {
                   </>
                 )
 
-
+              )
               ))
           )}
 
