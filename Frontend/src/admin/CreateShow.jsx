@@ -34,7 +34,6 @@ export default function AddShow() {
     load();
   }, []);
 
-  /* ---------- Show Dates ---------- */
   const addDate = () =>
     setForm({ ...form, showDates: [...form.showDates, { date: "" }] });
 
@@ -51,7 +50,6 @@ export default function AddShow() {
     });
   };
 
-  /* ---------- Show Timings ---------- */
   const addTiming = () =>
     setForm({
       ...form,
@@ -74,7 +72,6 @@ export default function AddShow() {
     });
   };
 
-  /* ---------- Seat Categories ---------- */
   const addCategory = (ti) => {
     const arr = [...form.showTimings];
     arr[ti].seatCategories.push({ categoryName: "", price: "" });
@@ -95,7 +92,6 @@ export default function AddShow() {
     setForm({ ...form, showTimings: arr });
   };
 
-  /* ---------- Submit ---------- */
   const submit = async (e) => {
     e.preventDefault();
     try {
@@ -160,7 +156,6 @@ export default function AddShow() {
         )}
 
         <form onSubmit={submit} className="p-6 space-y-4">
-          {/* Movie & Theatre */}
           <div className="grid md:grid-cols-2 gap-4">
             <select
               value={form.movie}
@@ -195,7 +190,6 @@ export default function AddShow() {
             </select>
           </div>
 
-          {/* Show Dates */}
           <div className="space-y-2">
             <h3 className="font-semibold">Show Dates</h3>
             {form.showDates.map((d, i) => (
@@ -227,7 +221,6 @@ export default function AddShow() {
             </button>
           </div>
 
-          {/* Show Timings */}
           <div className="space-y-4">
             <h3 className="font-semibold">Show Timings</h3>
             {form.showTimings.map((t, ti) => (
@@ -313,7 +306,6 @@ export default function AddShow() {
             </button>
           </div>
 
-          {/* Total Seats */}
           <input
             type="number"
             placeholder="Total Seats"

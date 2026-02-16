@@ -1,32 +1,80 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 function Payment() {
+  const location = useLocation();
+
+  const {
+    movieName,
+    theatre,
+    selectedDate,
+    selectedTime,
+    selectedSeats = [],
+    totalPrice = 0,
+    duration,
+    language = [],
+    genre,
+    poster,
+  } = location.state || {};
+
+  const formattedDate = selectedDate
+    ? new Date(selectedDate).toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+    : "";
+
+  const formattedTime = selectedTime
+    ? new Date(selectedTime).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      })
+    : "";
+
+  const ticketCount = selectedSeats.length;
+
+  const seatNames = selectedSeats.map((seat) => seat.id).join(", ");
+
+  const taxes = Math.round(totalPrice * 0.1);
+  const finalAmount = totalPrice + taxes;
+
   return (
+ <>
+
+      
+
+
+
     <div className="min-h-screen bg-gray-100 py-10">
       <div className="w-[90%] max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-        
+
         <div className="md:col-span-2 space-y-6">
-          
+
           <div className="flex gap-6 bg-white rounded-2xl shadow-md p-6">
             <img
-              src="https://via.placeholder.com/150"
+              src={poster}
               alt="movie"
               className="w-28 h-40 object-cover rounded-lg shadow"
             />
 
             <div className="flex flex-col justify-between">
               <div>
-                <p className="text-2xl font-bold">Movie Name</p>
+                <p className="text-2xl font-bold">{movieName}</p>
                 <p className="text-gray-500 text-sm mt-1">
-                  Hindi, English
+                  {theatre?.name}, {theatre?.location}, {theatre?.city}
                 </p>
                 <p className="text-gray-500 text-sm mt-1">
-                  2h 30m | Action, Drama
+                  {language.join(", ")}
+                </p>
+                <p className="text-gray-500 text-sm mt-1">
+                  {duration} hr
                 </p>
               </div>
 
               <div className="text-green-600 font-semibold text-sm">
-                UA 13+
+                {genre}
               </div>
             </div>
           </div>
@@ -38,30 +86,30 @@ function Payment() {
 
             <div className="flex justify-between text-gray-600">
               <p>Date</p>
-              <p className="font-medium text-black">12 Feb 2026</p>
+              <p className="font-medium text-black">{formattedDate}</p>
             </div>
 
             <div className="flex justify-between text-gray-600">
               <p>Time</p>
-              <p className="font-medium text-black">07:30 PM</p>
+              <p className="font-medium text-black">{formattedTime}</p>
             </div>
 
             <div className="flex justify-between text-gray-600">
               <p>Seats</p>
               <p className="font-medium text-black">
-                A1, A2 (Platinum)
+                {seatNames || "No seats"}
               </p>
             </div>
 
             <div className="flex justify-between text-gray-600">
               <p>Tickets</p>
-              <p className="font-medium text-black">2</p>
+              <p className="font-medium text-black">{ticketCount}</p>
             </div>
           </div>
         </div>
 
         <div className="bg-white rounded-2xl shadow-md p-6 h-fit">
-          
+
           <h2 className="text-xl font-semibold mb-6">
             Payment Summary
           </h2>
@@ -69,38 +117,24 @@ function Payment() {
           <div className="space-y-3 text-gray-600">
             <div className="flex justify-between">
               <p>Order Amount</p>
-              <p>₹1050</p>
+              <p>₹{totalPrice}</p>
             </div>
 
             <div className="flex justify-between">
-              <p>Taxes & Fees</p>
-              <p>₹120</p>
+              <p>Taxes & Fees (10%)</p>
+              <p>₹{taxes}</p>
             </div>
 
             <hr />
 
             <div className="flex justify-between font-bold text-lg text-black">
               <p>Total Payable</p>
-              <p>₹1170</p>
-            </div>
-          </div>
-
-          <div className="mt-8">
-            <h2 className="text-lg font-semibold mb-3 flex justify-between">
-              Your Details
-              <span className="text-sm text-blue-600 cursor-pointer">
-                Edit
-              </span>
-            </h2>
-
-            <div className="text-gray-600 text-sm space-y-1">
-              <p>📱 +91 9876543210</p>
-              <p>📍 Gujarat, India</p>
+              <p>₹{finalAmount}</p>
             </div>
           </div>
 
           <button className="w-full mt-8 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-semibold transition duration-300 shadow-lg">
-            Proceed to Pay ₹1170
+            Proceed to Pay ₹{finalAmount}
           </button>
 
           <p className="text-xs text-gray-400 mt-4 text-center">
@@ -109,6 +143,7 @@ function Payment() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

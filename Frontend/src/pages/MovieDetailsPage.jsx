@@ -10,7 +10,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
 import TimeCard from './TimeCard.jsx';
-function Ineer() {
+import { useRef } from "react";
+
+function MovieDetailPage() {
+  const [selectedDate, setSelectedDate] = useState(null);
+
   const [review, setReview] = useState([
     { platform: "Hungama News", review: "Amazing movie!", rating: 4.2 },
     { platform: "Times of India", review: "Great direction.", rating: 4.0 },
@@ -109,9 +113,18 @@ function Ineer() {
               </p>
 
               {show[0]?.showDates.map((d, i) => (
-                <div
-                  key={i}
-                  className="px-4 py-2 bg-gray-100 rounded-xl shadow text-center hover:bg-blue-100 cursor-pointer"
+  <div
+    key={i}
+    onClick={() => setSelectedDate(d.date)}
+    className={`px-4 py-2 rounded-xl shadow text-center cursor-pointer
+      ${
+        selectedDate === d.date
+          ? "bg-blue-500 text-white"
+          : "bg-gray-100 hover:bg-blue-100"
+      }
+    `}
+  
+
                 >
                   <p className="text-xl font-bold">{new Date(d.date).getDate()}</p>
                 </div>
@@ -155,14 +168,23 @@ function Ineer() {
                   
                   {
                     v.showTimings?.map((time, index) => (
-                      <TimeCard  key={index} 
-    time={time} 
-    movieId={movie._id}
-    movieName={movie.name}
-    theatre={v.theatre} />
+                   <TimeCard  
+  key={index} 
+  time={time}
+  selectedDate={selectedDate}  
+  movieId={movie._id}
+  movieName={movie.name}
+  theatre={v.theatre}
+  duration={movie.length}
+  language={movie.langauage}
+  genre={movie.genre}
+  poster={movie?.poster?.url}
+/>
+
     
                     ))
                   }
+                  
                 </div>
               </div>
             ))}
@@ -264,7 +286,7 @@ function Ineer() {
                   <section className="mb-10">
                     <h3 className="text-xs font-bold mb-4">🎥 Trailer</h3>
                     <div className="flex justify-center">
-                      <video src={movie?.video?.url} controls autoPlay></video>
+                      <video src={movie?.video?.url} controls className='w-100 md:w-full md:h-full object-cover' ></video>
                       
                     </div>
                   </section>
@@ -287,7 +309,7 @@ function Ineer() {
   );
 }
 
-export default Ineer;
+export default MovieDetailPage;
 
 
 

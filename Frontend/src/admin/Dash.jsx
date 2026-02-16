@@ -12,7 +12,7 @@ export default function Dash() {
   let [show,setShow]=useState([])
   let getAdmin = async () => {
     try {
-      let { data } = await axios("admin/getadmin");
+      let { data } = await axios("/api/admin/getadmin");
       setAdmin(data.data);
     } catch (error) {
       console.log(error);

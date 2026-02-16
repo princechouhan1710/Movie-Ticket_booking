@@ -2,11 +2,25 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import Seat from "../pages/Seat.jsx"
+import Navbar from '../Layout/Navbar.jsx';
 
 function BookingTicket() {
-
+  const [selectedShow, setSelectedShow] = useState(null);
   const location = useLocation();
-  const { movieId, movieName, time ,theatre} = location.state || {};
+
+  const {
+    movieId,
+    movieName,
+    theatre,
+    duration,
+    language,
+    genre,
+    poster,
+    selectedDate,
+    selectedTime
+  } = location.state || {};
+
+  const [activeDate, setActiveDate] = useState(null);
 
   const [show, setShow] = useState([]);
 
@@ -29,73 +43,126 @@ function BookingTicket() {
       getShow(movieId);
     }
   }, [movieId]);
+  useEffect(() => {
+    if (selectedDate) {
+      setActiveDate(new Date(selectedDate));
+    }
+  }, [selectedDate]);
 
-  console.log(movieId);
-  console.log(movieName);
-  console.log(time);
+  useEffect(() => {
+    if (!show.length || !selectedTime) return;
 
-  
-   return (
-  <div className="min-h-screen bg-gray-100 p-6">
-    
-    <div className="bg-white rounded-xl flex flex-col items-center w-fit m-auto shadow-md p-6 mb-6">
-      <h1 className="text-2xl font-bold text-gray-800 ">
-        {movieName}
-      </h1>
-      <p className="text-gray-500 mt-2">
-        at {theatre?.name},{theatre?.location},{theatre?.city}
-      </p>
-    </div>
+    show.forEach((s) => {
+      if (s.theatre?._id === theatre?._id) {
+        const matched = s.showTimings.find(
+          (val) =>
+            new Date(val.time).toISOString() ===
+            new Date(selectedTime).toISOString()
+        );
 
-    <div className="space-y-6 ">
-      {show
-        .filter((s) => s.theatre?._id === theatre?._id)
-        .map((value, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-xl shadow-md p-6"
-          >
-            <h2 className="text-lg font-semibold text-gray-700 mb-4">
-              Available Show Timings
-            </h2>
+        if (matched) {
+          setSelectedShow(matched);
+        }
+      }
+    });
+  }, [show, selectedTime, theatre]);
 
-            <div className="flex flex-wrap gap-4">
-              {value.showTimings.map((val, ind) => (
-                <div
-                  key={ind}
-                  className="w-36 border border-gray-200 rounded-xl p-4 text-center 
-                             hover:bg-red-50 hover:border-red-400 
-                             hover:shadow-lg transition-all duration-300 
-                             cursor-pointer"
-                >
-                  <p className="font-semibold text-gray-800">
-                    {new Date(val.time).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: true,
-                    })}
-                  </p>
 
-                  <p className="text-sm text-gray-500 mt-2">
-                    {new Date(val.time).toLocaleDateString("en-IN", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </p>
+  return (
+    <>
+      <Navbar
+        movieId={movieId}
+        movieName={movieName}
+        theatre={theatre} />
+
+
+      <div className="min-h-screen bg-gray-100 p-6">
+
+
+
+        <div className="space-y-6 ">
+
+          {show
+            .filter((s) => s.theatre?._id === theatre?._id)
+            .map((value, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl shadow-md p-6"
+              >
+                <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                  Available Show Timings
+                </h2>
+
+                <div className="flex flex-wrap gap-4">
+                  {value.showTimings
+                    ?.filter((val) => {
+                      if (!activeDate) return true;
+
+                      return (
+                        new Date(val.time).toDateString() ===
+                        activeDate.toDateString()
+                      );
+                    })
+                    .map((val, ind) => (
+                      <div
+                        key={ind}
+                        onClick={() => setSelectedShow(val)}
+                        className={`w-36 border rounded-xl p-4 text-center 
+  transition-all duration-300 cursor-pointer shadow-md transform
+  ${selectedShow?.time === val.time
+                            ? "bg-linear-to-r from-gray-200 to-gray-300 text-white border-gray-800 shadow-xl scale-105 ring-2 ring-gray-400"
+                            : "bg-linear-to-br from-gray-50 to-gray-100 text-gray-300 border-gray-300 hover:from-gray-200 hover:to-gray-300 hover:border-gray-500 hover:shadow-lg hover:scale-105"
+                          }
+`}
+
+
+
+                      >
+                        <p className="font-semibold text-gray-800">
+                          {new Date(val.time).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: true,
+                          })}
+                        </p>
+
+                        <p className="text-sm text-gray-500 mt-2">
+                          {new Date(val.time).toLocaleDateString("en-IN", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </p>
+                      </div>
+                    ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        ))}
-    </div>
 
-    <div className="mt-10">
-      <Seat />
-    </div>
+              </div>
+            ))}
+        </div>
 
-  </div>
-);
+        <div className="mt-10">
+          <Seat
+            movieId={movieId}
+            movieName={movieName}
+            theatre={theatre}
+            selectedDate={selectedShow?.time || null}
+            selectedTime={selectedShow?.time || null}
+            duration={duration}
+            language={language}
+            genre={genre}
+            poster={poster}
+          />
+
+
+
+
+
+        </div>
+
+      </div>
+    </>
+  );
 
 }
 

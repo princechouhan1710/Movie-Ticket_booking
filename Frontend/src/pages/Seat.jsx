@@ -25,10 +25,20 @@ const generateSeats = () => {
   return seats;
 };
 
-const TheatreSeats = () => {
+const TheatreSeats = ({ 
+   movieId,
+  movieName,
+  selectedDate,
+  selectedTime,
+  theatre,
+  duration,
+  language,
+  genre,
+  poster
+
+}) => {
   const [seats, setSeats] = useState(generateSeats());
   const [selectedSeats, setSelectedSeats] = useState([]);
-
   const handleSeatClick = (seatId) => {
     const updatedSeats = seats.map((seat) => {
       if (seat.id !== seatId) return seat;
@@ -142,18 +152,34 @@ const TheatreSeats = () => {
             ₹{totalPrice}
           </p>
 
-          <NavLink
-            disabled={selectedSeats.length === 0}
-            className={`mt-2 px-8 py-2 rounded-full font-semibold transition-all duration-300
-              ${
-                selectedSeats.length === 0
-                  ? "bg-gray-600 cursor-not-allowed"
-                  : "bg-green-500 hover:bg-green-600 hover:scale-105 shadow-lg"
-              }
-            `}
-         to={"/payment"} >
-           Proceed →
-          </NavLink>
+      <NavLink
+  to="/payment"
+  state={{
+       movieId,
+    movieName,
+    theatre,
+    duration,
+    language,
+    genre,
+    poster,
+    selectedSeats,
+    totalPrice,
+    selectedDate,
+    selectedTime,
+
+  }}
+  className={`mt-2 px-8 py-2 rounded-full font-semibold transition-all duration-300
+    ${
+      selectedSeats.length === 0 
+        ? "bg-gray-600 cursor-not-allowed pointer-events-none"
+        : "bg-green-500 hover:bg-green-600 hover:scale-105 shadow-lg"
+    }
+  `}
+>
+  Proceed →
+</NavLink>
+
+
         </div>
       </div>
     </div>
